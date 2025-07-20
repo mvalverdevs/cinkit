@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.urls import include, re_path
-from rest_framework import permissions, routers
+from rest_framework import routers
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 from user import views as user_views
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from product import views as product_views
 
 
 # To register all the urls, add one for each view created
@@ -37,6 +38,12 @@ router.register(
     r'user',
     user_views.UserView,
     basename='user'
+)
+
+router.register(
+    r'product',
+    product_views.ProductView,
+    basename='product'
 )
 
 urlpatterns += [

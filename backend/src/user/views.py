@@ -8,15 +8,13 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.schemas import SchemaGenerator
 from drf_spectacular.utils import extend_schema
-from utils.views import ModelViewSet
+from utils.views import GeneralViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated, DjangoModelPermissions
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.exceptions import APIException
 from utils.serializers import EmptySerializer
 
-class UserView(ModelViewSet):
+class UserView(GeneralViewSet):
     queryset = user_models.User.objects.all()
     serializer_class = user_serializers.UserSerializer
 

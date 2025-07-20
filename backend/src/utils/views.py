@@ -1,18 +1,22 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
+from utils.authentication import ExpiringTokenAuthentication
 
 
-class ModelViewSet(
+class GeneralViewSet(
     viewsets.GenericViewSet,
-    mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
     mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
     PermissionRequiredMixin
 ):
-    pass
+    authentication_classes = (ExpiringTokenAuthentication, )
+    permission_classes = (DjangoModelPermissions, )
+    filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter)
+    # ordering = ('-field',)
+    # filterset_class = FilterClass
+    # search_fields = ('field', 'field2')

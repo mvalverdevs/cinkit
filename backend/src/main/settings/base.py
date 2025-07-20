@@ -60,7 +60,9 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'main',
-    'user'
+    'user',
+    'document_library',
+    'product'
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -246,6 +248,8 @@ IMAGE_EXTENSIONS = ("jpg", "jpeg", "png", "gif")
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'ES'
+
+TOKEN_EXPIRATION_DAYS = 7
 
 
 # CACHES
