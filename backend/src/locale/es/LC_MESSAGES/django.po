@@ -1,0 +1,30 @@
+#: utils/serializers.py:285 utils/serializers.py:341 utils/serializers.py:406
+msgid "No file was submitted."
+msgstr ""
+
+#: utils/serializers.py:286 utils/serializers.py:342
+msgid "The submitted data was not a file. Check the encoding type on the form."
+msgstr ""
+
+#: utils/serializers.py:287 utils/serializers.py:343 utils/serializers.py:408
+msgid "No filename could be determined."
+msgstr ""
+
+#: utils/serializers.py:288 utils/serializers.py:344 utils/serializers.py:409
+msgid "The submitted file is empty."
+msgstr ""
+
+#: utils/serializers.py:289 utils/serializers.py:345 utils/serializers.py:410
+#, python-brace-format
+msgid ""
+"Ensure this filename has at most {max_length} characters (it has {length})."
+msgstr ""
+
+#: utils/serializers.py:407
+msgid "Not a valid uuid."
+msgstr ""
+
+#: utils/serializers.py:411
+#, python-brace-format
+msgid "File '{filepath}' not found."
+msgstr ""

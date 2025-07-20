@@ -1,0 +1,48 @@
+http:
+  routers:
+    api-router:
+      rule: "Host(`api.feats-app.com`) && Method(`GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `OPTIONS`, `CONNECT`, `HEAD`)"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: api-service
+      middlewares:
+        - corsHeader
+
+    dashboard-router:
+      rule: Host(`dashboard.feats-app.com`)
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: dashboard-service
+      middlewares:
+        - dashboard-auth
+
+
+  services:
+    api-service:
+      loadBalancer:
+        servers:
+          - url: "http://api:8000"
+
+    dashboard-service:
+      loadBalancer:
+        servers:
+          - url: "http://traefik:8080"
+
+
+  middlewares:
+    dashboard-auth:
+      basicAuth:
+        users:
+          - "admin:$apr1$90nxdgzo$dxfmzoMDmMPSw35ka5Spo0"
+
+    corsHeader:
+      headers:
+        accessControlAllowMethods: "*"
+        accessControlAllowHeaders: "*"
+        accessControlAllowOriginList: "*"
+        accessControlMaxAge: 100
+        addVaryHeader: true
