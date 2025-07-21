@@ -3,6 +3,7 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { base64toBlob } from 'src/app/utils/functions';
 
 @Component({
+  standalone: true,
   selector: 'app-image-picker',
   templateUrl: './image-picker.component.html',
   styleUrls: ['./image-picker.component.scss'],

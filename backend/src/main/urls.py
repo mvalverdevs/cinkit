@@ -22,6 +22,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from user import views as user_views
 from product import views as product_views
+from order import views as order_views
 
 
 # To register all the urls, add one for each view created
@@ -44,6 +45,24 @@ router.register(
     r'product',
     product_views.ProductView,
     basename='product'
+)
+
+router.register(
+    r'bill',
+    order_views.BillView,
+    basename='bill'
+)
+
+router.register(
+    r'order',
+    order_views.OrderView,
+    basename='order'
+)
+
+router.register(
+    r'zone',
+    order_views.ZoneView,
+    basename='zone'
 )
 
 urlpatterns += [

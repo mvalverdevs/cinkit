@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {LoginPage} from "./main/login/login.page";
-import {RegisterPage} from "./main/register/register.page";
-import { ProfilePage } from './main/profile/profile.page';
+import {LoginPage} from "./main/user/login/login.page";
+import {RegisterPage} from "./main/user/register/register.page";
+import { ProfilePage } from './main/user/profile/profile.page';
 
 const routes: Routes = [
   {
@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePage
+  },
+  {
+    path: 'product',
+    loadChildren: () => import('./main/product/product.module').then(m => m.ProductModule)
   },
 ];
 @NgModule({

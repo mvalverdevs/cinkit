@@ -6,29 +6,30 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { Ordererializer } from '../../models/ordererializer';
 
-export interface UserDestroy$Params {
+export interface OrderRetrieve$Params {
 
 /**
- * A unique integer value identifying this user.
+ * A unique integer value identifying this order.
  */
   id: number;
 }
 
-export function userDestroy(http: HttpClient, rootUrl: string, params: UserDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, userDestroy.PATH, 'delete');
+export function orderRetrieve(http: HttpClient, rootUrl: string, params: OrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  const rb = new RequestBuilder(rootUrl, orderRetrieve.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<Ordererializer>;
     })
   );
 }
 
-userDestroy.PATH = '/api/user/{id}/';
+orderRetrieve.PATH = '/api/order/{id}/';

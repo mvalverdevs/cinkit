@@ -33,8 +33,6 @@ import { userCreate$XWwwFormUrlencoded } from '../fn/user/user-create-x-www-form
 import { UserCreate$XWwwFormUrlencoded$Params } from '../fn/user/user-create-x-www-form-urlencoded';
 import { userCurrentRetrieve } from '../fn/user/user-current-retrieve';
 import { UserCurrentRetrieve$Params } from '../fn/user/user-current-retrieve';
-import { userDestroy } from '../fn/user/user-destroy';
-import { UserDestroy$Params } from '../fn/user/user-destroy';
 import { userList } from '../fn/user/user-list';
 import { UserList$Params } from '../fn/user/user-list';
 import { UserLogin } from '../models/user-login';
@@ -270,31 +268,6 @@ export class UserService extends BaseService {
   userUpdate$FormData(params: UserUpdate$FormData$Params, context?: HttpContext): Observable<User> {
     return this.userUpdate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<User>): User => r.body)
-    );
-  }
-
-  /** Path part for operation `userDestroy()` */
-  static readonly UserDestroyPath = '/api/user/{id}/';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `userDestroy()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  userDestroy$Response(params: UserDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return userDestroy(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `userDestroy$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  userDestroy(params: UserDestroy$Params, context?: HttpContext): Observable<void> {
-    return this.userDestroy$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

@@ -62,7 +62,8 @@ LOCAL_APPS = [
     'main',
     'user',
     'document_library',
-    'product'
+    'product',
+    'order'
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

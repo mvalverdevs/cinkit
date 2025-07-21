@@ -6,29 +6,33 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {LoginPage} from "./main/login/login.page";
-import {RegisterPage} from "./main/register/register.page";
+import {LoginPage} from "./main/user/login/login.page";
+import {RegisterPage} from "./main/user/register/register.page";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiModule } from 'src/api/api.module';
-import { StepCheckEmailComponent } from './main/register/components/step-check-email/step-check-email.component';
-import { StepCheckUsernameComponent } from './main/register/components/step-check-username/step-check-username.component';
+import { StepCheckEmailComponent } from './main/user/register/components/step-check-email/step-check-email.component';
+import { StepCheckUsernameComponent } from './main/user/register/components/step-check-username/step-check-username.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { ProfilePage } from './main/profile/profile.page';
+import { ProfilePage } from './main/user/profile/profile.page';
+import { ProductModule } from './main/product/product.module';
 
 
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         LoginPage,
         RegisterPage,
         StepCheckEmailComponent,
         StepCheckUsernameComponent,
         ProfilePage,
+        ProductModule,
     ],
     bootstrap: [
         AppComponent
-    ], imports: [
+    ],
+    imports: [
         ReactiveFormsModule,
         BrowserModule,
         IonicModule.forRoot(),

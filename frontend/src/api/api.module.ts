@@ -4,8 +4,12 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { BillService } from './services/bill.service';
+import { OrderService } from './services/order.service';
+import { ProductService } from './services/product.service';
 import { SchemaService } from './services/schema.service';
 import { UserService } from './services/user.service';
+import { ZoneService } from './services/zone.service';
 
 /**
  * Module that provides all services and configuration.
@@ -15,8 +19,12 @@ import { UserService } from './services/user.service';
   exports: [],
   declarations: [],
   providers: [
+    BillService,
+    OrderService,
+    ProductService,
     SchemaService,
     UserService,
+    ZoneService,
     ApiConfiguration
   ],
 })

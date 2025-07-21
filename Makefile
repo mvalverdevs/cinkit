@@ -9,6 +9,8 @@ DBDUMP := postgres-data.tar.bz2
 DOCKER_DEV := docker compose -p newproj-dev -f docker-compose.yml
 DOCKER_PROD := docker compose -p newproj-prod -f docker-compose.production-test.yml
 
+LOCAL_IP := 192.168.0.33
+
 
 
 ### COMMON
@@ -104,7 +106,7 @@ front-osshell: ## Run interactive bash shell in 'frontend' developer container
 	$(DOCKER_DEV) run --rm frontend bash
 
 front-swagger: ## Generate OpenAPI definition nfge-spa/swagger.json
-	$(DOCKER_DEV) run --rm frontend wget -O ./schema.yaml http://192.168.1.35:8000/api/schema/
+	$(DOCKER_DEV) run --rm frontend wget -O ./schema.yaml http://$(LOCAL_IP):8000/api/schema/
 
 front-apigen: front-swagger ## Run NPM APIGEN (ng-openapi-gen)
 	$(DOCKER_DEV) run --rm frontend ng-openapi-gen
@@ -119,9 +121,12 @@ front-npm-delete-cache: ## Delete npm package cache
 
 front-newapp: ## Create new frontend app, expects name argument.
 	mkdir ./frontend/src/app/main/$(name)/
-	mkdir ./frontend/src/app/main/$(name)/$(name)-form/
-	mkdir ./frontend/src/app/main/$(name)/$(name)-list/
-	mkdir ./frontend/src/app/main/$(name)/$(name)-retrieve/
+	touch ./frontend/src/app/main/$(name)/$(name).module.ts
+	touch ./frontend/src/app/main/$(name)/$(name)-routing.module.ts
+
+	$(DOCKER_DEV) run --rm frontend ionic generate component ./main/$(name)/$(name)-form/
+	$(DOCKER_DEV) run --rm frontend ionic generate component ./main/$(name)/$(name)-list/
+	$(DOCKER_DEV) run --rm frontend ionic generate component ./main/$(name)/$(name)-retrieve/
 
 front-newcomponent: ## Create new frontend component, expects 'name' argument
 	$(DOCKER_DEV) run --rm frontend ionic generate page $(name)
