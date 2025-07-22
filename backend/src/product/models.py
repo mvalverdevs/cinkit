@@ -5,7 +5,7 @@ class Product(models.Model):
     name = models.CharField()
 
     image = models.ForeignKey(
-        to='document_library.DocumentLibrary',
+        to='image_library.Image',
         on_delete=models.SET_NULL,
         null=True
     )
@@ -14,4 +14,20 @@ class Product(models.Model):
         default=0.00,
         decimal_places=2,
         max_digits=6
+    )
+
+    category = models.ForeignKey(
+        to='ProductCategory',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+
+class ProductCategory(models.Model):
+    name = models.CharField()
+
+    image = models.ForeignKey(
+        to='image_library.Image',
+        on_delete=models.SET_NULL,
+        null=True
     )

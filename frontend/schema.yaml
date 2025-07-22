@@ -154,6 +154,134 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bill'
           description: ''
+  /api/image_library/:
+    get:
+      operationId: image_library_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - image_library
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedImageList'
+          description: ''
+    post:
+      operationId: image_library_create
+      tags:
+      - image_library
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+          description: ''
+  /api/image_library/{id}/:
+    get:
+      operationId: image_library_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image.
+        required: true
+      tags:
+      - image_library
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+          description: ''
+    put:
+      operationId: image_library_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image.
+        required: true
+      tags:
+      - image_library
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+          description: ''
+    patch:
+      operationId: image_library_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image.
+        required: true
+      tags:
+      - image_library
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedImage'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Image'
+          description: ''
   /api/order/:
     get:
       operationId: order_list
@@ -306,6 +434,11 @@ paths:
     get:
       operationId: product_list
       parameters:
+      - in: query
+        name: category_id
+        schema:
+          type: integer
+          nullable: true
       - name: limit
         required: false
         in: query
@@ -1152,6 +1285,24 @@ components:
           readOnly: true
       required:
       - empty_data
+    Image:
+      type: object
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields" and "include" in order to
+        control which fields are displayed, and whether to replace simple values with
+        complex, nested serializations.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Recipe image
+      required:
+      - id
     PaginatedBillList:
       type: object
       required:
@@ -1175,6 +1326,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Bill'
+    PaginatedImageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
     PaginatedProductList:
       type: object
       required:
@@ -1291,6 +1465,22 @@ components:
         table:
           type: integer
           nullable: true
+    PatchedImage:
+      type: object
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields" and "include" in order to
+        control which fields are displayed, and whether to replace simple values with
+        complex, nested serializations.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+          title: Recipe image
     PatchedProduct:
       type: object
       description: |-
@@ -1309,6 +1499,9 @@ components:
           format: decimal
           pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
         image:
+          type: integer
+          nullable: true
+        category:
           type: integer
           nullable: true
     PatchedUser:
@@ -1438,6 +1631,9 @@ components:
           format: decimal
           pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
         image:
+          type: integer
+          nullable: true
+        category:
           type: integer
           nullable: true
       required:

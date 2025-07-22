@@ -6,3 +6,4 @@ from product import models as product_models
 class ProductView(GeneralViewSet):
     serializer_class = product_serializers.ProductSerializer
     queryset = product_models.Product.objects.all().distinct()
+    filterset_fields = ('category_id',)

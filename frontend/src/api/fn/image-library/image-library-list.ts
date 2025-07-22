@@ -6,10 +6,9 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { PaginatedProductList } from '../../models/paginated-product-list';
+import { PaginatedImageList } from '../../models/paginated-image-list';
 
-export interface ProductList$Params {
-  category_id?: number;
+export interface ImageLibraryList$Params {
 
 /**
  * Number of results to return per page.
@@ -32,10 +31,9 @@ export interface ProductList$Params {
   search?: string;
 }
 
-export function productList(http: HttpClient, rootUrl: string, params?: ProductList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedProductList>> {
-  const rb = new RequestBuilder(rootUrl, productList.PATH, 'get');
+export function imageLibraryList(http: HttpClient, rootUrl: string, params?: ImageLibraryList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedImageList>> {
+  const rb = new RequestBuilder(rootUrl, imageLibraryList.PATH, 'get');
   if (params) {
-    rb.query('category_id', params.category_id, {});
     rb.query('limit', params.limit, {});
     rb.query('offset', params.offset, {});
     rb.query('ordering', params.ordering, {});
@@ -47,9 +45,9 @@ export function productList(http: HttpClient, rootUrl: string, params?: ProductL
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<PaginatedProductList>;
+      return r as StrictHttpResponse<PaginatedImageList>;
     })
   );
 }
 
-productList.PATH = '/api/product/';
+imageLibraryList.PATH = '/api/image_library/';

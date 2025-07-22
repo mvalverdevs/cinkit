@@ -7,10 +7,7 @@
  * control which fields are displayed, and whether to replace simple values with
  * complex, nested serializations.
  */
-export interface Product {
-  category?: null | number;
-  id: number;
-  image?: null | number;
-  name: string;
-  price?: string;
+export interface PatchedImage {
+  id?: number;
+  image?: null | string;
 }

@@ -27,7 +27,6 @@ import { ProductModule } from './main/product/product.module';
         StepCheckEmailComponent,
         StepCheckUsernameComponent,
         ProfilePage,
-        ProductModule,
     ],
     bootstrap: [
         AppComponent

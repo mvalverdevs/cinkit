@@ -61,7 +61,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'main',
     'user',
-    'document_library',
+    'image_library',
     'product',
     'order'
 ]

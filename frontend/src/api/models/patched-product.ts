@@ -8,6 +8,7 @@
  * complex, nested serializations.
  */
 export interface PatchedProduct {
+  category?: null | number;
   id?: number;
   image?: null | number;
   name?: string;
