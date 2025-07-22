@@ -1,0 +1,19 @@
+<ion-grid>
+  <ion-row *ngFor="let row of itemRows">
+    <ion-col class="sin-padding" [size]="COL_SIZE" *ngFor="let item of row">
+      <ion-card>
+        <div>
+          <div
+            [ngStyle]="{
+                'background-image': 'url(' + item.image_data?.image + ')',
+              }"
+            class="item-image">
+          </div>
+            <ion-text class="item-name">
+                {{ item.name }}
+            </ion-text>
+        </div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

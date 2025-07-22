@@ -23,7 +23,7 @@ const routes: Routes = [
     component: ProfilePage
   },
   {
-    path: 'product',
+    path: 'products',
     loadChildren: () => import('./main/product/product.module').then(m => m.ProductModule)
   },
 ];

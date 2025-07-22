@@ -36,7 +36,11 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(localStorage.getItem('accessToken') != null){
+      this._router.navigate(['/products']);
+    }
+  }
 
   changeStep(step: string){
     this.current_step = step

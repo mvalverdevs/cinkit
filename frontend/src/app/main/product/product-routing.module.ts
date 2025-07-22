@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductFormComponent } from './product-form/product-form.component';
-import { ProductRetrieveComponent } from './product-retrieve/product-retrieve.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductCategoryListComponent } from './product-category-list/product-category-list.component';
 
 const routes: Routes = [
   {
@@ -22,8 +22,8 @@ const routes: Routes = [
     component: ProductFormComponent,
   },
   {
-    path: ':id',
-    component: ProductRetrieveComponent,
+    path: 'categories',
+    component: ProductCategoryListComponent,
   },
 ];
 
