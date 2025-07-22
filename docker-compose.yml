@@ -1,5 +1,3 @@
-version: '3'
-
 volumes:
   newproj_postgres_data: {}
   newproj_postgres_data_backups: {}

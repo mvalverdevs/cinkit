@@ -12,10 +12,10 @@ class GeneralViewSet(
     mixins.RetrieveModelMixin,
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
-    PermissionRequiredMixin
+    # PermissionRequiredMixin
 ):
     authentication_classes = (ExpiringTokenAuthentication, )
-    permission_classes = (DjangoModelPermissions, )
+    # permission_classes = (DjangoModelPermissions, )
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter)
     # ordering = ('-field',)
     # filterset_class = FilterClass

@@ -7,3 +7,8 @@ class ProductView(GeneralViewSet):
     serializer_class = product_serializers.ProductSerializer
     queryset = product_models.Product.objects.all().distinct()
     filterset_fields = ('category_id',)
+
+
+class ProductCategoryView(GeneralViewSet):
+    serializer_class = product_serializers.ProductCategorySerializer
+    queryset = product_models.ProductCategory.objects.all().distinct()

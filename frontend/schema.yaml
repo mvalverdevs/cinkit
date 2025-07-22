@@ -583,6 +583,154 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
+  /api/product_category/:
+    get:
+      operationId: product_category_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - product_category
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductCategoryList'
+          description: ''
+    post:
+      operationId: product_category_create
+      tags:
+      - product_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+          description: ''
+  /api/product_category/{id}/:
+    get:
+      operationId: product_category_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product category.
+        required: true
+      tags:
+      - product_category
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+          description: ''
+    put:
+      operationId: product_category_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product category.
+        required: true
+      tags:
+      - product_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+          description: ''
+    patch:
+      operationId: product_category_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product category.
+        required: true
+      tags:
+      - product_category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductCategory'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategory'
+          description: ''
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -1349,6 +1497,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Image'
+    PaginatedProductCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductCategory'
     PaginatedProductList:
       type: object
       required:
@@ -1483,27 +1654,41 @@ components:
           title: Recipe image
     PatchedProduct:
       type: object
-      description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields" and "include" in order to
-        control which fields are displayed, and whether to replace simple values with
-        complex, nested serializations.
       properties:
         id:
           type: integer
           readOnly: true
         name:
           type: string
+        image:
+          type: integer
+          nullable: true
+        image_data:
+          allOf:
+          - $ref: '#/components/schemas/Image'
+          readOnly: true
         price:
           type: string
           format: decimal
           pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
-        image:
-          type: integer
-          nullable: true
         category:
           type: integer
           nullable: true
+    PatchedProductCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        image:
+          type: integer
+          nullable: true
+        image_data:
+          allOf:
+          - $ref: '#/components/schemas/Image'
+          readOnly: true
     PatchedUser:
       type: object
       description: |-
@@ -1615,29 +1800,48 @@ components:
       - url
     Product:
       type: object
-      description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields" and "include" in order to
-        control which fields are displayed, and whether to replace simple values with
-        complex, nested serializations.
       properties:
         id:
           type: integer
           readOnly: true
         name:
           type: string
+        image:
+          type: integer
+          nullable: true
+        image_data:
+          allOf:
+          - $ref: '#/components/schemas/Image'
+          readOnly: true
         price:
           type: string
           format: decimal
           pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
-        image:
-          type: integer
-          nullable: true
         category:
           type: integer
           nullable: true
       required:
       - id
+      - image_data
+      - name
+    ProductCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        image:
+          type: integer
+          nullable: true
+        image_data:
+          allOf:
+          - $ref: '#/components/schemas/Image'
+          readOnly: true
+      required:
+      - id
+      - image_data
       - name
     ResetPassword:
       type: object

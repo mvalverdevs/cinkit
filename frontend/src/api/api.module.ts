@@ -8,6 +8,7 @@ import { BillService } from './services/bill.service';
 import { ImageLibraryService } from './services/image-library.service';
 import { OrderService } from './services/order.service';
 import { ProductService } from './services/product.service';
+import { ProductCategoryService } from './services/product-category.service';
 import { SchemaService } from './services/schema.service';
 import { UserService } from './services/user.service';
 import { ZoneService } from './services/zone.service';
@@ -24,6 +25,7 @@ import { ZoneService } from './services/zone.service';
     ImageLibraryService,
     OrderService,
     ProductService,
+    ProductCategoryService,
     SchemaService,
     UserService,
     ZoneService,

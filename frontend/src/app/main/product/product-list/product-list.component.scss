@@ -1,0 +1,26 @@
+.product-image {
+    padding: 60px 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+ion-card {
+    margin-inline: 10px !important;
+    box-shadow: none; /* opcional, para que no haya separación visual */
+    height: 150px;       /* o el valor que necesites */
+    width: 90%;         /* ocupa el ancho del ion-col */
+    text-align: center;
+}
+
+.product-name {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+    text-overflow: ellipsis;
+     display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}

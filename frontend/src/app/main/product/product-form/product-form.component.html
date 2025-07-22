@@ -1,3 +1,56 @@
-<p>
-  product-form works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Producto
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="submit()">Hecho</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/product" ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="productForm!">
+    <app-image-picker
+      (selectImage)="imageSelected($event)"
+      [imageUrl]="selectedImage"
+      [width]="'100%'"
+      [height]="'300px'"
+      [customImageUrl]="selectedImage"
+    ></app-image-picker>
+    <ion-list>
+
+      <ion-item>
+        <ion-input
+          formControlName="name"
+          labelPlacement="stacked">
+            <div slot="label">
+              <ion-icon slot="start" name="text-outline"></ion-icon>
+              Nombre
+            </div>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          formControlName="price"
+          labelPlacement="stacked">
+            <div slot="label">
+              <ion-icon slot="start" name="cash-outline"></ion-icon>
+              Precio
+            </div>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Categoría" placeholder="Seleccionar" formControlName="category">
+          <ion-select-option *ngFor="let category of categories"
+            [value]="category.id">{{ category.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

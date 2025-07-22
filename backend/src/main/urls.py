@@ -49,6 +49,13 @@ router.register(
 )
 
 router.register(
+    r'product_category',
+    product_views.ProductCategoryView,
+    basename='product_category'
+)
+
+
+router.register(
     r'bill',
     order_views.BillView,
     basename='bill'
