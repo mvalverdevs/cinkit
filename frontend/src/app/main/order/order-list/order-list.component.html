@@ -1,21 +1,25 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Pedidos
+      Comandas
     </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <app-horizontal-image-list 
-      [items]="zones"
-      (selectedItemChange)="selectZone($event)"
-    ></app-horizontal-image-list>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="createBill()">
+    <ion-fab-button (click)="createOrder()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-list lines="none">
+    <ion-item
+      *ngFor="let order of orders"
+    >
+      <ion-card class="order-card">
+        {{ order.id }}
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

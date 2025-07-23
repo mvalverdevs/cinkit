@@ -8,6 +8,7 @@ export { Email } from './models/email';
 export { Empty } from './models/empty';
 export { Image } from './models/image';
 export { Order } from './models/order';
+export { OrderItem } from './models/order-item';
 export { PaginatedBillList } from './models/paginated-bill-list';
 export { PaginatedImageList } from './models/paginated-image-list';
 export { PaginatedOrderList } from './models/paginated-order-list';

@@ -1,7 +1,7 @@
 <ion-grid *ngIf="items.length > 0">
   <ion-row *ngFor="let row of itemRows">
     <ion-col class="sin-padding" [size]="COL_SIZE" *ngFor="let item of row">
-      <ion-card>
+      <ion-card (click)="selectItem(item)">
         <div>
           <div
             [ngStyle]="{

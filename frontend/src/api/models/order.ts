@@ -1,9 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
+import { OrderItem } from '../models/order-item';
 export interface Order {
   bill: number;
   delivered?: boolean;
   id: number;
-  products?: Array<number>;
+  items: Array<OrderItem>;
   user?: null | number;
 }

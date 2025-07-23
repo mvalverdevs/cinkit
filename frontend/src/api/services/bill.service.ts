@@ -18,6 +18,12 @@ import { billCreate$XWwwFormUrlencoded } from '../fn/bill/bill-create-x-www-form
 import { BillCreate$XWwwFormUrlencoded$Params } from '../fn/bill/bill-create-x-www-form-urlencoded';
 import { billList } from '../fn/bill/bill-list';
 import { BillList$Params } from '../fn/bill/bill-list';
+import { billNewOrderCreate$FormData } from '../fn/bill/bill-new-order-create-form-data';
+import { BillNewOrderCreate$FormData$Params } from '../fn/bill/bill-new-order-create-form-data';
+import { billNewOrderCreate$Json } from '../fn/bill/bill-new-order-create-json';
+import { BillNewOrderCreate$Json$Params } from '../fn/bill/bill-new-order-create-json';
+import { billNewOrderCreate$XWwwFormUrlencoded } from '../fn/bill/bill-new-order-create-x-www-form-urlencoded';
+import { BillNewOrderCreate$XWwwFormUrlencoded$Params } from '../fn/bill/bill-new-order-create-x-www-form-urlencoded';
 import { billPartialUpdate$FormData } from '../fn/bill/bill-partial-update-form-data';
 import { BillPartialUpdate$FormData$Params } from '../fn/bill/bill-partial-update-form-data';
 import { billPartialUpdate$Json } from '../fn/bill/bill-partial-update-json';
@@ -32,6 +38,7 @@ import { billUpdate$Json } from '../fn/bill/bill-update-json';
 import { BillUpdate$Json$Params } from '../fn/bill/bill-update-json';
 import { billUpdate$XWwwFormUrlencoded } from '../fn/bill/bill-update-x-www-form-urlencoded';
 import { BillUpdate$XWwwFormUrlencoded$Params } from '../fn/bill/bill-update-x-www-form-urlencoded';
+import { Order } from '../models/order';
 import { PaginatedBillList } from '../models/paginated-bill-list';
 
 @Injectable({ providedIn: 'root' })
@@ -294,6 +301,75 @@ export class BillService extends BaseService {
   billPartialUpdate$FormData(params: BillPartialUpdate$FormData$Params, context?: HttpContext): Observable<Bill> {
     return this.billPartialUpdate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /** Path part for operation `billNewOrderCreate()` */
+  static readonly BillNewOrderCreatePath = '/api/bill/{id}/new_order/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billNewOrderCreate$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  billNewOrderCreate$Json$Response(params: BillNewOrderCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
+    return billNewOrderCreate$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billNewOrderCreate$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  billNewOrderCreate$Json(params: BillNewOrderCreate$Json$Params, context?: HttpContext): Observable<Order> {
+    return this.billNewOrderCreate$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Order>): Order => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billNewOrderCreate$XWwwFormUrlencoded()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  billNewOrderCreate$XWwwFormUrlencoded$Response(params: BillNewOrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
+    return billNewOrderCreate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billNewOrderCreate$XWwwFormUrlencoded$Response()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  billNewOrderCreate$XWwwFormUrlencoded(params: BillNewOrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Order> {
+    return this.billNewOrderCreate$XWwwFormUrlencoded$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Order>): Order => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billNewOrderCreate$FormData()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  billNewOrderCreate$FormData$Response(params: BillNewOrderCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
+    return billNewOrderCreate$FormData(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billNewOrderCreate$FormData$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  billNewOrderCreate$FormData(params: BillNewOrderCreate$FormData$Params, context?: HttpContext): Observable<Order> {
+    return this.billNewOrderCreate$FormData$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 

@@ -6,5 +6,7 @@ export interface Bill {
   created_at: string;
   id: number;
   is_open?: boolean;
+  last_3_products: string;
+  orders_number: string;
   zone?: null | number;
 }

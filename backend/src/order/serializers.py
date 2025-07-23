@@ -1,4 +1,4 @@
-from rest_framework.serializers import ListSerializer, ModelSerializer
+from rest_framework.serializers import ListSerializer, ModelSerializer, Serializer
 
 from order import models as order_models
 from image_library.serializers import ImageSerializer
@@ -13,19 +13,54 @@ class BillSerializer(ModelSerializer):
             'closed_at',
             'is_open',
             'amount',
-            'zone'
+            'zone',
+            'orders_number',
+            'last_3_products'
         )
 
         read_only_fields = (
             'id',
-            'created_at'
+            'created_at',
+            'orders_number',
+            'last_3_products'
         )
 
 
+class OrderItemSerializer(ModelSerializer):
+    class Meta:
+        model = order_models.OrderItem
+        fields = (
+            'id',
+            'order',
+            'product',
+            'quantity',
+            'note'
+        )
+        read_only_fields = (
+            'id',
+        )
+
+
+class NewOrderSerializer(ListSerializer):
+    child = OrderItemSerializer()
+
+
 class OrderSerializer(ModelSerializer):
+    items = OrderItemSerializer(many=True, read_only=True)
+
     class Meta:
         model = order_models.Order
-        fields = '__all__'
+        fields = (
+            'id',
+            'bill',
+            'user',
+            'delivered',
+            'items'
+        )
+        read_only_fields = (
+            'id',
+            'items'
+        )
 
 
 class ZoneSerializer(ModelSerializer):

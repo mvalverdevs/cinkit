@@ -27,16 +27,30 @@ class Bill(models.Model):
         null=True
     )
 
+    @property
+    def orders_number(self):
+        print(self.orders.all())
+        return self.orders.all().count()
+
+    @property
+    def last_3_products(self):
+        orders = self.orders.order_by('-id')
+        products = []
+        for order in orders:
+            for p in order.products.all():
+                products.append(p.name)
+                if len(products) == 3:
+                    break
+            if len(products) == 3:
+                break
+        return ', '.join(products) if products else "Sin productos"
+
 
 class Order(models.Model):
     bill = models.ForeignKey(
         to='Bill',
-        on_delete=models.CASCADE
-    )
-
-    products = models.ManyToManyField(
-        to='product.Product',
-        blank=True
+        on_delete=models.CASCADE,
+        related_name='orders'
     )
 
     user = models.ForeignKey(
@@ -47,9 +61,30 @@ class Order(models.Model):
 
     delivered = models.BooleanField(default=False)
 
-    @property
-    def amount(self):
-        return self.products.aggregate(total=Sum('price'))['total'] or 0
+    amount = models.DecimalField(
+        default=0.00,
+        decimal_places=2,
+        max_digits=6,
+    )
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(
+        to='Order',
+        on_delete=models.CASCADE,
+        related_name='items'
+    )
+
+    product = models.ForeignKey(
+        to='product.Product',
+        on_delete=models.CASCADE
+    )
+
+    quantity = models.PositiveIntegerField(
+        default=1
+    )
+
+    note = models.CharField(null=True)
 
 
 class Zone(models.Model):

@@ -159,6 +159,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bill'
           description: ''
+  /api/bill/{id}/new_order/:
+    post:
+      operationId: bill_new_order_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bill.
+        required: true
+      tags:
+      - bill
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderItem'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
   /api/image_library/:
     get:
       operationId: image_library_list
@@ -1395,9 +1434,17 @@ components:
         zone:
           type: integer
           nullable: true
+        orders_number:
+          type: string
+          readOnly: true
+        last_3_products:
+          type: string
+          readOnly: true
       required:
       - created_at
       - id
+      - last_3_products
+      - orders_number
     CheckEmail:
       type: object
       properties:
@@ -1461,20 +1508,43 @@ components:
         id:
           type: integer
           readOnly: true
-        delivered:
-          type: boolean
         bill:
           type: integer
         user:
           type: integer
           nullable: true
-        products:
+        delivered:
+          type: boolean
+        items:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
       required:
       - bill
       - id
+      - items
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+        product:
+          type: integer
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        note:
+          type: string
+          nullable: true
+      required:
+      - id
+      - order
+      - product
     PaginatedBillList:
       type: object
       required:
@@ -1659,6 +1729,12 @@ components:
         zone:
           type: integer
           nullable: true
+        orders_number:
+          type: string
+          readOnly: true
+        last_3_products:
+          type: string
+          readOnly: true
     PatchedImage:
       type: object
       description: |-
@@ -1681,17 +1757,18 @@ components:
         id:
           type: integer
           readOnly: true
-        delivered:
-          type: boolean
         bill:
           type: integer
         user:
           type: integer
           nullable: true
-        products:
+        delivered:
+          type: boolean
+        items:
           type: array
           items:
-            type: integer
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
     PatchedProduct:
       type: object
       properties:
