@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 
 class Bill(models.Model):
@@ -14,8 +15,14 @@ class Bill(models.Model):
         default=True
     )
 
-    table = models.ForeignKey(
-        to='Table',
+    amount = models.DecimalField(
+        default=0.00,
+        decimal_places=2,
+        max_digits=6,
+    )
+
+    zone = models.ForeignKey(
+        to='Zone',
         on_delete=models.SET_NULL,
         null=True
     )
@@ -38,20 +45,18 @@ class Order(models.Model):
         null=True
     )
 
+    delivered = models.BooleanField(default=False)
+
+    @property
+    def amount(self):
+        return self.products.aggregate(total=Sum('price'))['total'] or 0
+
 
 class Zone(models.Model):
     name = models.CharField()
 
-
-class Table(models.Model):
-    number = models.IntegerField()
-
-    zone = models.ForeignKey(
-        to='Zone',
+    image = models.ForeignKey(
+        to='image_library.Image',
         on_delete=models.SET_NULL,
         null=True
-    )
-
-    is_open = models.BooleanField(
-        default=True
     )

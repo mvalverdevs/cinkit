@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pedidos
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <app-horizontal-image-list 
+      [items]="zones"
+      (selectedItemChange)="selectZone($event)"
+    ></app-horizontal-image-list>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="createBill()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

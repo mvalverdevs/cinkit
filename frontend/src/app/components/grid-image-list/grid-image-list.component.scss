@@ -17,9 +17,14 @@
     width: 100%;
 }
 
+.empty-list-text {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--ion-color-medium);
+}
+
 ion-card {
     margin-inline: 10px !important;
-    box-shadow: none; /* opcional, para que no haya separación visual */
     height: 150px;       /* o el valor que necesites */
     width: 90%;         /* ocupa el ancho del ion-col */
     text-align: center;

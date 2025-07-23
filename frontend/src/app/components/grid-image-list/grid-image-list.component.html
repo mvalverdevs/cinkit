@@ -1,4 +1,4 @@
-<ion-grid>
+<ion-grid *ngIf="items.length > 0">
   <ion-row *ngFor="let row of itemRows">
     <ion-col class="sin-padding" [size]="COL_SIZE" *ngFor="let item of row">
       <ion-card>
@@ -17,3 +17,6 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+<div *ngIf="items.length == 0" class="empty-list-text">
+  No hay nada aún.
+</div>

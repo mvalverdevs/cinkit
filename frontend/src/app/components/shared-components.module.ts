@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
-import { GridListComponent } from './grid-list-image/grid-image-list.component';
+import { GridListComponent } from './grid-image-list/grid-image-list.component';
+import { HorizontalListComponent } from './horizontal-image-list/horizontal-image-list.component';
 
 @NgModule({
   imports: [
     ImagePickerComponent,
-    GridListComponent
+    GridListComponent,
+    HorizontalListComponent
   ],
   exports: [
     ImagePickerComponent,
-    GridListComponent
+    GridListComponent,
+    HorizontalListComponent
   ]
 })
 export class SharedComponentsModule { }

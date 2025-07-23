@@ -24,7 +24,7 @@ export class GridListComponent  implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['items'] && this.items?.length) {
+    if (changes['items']) {
       this.itemRows = this.agruparEnFilas(this.items, this.PRODUCT_LIST_ROWS);
     }
   }

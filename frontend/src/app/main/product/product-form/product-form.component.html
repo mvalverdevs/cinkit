@@ -46,7 +46,11 @@
       </ion-item>
 
       <ion-item>
-        <ion-select label="Categoría" placeholder="Seleccionar" formControlName="category">
+        <ion-select placeholder="" labelPlacement="stacked" formControlName="category">
+          <div slot="label">
+              <ion-icon slot="start" name="pricetag-outline"></ion-icon>
+              Categoría
+            </div>
           <ion-select-option *ngFor="let category of categories"
             [value]="category.id">{{ category.name }}</ion-select-option>
         </ion-select>

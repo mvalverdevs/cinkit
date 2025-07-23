@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Ordererializer } from '../../models/ordererializer';
+import { Order } from '../../models/order';
 
 export interface OrderCreate$FormData$Params {
-      body: Ordererializer
+      body: Order
 }
 
-export function orderCreate$FormData(http: HttpClient, rootUrl: string, params: OrderCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+export function orderCreate$FormData(http: HttpClient, rootUrl: string, params: OrderCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
   const rb = new RequestBuilder(rootUrl, orderCreate$FormData.PATH, 'post');
   if (params) {
     rb.body(params.body, 'multipart/form-data');
@@ -23,7 +23,7 @@ export function orderCreate$FormData(http: HttpClient, rootUrl: string, params: 
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Ordererializer>;
+      return r as StrictHttpResponse<Order>;
     })
   );
 }

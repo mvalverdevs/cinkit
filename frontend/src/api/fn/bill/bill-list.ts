@@ -29,6 +29,7 @@ export interface BillList$Params {
  * A search term.
  */
   search?: string;
+  zone_id?: number;
 }
 
 export function billList(http: HttpClient, rootUrl: string, params?: BillList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedBillList>> {
@@ -38,6 +39,7 @@ export function billList(http: HttpClient, rootUrl: string, params?: BillList$Pa
     rb.query('offset', params.offset, {});
     rb.query('ordering', params.ordering, {});
     rb.query('search', params.search, {});
+    rb.query('zone_id', params.zone_id, {});
   }
 
   return http.request(

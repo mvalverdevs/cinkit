@@ -15,7 +15,6 @@ import { StepCheckEmailComponent } from './main/user/register/components/step-ch
 import { StepCheckUsernameComponent } from './main/user/register/components/step-check-username/step-check-username.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ProfilePage } from './main/user/profile/profile.page';
-import { ProductModule } from './main/product/product.module';
 
 
 

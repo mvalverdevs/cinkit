@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Ordererializer } from '../../models/ordererializer';
+import { Order } from '../../models/order';
 
 export interface OrderUpdate$FormData$Params {
 
@@ -14,10 +14,10 @@ export interface OrderUpdate$FormData$Params {
  * A unique integer value identifying this order.
  */
   id: number;
-      body: Ordererializer
+      body: Order
 }
 
-export function orderUpdate$FormData(http: HttpClient, rootUrl: string, params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+export function orderUpdate$FormData(http: HttpClient, rootUrl: string, params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
   const rb = new RequestBuilder(rootUrl, orderUpdate$FormData.PATH, 'put');
   if (params) {
     rb.path('id', params.id, {});
@@ -29,7 +29,7 @@ export function orderUpdate$FormData(http: HttpClient, rootUrl: string, params: 
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Ordererializer>;
+      return r as StrictHttpResponse<Order>;
     })
   );
 }

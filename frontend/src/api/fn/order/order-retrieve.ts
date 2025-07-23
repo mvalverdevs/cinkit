@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { Ordererializer } from '../../models/ordererializer';
+import { Order } from '../../models/order';
 
 export interface OrderRetrieve$Params {
 
@@ -16,7 +16,7 @@ export interface OrderRetrieve$Params {
   id: number;
 }
 
-export function orderRetrieve(http: HttpClient, rootUrl: string, params: OrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+export function orderRetrieve(http: HttpClient, rootUrl: string, params: OrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
   const rb = new RequestBuilder(rootUrl, orderRetrieve.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
@@ -27,7 +27,7 @@ export function orderRetrieve(http: HttpClient, rootUrl: string, params: OrderRe
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Ordererializer>;
+      return r as StrictHttpResponse<Order>;
     })
   );
 }

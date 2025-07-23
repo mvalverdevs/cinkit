@@ -9,13 +9,13 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { Order } from '../models/order';
 import { orderCreate$FormData } from '../fn/order/order-create-form-data';
 import { OrderCreate$FormData$Params } from '../fn/order/order-create-form-data';
 import { orderCreate$Json } from '../fn/order/order-create-json';
 import { OrderCreate$Json$Params } from '../fn/order/order-create-json';
 import { orderCreate$XWwwFormUrlencoded } from '../fn/order/order-create-x-www-form-urlencoded';
 import { OrderCreate$XWwwFormUrlencoded$Params } from '../fn/order/order-create-x-www-form-urlencoded';
-import { Ordererializer } from '../models/ordererializer';
 import { orderList } from '../fn/order/order-list';
 import { OrderList$Params } from '../fn/order/order-list';
 import { orderPartialUpdate$FormData } from '../fn/order/order-partial-update-form-data';
@@ -32,7 +32,7 @@ import { orderUpdate$Json } from '../fn/order/order-update-json';
 import { OrderUpdate$Json$Params } from '../fn/order/order-update-json';
 import { orderUpdate$XWwwFormUrlencoded } from '../fn/order/order-update-x-www-form-urlencoded';
 import { OrderUpdate$XWwwFormUrlencoded$Params } from '../fn/order/order-update-x-www-form-urlencoded';
-import { PaginatedordererializerList } from '../models/paginatedordererializer-list';
+import { PaginatedOrderList } from '../models/paginated-order-list';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService extends BaseService {
@@ -49,7 +49,7 @@ export class OrderService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  orderList$Response(params?: OrderList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedordererializerList>> {
+  orderList$Response(params?: OrderList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedOrderList>> {
     return orderList(this.http, this.rootUrl, params, context);
   }
 
@@ -59,9 +59,9 @@ export class OrderService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  orderList(params?: OrderList$Params, context?: HttpContext): Observable<PaginatedordererializerList> {
+  orderList(params?: OrderList$Params, context?: HttpContext): Observable<PaginatedOrderList> {
     return this.orderList$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PaginatedordererializerList>): PaginatedordererializerList => r.body)
+      map((r: StrictHttpResponse<PaginatedOrderList>): PaginatedOrderList => r.body)
     );
   }
 
@@ -74,7 +74,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderCreate$Json$Response(params: OrderCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderCreate$Json$Response(params: OrderCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderCreate$Json(this.http, this.rootUrl, params, context);
   }
 
@@ -84,9 +84,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderCreate$Json(params: OrderCreate$Json$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderCreate$Json(params: OrderCreate$Json$Params, context?: HttpContext): Observable<Order> {
     return this.orderCreate$Json$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -96,7 +96,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderCreate$XWwwFormUrlencoded$Response(params: OrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderCreate$XWwwFormUrlencoded$Response(params: OrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderCreate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
   }
 
@@ -106,9 +106,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderCreate$XWwwFormUrlencoded(params: OrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderCreate$XWwwFormUrlencoded(params: OrderCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Order> {
     return this.orderCreate$XWwwFormUrlencoded$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -118,7 +118,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderCreate$FormData$Response(params: OrderCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderCreate$FormData$Response(params: OrderCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderCreate$FormData(this.http, this.rootUrl, params, context);
   }
 
@@ -128,9 +128,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderCreate$FormData(params: OrderCreate$FormData$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderCreate$FormData(params: OrderCreate$FormData$Params, context?: HttpContext): Observable<Order> {
     return this.orderCreate$FormData$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -143,7 +143,7 @@ export class OrderService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  orderRetrieve$Response(params: OrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderRetrieve$Response(params: OrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderRetrieve(this.http, this.rootUrl, params, context);
   }
 
@@ -153,9 +153,9 @@ export class OrderService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  orderRetrieve(params: OrderRetrieve$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderRetrieve(params: OrderRetrieve$Params, context?: HttpContext): Observable<Order> {
     return this.orderRetrieve$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -168,7 +168,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderUpdate$Json$Response(params: OrderUpdate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderUpdate$Json$Response(params: OrderUpdate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderUpdate$Json(this.http, this.rootUrl, params, context);
   }
 
@@ -178,9 +178,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderUpdate$Json(params: OrderUpdate$Json$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderUpdate$Json(params: OrderUpdate$Json$Params, context?: HttpContext): Observable<Order> {
     return this.orderUpdate$Json$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -190,7 +190,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderUpdate$XWwwFormUrlencoded$Response(params: OrderUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderUpdate$XWwwFormUrlencoded$Response(params: OrderUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderUpdate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
   }
 
@@ -200,9 +200,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderUpdate$XWwwFormUrlencoded(params: OrderUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderUpdate$XWwwFormUrlencoded(params: OrderUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Order> {
     return this.orderUpdate$XWwwFormUrlencoded$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -212,7 +212,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderUpdate$FormData$Response(params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderUpdate$FormData$Response(params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderUpdate$FormData(this.http, this.rootUrl, params, context);
   }
 
@@ -222,9 +222,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderUpdate$FormData(params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderUpdate$FormData(params: OrderUpdate$FormData$Params, context?: HttpContext): Observable<Order> {
     return this.orderUpdate$FormData$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -237,7 +237,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderPartialUpdate$Json$Response(params: OrderPartialUpdate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderPartialUpdate$Json$Response(params: OrderPartialUpdate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderPartialUpdate$Json(this.http, this.rootUrl, params, context);
   }
 
@@ -247,9 +247,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  orderPartialUpdate$Json(params: OrderPartialUpdate$Json$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderPartialUpdate$Json(params: OrderPartialUpdate$Json$Params, context?: HttpContext): Observable<Order> {
     return this.orderPartialUpdate$Json$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -259,7 +259,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderPartialUpdate$XWwwFormUrlencoded$Response(params: OrderPartialUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderPartialUpdate$XWwwFormUrlencoded$Response(params: OrderPartialUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderPartialUpdate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
   }
 
@@ -269,9 +269,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
    */
-  orderPartialUpdate$XWwwFormUrlencoded(params: OrderPartialUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderPartialUpdate$XWwwFormUrlencoded(params: OrderPartialUpdate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Order> {
     return this.orderPartialUpdate$XWwwFormUrlencoded$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 
@@ -281,7 +281,7 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderPartialUpdate$FormData$Response(params: OrderPartialUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Ordererializer>> {
+  orderPartialUpdate$FormData$Response(params: OrderPartialUpdate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
     return orderPartialUpdate$FormData(this.http, this.rootUrl, params, context);
   }
 
@@ -291,9 +291,9 @@ export class OrderService extends BaseService {
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  orderPartialUpdate$FormData(params: OrderPartialUpdate$FormData$Params, context?: HttpContext): Observable<Ordererializer> {
+  orderPartialUpdate$FormData(params: OrderPartialUpdate$FormData$Params, context?: HttpContext): Observable<Order> {
     return this.orderPartialUpdate$FormData$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Ordererializer>): Ordererializer => r.body)
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 

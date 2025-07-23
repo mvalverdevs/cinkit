@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { PaginatedordererializerList } from '../../models/paginatedordererializer-list';
+import { PaginatedOrderList } from '../../models/paginated-order-list';
 
 export interface OrderList$Params {
 
@@ -31,7 +31,7 @@ export interface OrderList$Params {
   search?: string;
 }
 
-export function orderList(http: HttpClient, rootUrl: string, params?: OrderList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedordererializerList>> {
+export function orderList(http: HttpClient, rootUrl: string, params?: OrderList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedOrderList>> {
   const rb = new RequestBuilder(rootUrl, orderList.PATH, 'get');
   if (params) {
     rb.query('limit', params.limit, {});
@@ -45,7 +45,7 @@ export function orderList(http: HttpClient, rootUrl: string, params?: OrderList$
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<PaginatedordererializerList>;
+      return r as StrictHttpResponse<PaginatedOrderList>;
     })
   );
 }

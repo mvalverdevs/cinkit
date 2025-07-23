@@ -60,7 +60,6 @@ export class ProductFormComponent  implements OnInit {
       {
         next: (categories) => {
           this.categories = categories.results;
-          console.log(this.categories);
         }
       }
     )
@@ -78,7 +77,6 @@ export class ProductFormComponent  implements OnInit {
             image: response.body.id
           });
           this.selectedImage = response.body.image!;
-          console.log(this.selectedImage)
         },
         error: (e) =>
         console.error(e),

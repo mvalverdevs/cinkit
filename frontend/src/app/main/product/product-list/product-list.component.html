@@ -4,12 +4,19 @@
       Productos
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <app-horizontal-image-list 
+      [items]="categories"
+      (selectedItemChange)="selectCategory($event)"
+    ></app-horizontal-image-list>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
     <app-grid-image-list
-    [PRODUCT_LIST_ROWS]="2"
-    [COL_SIZE]="6"
-    [items]="products"
-  ></app-grid-image-list>
+      [PRODUCT_LIST_ROWS]="2"
+      [COL_SIZE]="6"
+      [items]="products"
+    ></app-grid-image-list>
 </ion-content>
