@@ -10,6 +10,12 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { Bill } from '../models/bill';
+import { billCloseCreate$FormData } from '../fn/bill/bill-close-create-form-data';
+import { BillCloseCreate$FormData$Params } from '../fn/bill/bill-close-create-form-data';
+import { billCloseCreate$Json } from '../fn/bill/bill-close-create-json';
+import { BillCloseCreate$Json$Params } from '../fn/bill/bill-close-create-json';
+import { billCloseCreate$XWwwFormUrlencoded } from '../fn/bill/bill-close-create-x-www-form-urlencoded';
+import { BillCloseCreate$XWwwFormUrlencoded$Params } from '../fn/bill/bill-close-create-x-www-form-urlencoded';
 import { billCreate$FormData } from '../fn/bill/bill-create-form-data';
 import { BillCreate$FormData$Params } from '../fn/bill/bill-create-form-data';
 import { billCreate$Json } from '../fn/bill/bill-create-json';
@@ -300,6 +306,75 @@ export class BillService extends BaseService {
    */
   billPartialUpdate$FormData(params: BillPartialUpdate$FormData$Params, context?: HttpContext): Observable<Bill> {
     return this.billPartialUpdate$FormData$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /** Path part for operation `billCloseCreate()` */
+  static readonly BillCloseCreatePath = '/api/bill/{id}/close/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billCloseCreate$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  billCloseCreate$Json$Response(params: BillCloseCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return billCloseCreate$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billCloseCreate$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  billCloseCreate$Json(params: BillCloseCreate$Json$Params, context?: HttpContext): Observable<Bill> {
+    return this.billCloseCreate$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billCloseCreate$XWwwFormUrlencoded()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  billCloseCreate$XWwwFormUrlencoded$Response(params: BillCloseCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return billCloseCreate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billCloseCreate$XWwwFormUrlencoded$Response()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  billCloseCreate$XWwwFormUrlencoded(params: BillCloseCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Bill> {
+    return this.billCloseCreate$XWwwFormUrlencoded$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billCloseCreate$FormData()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  billCloseCreate$FormData$Response(params: BillCloseCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return billCloseCreate$FormData(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billCloseCreate$FormData$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  billCloseCreate$FormData(params: BillCloseCreate$FormData$Params, context?: HttpContext): Observable<Bill> {
+    return this.billCloseCreate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<Bill>): Bill => r.body)
     );
   }

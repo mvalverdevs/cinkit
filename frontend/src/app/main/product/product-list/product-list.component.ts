@@ -95,7 +95,8 @@ export class ProductListComponent  implements OnInit {
         product: product.id,
         quantity: 1,
         order: this.orderId,
-        id: 0
+        id: 0,
+        product_data: {} as Product
       };
       this.orderItems.push(newItem);
     }

@@ -9,6 +9,7 @@ import { RequestBuilder } from '../../request-builder';
 import { PaginatedBillList } from '../../models/paginated-bill-list';
 
 export interface BillList$Params {
+  is_open?: boolean;
 
 /**
  * Number of results to return per page.
@@ -35,6 +36,7 @@ export interface BillList$Params {
 export function billList(http: HttpClient, rootUrl: string, params?: BillList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedBillList>> {
   const rb = new RequestBuilder(rootUrl, billList.PATH, 'get');
   if (params) {
+    rb.query('is_open', params.is_open, {});
     rb.query('limit', params.limit, {});
     rb.query('offset', params.offset, {});
     rb.query('ordering', params.ordering, {});

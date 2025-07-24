@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cuenta
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/bills" ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-text class="bill-total-text">
+      Total: {{ bill?.amount }} €
+    </ion-text>
+  </ion-toolbar>
+  <div class="is-active-line"
+    [ngClass]="{
+      'is-active-line': bill?.is_open,
+      'is-closed-line': !bill?.is_open,
+    }"
+  ></div>
+</ion-header>
+
+<ion-content>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="createOrder()" *ngIf="bill?.is_open">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <ion-fab-button size="medium" color="danger" (click)="closeBill()">
+      <ion-icon name="receipt-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <ion-list *ngIf="orders.length > 0">
+    <ion-item *ngFor="let order of orders">
+      <ion-card class="order-card-item">
+        <ion-card-content>
+          <ion-button fill="clear" class="floating-button" [ngClass]="{
+            'delivered-icon': order.delivered,
+            'undelivered-icon': !order.delivered,
+          }"
+          (click)="deliverOrder(order)"
+          [disabled]="order.delivered">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-list>
+            <ion-item *ngFor="let item of order.items">
+              {{ item.product_data.name }} x {{ item.quantity }}
+            </ion-item>
+          </ion-list>
+          {{order.user_data.first_name}} {{order.user_data.last_name}} | {{ order.amount }} €
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="orders.length == 0" class="empty-list-text">
+    Aún no hay comandas.
+  </div>
+
+</ion-content>

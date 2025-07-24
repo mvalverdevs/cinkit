@@ -1,0 +1,48 @@
+.bill-total-text {
+    font-weight: bold;
+    font-size: x-large;
+    padding-left: 20px;
+}
+
+.order-card-item {
+    width: 95%;
+}
+
+.floating-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    padding: 4px;
+    font-size: 20px;
+
+    ion-icon {
+        font-size: 24px;
+    }
+  }
+
+.delivered-icon {
+    color: var(--ion-color-success);
+}
+
+.undelivered-icon {
+    color: red
+}
+
+.is-active-line{
+    background-color: var(--ion-color-success);
+    height: 4px;
+    width: 100%;
+}
+
+.is-closed-line{
+    background-color: var(--ion-color-danger);
+    height: 4px;
+    width: 100%;
+}
+
+.empty-list-text {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--ion-color-medium);
+}

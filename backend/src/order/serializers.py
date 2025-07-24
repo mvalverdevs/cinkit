@@ -2,6 +2,8 @@ from rest_framework.serializers import ListSerializer, ModelSerializer, Serializ
 
 from order import models as order_models
 from image_library.serializers import ImageSerializer
+from product.serializers import ProductSerializer
+from user.serializers import UserSerializer
 
 
 class BillSerializer(ModelSerializer):
@@ -27,6 +29,11 @@ class BillSerializer(ModelSerializer):
 
 
 class OrderItemSerializer(ModelSerializer):
+    product_data = ProductSerializer(
+        source='product',
+        read_only=True
+    )
+
     class Meta:
         model = order_models.OrderItem
         fields = (
@@ -34,10 +41,12 @@ class OrderItemSerializer(ModelSerializer):
             'order',
             'product',
             'quantity',
-            'note'
+            'note',
+            'product_data'
         )
         read_only_fields = (
             'id',
+            'product_data'
         )
 
 
@@ -47,6 +56,7 @@ class NewOrderSerializer(ListSerializer):
 
 class OrderSerializer(ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
+    user_data = UserSerializer(read_only=True, source='user')
 
     class Meta:
         model = order_models.Order
@@ -55,11 +65,17 @@ class OrderSerializer(ModelSerializer):
             'bill',
             'user',
             'delivered',
-            'items'
+            'items',
+            'amount',
+            'user_data',
+            'created_at',
+            'delivered_at'
         )
         read_only_fields = (
             'id',
-            'items'
+            'items',
+            'user_data'
+            'created_at',
         )
 
 

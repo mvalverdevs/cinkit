@@ -9,6 +9,7 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { Bill } from '../models/bill';
 import { Order } from '../models/order';
 import { orderCreate$FormData } from '../fn/order/order-create-form-data';
 import { OrderCreate$FormData$Params } from '../fn/order/order-create-form-data';
@@ -26,6 +27,12 @@ import { orderPartialUpdate$XWwwFormUrlencoded } from '../fn/order/order-partial
 import { OrderPartialUpdate$XWwwFormUrlencoded$Params } from '../fn/order/order-partial-update-x-www-form-urlencoded';
 import { orderRetrieve } from '../fn/order/order-retrieve';
 import { OrderRetrieve$Params } from '../fn/order/order-retrieve';
+import { orderSetDeliveredCreate$FormData } from '../fn/order/order-set-delivered-create-form-data';
+import { OrderSetDeliveredCreate$FormData$Params } from '../fn/order/order-set-delivered-create-form-data';
+import { orderSetDeliveredCreate$Json } from '../fn/order/order-set-delivered-create-json';
+import { OrderSetDeliveredCreate$Json$Params } from '../fn/order/order-set-delivered-create-json';
+import { orderSetDeliveredCreate$XWwwFormUrlencoded } from '../fn/order/order-set-delivered-create-x-www-form-urlencoded';
+import { OrderSetDeliveredCreate$XWwwFormUrlencoded$Params } from '../fn/order/order-set-delivered-create-x-www-form-urlencoded';
 import { orderUpdate$FormData } from '../fn/order/order-update-form-data';
 import { OrderUpdate$FormData$Params } from '../fn/order/order-update-form-data';
 import { orderUpdate$Json } from '../fn/order/order-update-json';
@@ -294,6 +301,75 @@ export class OrderService extends BaseService {
   orderPartialUpdate$FormData(params: OrderPartialUpdate$FormData$Params, context?: HttpContext): Observable<Order> {
     return this.orderPartialUpdate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<Order>): Order => r.body)
+    );
+  }
+
+  /** Path part for operation `orderSetDeliveredCreate()` */
+  static readonly OrderSetDeliveredCreatePath = '/api/order/{id}/set_delivered/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `orderSetDeliveredCreate$Json()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  orderSetDeliveredCreate$Json$Response(params: OrderSetDeliveredCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return orderSetDeliveredCreate$Json(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `orderSetDeliveredCreate$Json$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  orderSetDeliveredCreate$Json(params: OrderSetDeliveredCreate$Json$Params, context?: HttpContext): Observable<Bill> {
+    return this.orderSetDeliveredCreate$Json$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `orderSetDeliveredCreate$XWwwFormUrlencoded()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  orderSetDeliveredCreate$XWwwFormUrlencoded$Response(params: OrderSetDeliveredCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return orderSetDeliveredCreate$XWwwFormUrlencoded(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `orderSetDeliveredCreate$XWwwFormUrlencoded$Response()` instead.
+   *
+   * This method sends `application/x-www-form-urlencoded` and handles request body of type `application/x-www-form-urlencoded`.
+   */
+  orderSetDeliveredCreate$XWwwFormUrlencoded(params: OrderSetDeliveredCreate$XWwwFormUrlencoded$Params, context?: HttpContext): Observable<Bill> {
+    return this.orderSetDeliveredCreate$XWwwFormUrlencoded$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `orderSetDeliveredCreate$FormData()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  orderSetDeliveredCreate$FormData$Response(params: OrderSetDeliveredCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<Bill>> {
+    return orderSetDeliveredCreate$FormData(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `orderSetDeliveredCreate$FormData$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  orderSetDeliveredCreate$FormData(params: OrderSetDeliveredCreate$FormData$Params, context?: HttpContext): Observable<Bill> {
+    return this.orderSetDeliveredCreate$FormData$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Bill>): Bill => r.body)
     );
   }
 

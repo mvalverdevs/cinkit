@@ -12,6 +12,10 @@ paths:
     get:
       operationId: bill_list
       parameters:
+      - in: query
+        name: is_open
+        schema:
+          type: boolean
       - name: limit
         required: false
         in: query
@@ -150,6 +154,38 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedBill'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+          description: ''
+  /api/bill/{id}/close/:
+    post:
+      operationId: bill_close_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bill.
+        required: true
+      tags:
+      - bill
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Empty'
       security:
       - tokenAuth: []
       responses:
@@ -330,6 +366,14 @@ paths:
     get:
       operationId: order_list
       parameters:
+      - in: query
+        name: bill_id
+        schema:
+          type: integer
+      - in: query
+        name: delivered
+        schema:
+          type: boolean
       - name: limit
         required: false
         in: query
@@ -473,6 +517,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Order'
+          description: ''
+  /api/order/{id}/set_delivered/:
+    post:
+      operationId: order_set_delivered_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this order.
+        required: true
+      tags:
+      - order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Empty'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Empty'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
           description: ''
   /api/product/:
     get:
@@ -1520,10 +1596,29 @@ components:
           items:
             $ref: '#/components/schemas/OrderItem'
           readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
+        user_data:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        delivered_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - bill
+      - created_at
+      - delivered_at
       - id
       - items
+      - user_data
     OrderItem:
       type: object
       properties:
@@ -1541,10 +1636,15 @@ components:
         note:
           type: string
           nullable: true
+        product_data:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          readOnly: true
       required:
       - id
       - order
       - product
+      - product_data
     PaginatedBillList:
       type: object
       required:
@@ -1768,6 +1868,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,4}(?:\.\d{0,2})?$
+        user_data:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        delivered_at:
+          type: string
+          format: date-time
           readOnly: true
     PatchedProduct:
       type: object

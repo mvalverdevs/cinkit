@@ -1,8 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Productos
+      Nueva Comanda
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/bills" ></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <app-horizontal-image-list 
@@ -64,7 +67,7 @@
         <ion-toolbar>
           <ion-title>Artículos</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Close</ion-button>
+            <ion-button (click)="setOpen(false)">Hecho</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>

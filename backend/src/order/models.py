@@ -29,7 +29,6 @@ class Bill(models.Model):
 
     @property
     def orders_number(self):
-        print(self.orders.all())
         return self.orders.all().count()
 
     @property
@@ -37,7 +36,7 @@ class Bill(models.Model):
         orders = self.orders.order_by('-id')
         products = []
         for order in orders:
-            for p in order.products.all():
+            for p in order.items.all():
                 products.append(p.name)
                 if len(products) == 3:
                     break
@@ -47,6 +46,14 @@ class Bill(models.Model):
 
 
 class Order(models.Model):
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    delivered_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
     bill = models.ForeignKey(
         to='Bill',
         on_delete=models.CASCADE,

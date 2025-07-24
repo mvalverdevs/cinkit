@@ -24,6 +24,9 @@
       *ngFor="let bill of bills"
     >
       <ion-card class="bill-card" (click)="goToBill(bill)">
+        <ion-button fill="clear" class="floating-button" (click)="onInfoClick($event, bill)">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-button>
         <ion-grid>
           <ion-row>
             <ion-col>
@@ -51,7 +54,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button class="fill-button" expand="full">Llenar</ion-button>
+              <ion-button class="fill-button" expand="block">Llenar</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

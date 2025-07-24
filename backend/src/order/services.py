@@ -1,9 +1,10 @@
 from order import models as order_models
 from product import models as product_models
 from django.db import transaction
+from datetime import datetime
 
 
-class OrderService:
+class BillService:
 
     @staticmethod
     @transaction.atomic
@@ -40,6 +41,21 @@ class OrderService:
 
         return order
 
-    def close_bill(self, bill):
+    @staticmethod
+    @transaction.atomic
+    def close_bill(bill):
         bill.is_open = False
+        bill.closed_at = datetime.now()
         bill.save()
+        return bill
+
+
+class OrderService:
+
+    @staticmethod
+    @transaction.atomic
+    def set_order_as_delivered(order):
+        order.delivered = True
+        order.delivered_at = datetime.now()
+        order.save()
+        return order

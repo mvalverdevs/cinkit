@@ -9,6 +9,8 @@ import { RequestBuilder } from '../../request-builder';
 import { PaginatedOrderList } from '../../models/paginated-order-list';
 
 export interface OrderList$Params {
+  bill_id?: number;
+  delivered?: boolean;
 
 /**
  * Number of results to return per page.
@@ -34,6 +36,8 @@ export interface OrderList$Params {
 export function orderList(http: HttpClient, rootUrl: string, params?: OrderList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedOrderList>> {
   const rb = new RequestBuilder(rootUrl, orderList.PATH, 'get');
   if (params) {
+    rb.query('bill_id', params.bill_id, {});
+    rb.query('delivered', params.delivered, {});
     rb.query('limit', params.limit, {});
     rb.query('offset', params.offset, {});
     rb.query('ordering', params.ordering, {});

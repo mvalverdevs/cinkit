@@ -31,19 +31,16 @@ export class BillListComponent implements OnInit {
         }
       }
     )
+  }
 
-    this._billService.billList({zone_id: this.selectedZoneId}).subscribe(
-      {
-        next: (bills) => {
-          this.bills = bills.results;
-        }
-      }
-    )
+  async ionViewWillEnter() {
+    this.getBills();
   }
 
   getBills(){
     this._billService.billList({
-      zone_id: this.selectedZoneId
+      zone_id: this.selectedZoneId,
+      is_open: true
     }).subscribe(
       {
         next: (bills) => {
@@ -84,6 +81,11 @@ export class BillListComponent implements OnInit {
 
   goToBill(bill: Bill){
     this._router.navigate(['/bills/' + bill.id + '/order/new/']);
+  }
+
+  onInfoClick(event: Event, bill: Bill){
+    event.stopPropagation()
+    this._router.navigate(['/bills/' + bill.id]);
   }
 
 }
