@@ -19,7 +19,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <ion-list lines="none">
+  <ion-list lines="none" *ngIf="bills.length > 0">
     <ion-item
       *ngFor="let bill of bills"
     >
@@ -54,11 +54,14 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button class="fill-button" expand="block">Llenar</ion-button>
+              <ion-button class="fill-button" expand="block" (click)="fillLastOrder($event, bill)" *ngIf="bill.orders_number != '0'">Llenar</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card>
     </ion-item>
   </ion-list>
+  <div *ngIf="bills.length == 0" class="empty-list-text">
+    No hay cuentas abiertas aún.
+  </div>
 </ion-content>

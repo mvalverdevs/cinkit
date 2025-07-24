@@ -22,6 +22,8 @@ import { billCreate$Json } from '../fn/bill/bill-create-json';
 import { BillCreate$Json$Params } from '../fn/bill/bill-create-json';
 import { billCreate$XWwwFormUrlencoded } from '../fn/bill/bill-create-x-www-form-urlencoded';
 import { BillCreate$XWwwFormUrlencoded$Params } from '../fn/bill/bill-create-x-www-form-urlencoded';
+import { billLastOrderRetrieve } from '../fn/bill/bill-last-order-retrieve';
+import { BillLastOrderRetrieve$Params } from '../fn/bill/bill-last-order-retrieve';
 import { billList } from '../fn/bill/bill-list';
 import { BillList$Params } from '../fn/bill/bill-list';
 import { billNewOrderCreate$FormData } from '../fn/bill/bill-new-order-create-form-data';
@@ -376,6 +378,31 @@ export class BillService extends BaseService {
   billCloseCreate$FormData(params: BillCloseCreate$FormData$Params, context?: HttpContext): Observable<Bill> {
     return this.billCloseCreate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<Bill>): Bill => r.body)
+    );
+  }
+
+  /** Path part for operation `billLastOrderRetrieve()` */
+  static readonly BillLastOrderRetrievePath = '/api/bill/{id}/last_order/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `billLastOrderRetrieve()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  billLastOrderRetrieve$Response(params: BillLastOrderRetrieve$Params, context?: HttpContext): Observable<StrictHttpResponse<Order>> {
+    return billLastOrderRetrieve(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `billLastOrderRetrieve$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  billLastOrderRetrieve(params: BillLastOrderRetrieve$Params, context?: HttpContext): Observable<Order> {
+    return this.billLastOrderRetrieve$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Order>): Order => r.body)
     );
   }
 

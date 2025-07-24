@@ -43,6 +43,17 @@ class BillView(GeneralViewSet):
             order_serializers.BillSerializer(instance=bill).data
         )
 
+    @extend_schema(
+        responses={200: order_serializers.OrderSerializer}
+    )
+    @action(detail=True, methods=['get'])
+    def last_order(self, request, *args, **kwargs):
+        order = self.get_object().orders.all().order_by('id').last()
+
+        return Response(
+            order_serializers.OrderSerializer(instance=order).data
+        )
+
 
 class OrderView(GeneralViewSet):
     serializer_class = order_serializers.OrderSerializer

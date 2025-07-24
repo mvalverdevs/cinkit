@@ -73,14 +73,14 @@ export class BillListComponent implements OnInit {
     ).subscribe(
       {
         next: (bill) => {
-          this._router.navigate(['/products/']);
+          this._router.navigate(['/bills/' + bill.body.id + '/order/']);
         }
       }
     )
   }
 
   goToBill(bill: Bill){
-    this._router.navigate(['/bills/' + bill.id + '/order/new/']);
+    this._router.navigate(['/bills/' + bill.id + '/order/']);
   }
 
   onInfoClick(event: Event, bill: Bill){
@@ -88,4 +88,10 @@ export class BillListComponent implements OnInit {
     this._router.navigate(['/bills/' + bill.id]);
   }
 
+  fillLastOrder(event: Event, bill: Bill){
+    event.stopPropagation()
+    this._router.navigate(['/bills/' + bill.id + '/order/'], {
+      state: { fill: true }
+    });
+  }
 }

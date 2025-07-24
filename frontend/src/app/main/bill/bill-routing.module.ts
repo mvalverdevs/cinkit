@@ -15,7 +15,7 @@ const routes: Routes = [
     component: BillRetrieveComponent,
   },
   {
-    path: ':id/order/new',
+    path: ':id/order',
     component: ProductListComponent,
   }
 ];

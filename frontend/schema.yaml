@@ -195,6 +195,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/Bill'
           description: ''
+  /api/bill/{id}/last_order/:
+    get:
+      operationId: bill_last_order_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this bill.
+        required: true
+      tags:
+      - bill
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
   /api/bill/{id}/new_order/:
     post:
       operationId: bill_new_order_create

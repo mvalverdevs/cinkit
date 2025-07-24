@@ -33,13 +33,12 @@ class Bill(models.Model):
 
     @property
     def last_3_products(self):
-        orders = self.orders.order_by('-id')
         products = []
-        for order in orders:
-            for p in order.items.all():
-                products.append(p.name)
+        for order in self.orders.order_by('-id'):
+            for item in order.items.all():
+                products.append(item.product.name)
                 if len(products) == 3:
-                    break
+                    return ', '.join(products)
             if len(products) == 3:
                 break
         return ', '.join(products) if products else "Sin productos"

@@ -17,7 +17,6 @@ export class ProductListComponent  implements OnInit {
   categories: ProductCategory[] = [];
   selectedCategoryId?: number;
   orderItems: OrderItem[] = [];
-  orderId = 1;
   itemRows: any[][] = [];
   PRODUCT_LIST_ROWS = 2;
   COL_SIZE = 6;
@@ -41,6 +40,20 @@ export class ProductListComponent  implements OnInit {
         this.billId = params['id'];
       }
     });
+    const navigation = this._router.getCurrentNavigation();
+    const state = navigation?.extras.state as { fill: string };
+
+    if (state?.fill) {
+      this._billService.billLastOrderRetrieve({id: this.billId!}).subscribe(
+        {
+          next: (order) => {
+            if (order.bill){
+              this.orderItems = order.items;
+            }
+          }
+        }
+      )
+    }
   }
 
   async ionViewWillEnter() {
@@ -94,7 +107,7 @@ export class ProductListComponent  implements OnInit {
       const newItem: OrderItem = {
         product: product.id,
         quantity: 1,
-        order: this.orderId,
+        order: 0,
         id: 0,
         product_data: {} as Product
       };
@@ -146,10 +159,10 @@ export class ProductListComponent  implements OnInit {
       body: this.orderItems
     }).subscribe({
       next: (order) => {
-        console.log(order)
+        this._router.navigate(['/bills/']);
       }
     })
-    this._router.navigate(['/bills/']);
+    
   }
 
   setOpen(isOpen: boolean) {

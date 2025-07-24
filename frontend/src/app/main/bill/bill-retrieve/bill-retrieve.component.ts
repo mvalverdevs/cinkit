@@ -51,7 +51,7 @@ export class BillRetrieveComponent implements OnInit {
   }
 
   createOrder(){
-    this._router.navigate(['/bills/' + this.bill!.id + '/order/new/']);
+    this._router.navigate(['/bills/' + this.bill!.id + '/order/']);
   }
 
   closeBill(){
