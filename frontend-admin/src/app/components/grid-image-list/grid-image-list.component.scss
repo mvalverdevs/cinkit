@@ -1,0 +1,31 @@
+.item-image {
+    padding: 60px 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.item-name {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+    text-overflow: ellipsis;
+     display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.empty-list-text {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--ion-color-medium);
+}
+
+ion-card {
+    margin-inline: 10px !important;
+    height: 150px;       /* o el valor que necesites */
+    width: 90%;         /* ocupa el ancho del ion-col */
+    text-align: center;
+}

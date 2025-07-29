@@ -1,0 +1,23 @@
+<div class="items">
+      <ion-card 
+        class="item-card"
+        *ngFor="let item of items"
+        (click)="selectItem(item.id)"
+        [ngClass]="{
+          'item-card-selected': selectedItemId == item.id}"
+      >
+      <div class="item-spacer"></div>
+        <div>
+          <div
+            [ngStyle]="{
+                'background-image': 'url(' + item.image_data?.image + ')',
+              }"
+            class="item-image"
+            >
+          </div>
+            <ion-text class="item-name">
+                {{ item.name }}
+            </ion-text>
+        </div>
+      </ion-card>
+    </div>

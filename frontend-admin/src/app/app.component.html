@@ -1,0 +1,38 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [mode]="isMobile ? 'over' : 'side'"
+               [opened]="!isMobile">
+    <mat-toolbar>Menú</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="closeIfMobile(drawer)">
+        <mat-icon matListIcon class="material-symbols-outlined">home</mat-icon>
+        <span class="nav-text">Inicio</span>
+      </a>
+      <hr class="nav-separator">
+      <a mat-list-item routerLink="/users" routerLinkActive="active" (click)="closeIfMobile(drawer)">
+        <mat-icon class="material-symbols-outlined" fontIcon="person"></mat-icon>
+        <span class="nav-text">Usuarios</span>
+      </a>
+      <a mat-list-item routerLink="/zones" routerLinkActive="active" (click)="closeIfMobile(drawer)">
+        <mat-icon class="material-symbols-outlined" fontIcon="location_on"></mat-icon>
+        <span class="nav-text">Zonas</span>
+      </a>
+      <a mat-list-item routerLink="/products" routerLinkActive="active" (click)="closeIfMobile(drawer)">
+        <mat-icon class="material-symbols-outlined" fontIcon="fastfood"></mat-icon>
+        <span class="nav-text">Productos</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-content">
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Cinkit</span>
+    </mat-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

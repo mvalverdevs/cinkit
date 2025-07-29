@@ -1,0 +1,17 @@
+<mat-list>
+ <div mat-list-item *ngFor="let zone of zones" class="zone-item">
+      <mat-grid-list cols="4" rowHeight="2:1">
+        <mat-grid-tile>
+          <div
+            class="zone-image"
+            [ngStyle]="{
+              'background-image': 'url(' + zone.image_data?.image + ')'
+            }">
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="3" class="zone-text">
+          <span matListItemTitle>{{ zone.name }}</span>
+        </mat-grid-tile>
+      </mat-grid-list>
+</div>
+</mat-list>

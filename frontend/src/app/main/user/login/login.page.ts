@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { UserService } from 'src/api/services';
 import { UserLogin } from 'src/api/models';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { RegisterPage } from '../register/register.page';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +14,6 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup
-  register = RegisterPage
   hasError = false
   errorMessage = ''
 

@@ -1,0 +1,18 @@
+<div
+  class="image"
+  id="open-action-sheet"
+  [ngStyle]="{
+    'background-image': 'url(' + (imageUrl ? imageUrl : getDefaultImage()) + ')',
+    'height': height,
+    'width': width,
+    'border-radius': borderRadius
+  }">
+</div>
+<div class="icono-editar">
+  <img src="https://unpkg.com/ionicons@7.1.0/dist/svg/pencil-outline.svg" alt="Editar">
+</div>
+<ion-action-sheet
+  trigger="open-action-sheet"
+  [buttons]="actionSheetButtons"
+  (didDismiss)="takePicture($event)"
+></ion-action-sheet>

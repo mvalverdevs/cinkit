@@ -1,7 +1,8 @@
 volumes:
   newproj_postgres_data: {}
   newproj_postgres_data_backups: {}
-  npm_cache: {}
+  npm_cache_frontend: {}
+  npm_cache_frontend_admin: {}
   pg_admin_data: {}
 
 services:
@@ -66,11 +67,22 @@ services:
     volumes:
       - ./frontend:/app
       - ./frontend/node_modules:/app/node_modules
-      - npm_cache:/npm-cache
+      - npm_cache_frontend:/npm-cache
     ports:
       - '4200:4200'
     command: dev-webserver
 
+  frontend-admin:
+    build:
+      context: ./frontend-admin/
+      dockerfile: ./compose/local/Dockerfile
+    volumes:
+      - ./frontend-admin:/app
+      - ./frontend-admin/node_modules:/app/node_modules
+      - npm_cache_frontend_admin:/npm-cache
+    ports:
+      - '4300:4300'
+    command: dev-webserver
   pgadmin:
       image: dpage/pgadmin4:latest
       environment:

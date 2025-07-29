@@ -158,6 +158,30 @@ front-devices-android:
 node-modules-permissions: ## Change permissions to ./frontend/node_modules/
 	sudo chown -R $(runner):$(group) ./frontend/node_modules/
 
+## ADMIN FRONT
+
+front-admin-osshell: ## Run interactive bash shell in 'front-adminend' developer container
+	$(DOCKER_DEV) run --rm frontend-admin bash
+
+front-admin-swagger: ## Generate OpenAPI definition nfge-spa/swagger.json
+	$(DOCKER_DEV) run --rm frontend-admin wget -O ./schema.yaml http://$(LOCAL_IP):8000/api/schema/
+
+front-admin-apigen: front-swagger ## Run NPM APIGEN (ng-openapi-gen)
+	$(DOCKER_DEV) run --rm frontend-admin ng-openapi-gen
+	sudo chown -R $(runner):$(group) ./frontend-admin/src/api
+
+front-admin-build-prod: ## Compile frontend-admin using gulp build
+	$(DOCKER_DEV) run --rm frontend-admin npm run build-prod
+	sudo chown -R $(runner):$(group) ./frontend-admin/dist/
+
+front-admin-npm-delete-cache: ## Delete npm package cache
+	docker volume rm -p newproj-dev_aspb-newproj_npm_cache
+
+front-admin-translate: ## Run NPM extract (translate)
+	$(DOCKER_DEV) run --rm frontend-admin npm run extract
+
+front-admin-node-modules-permissions: ## Change permissions to ./frontend-admin/node_modules/
+	sudo chown -R $(runner):$(group) ./frontend-admin/node_modules/
 
 ### DATABASE
 

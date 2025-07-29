@@ -1,0 +1,16 @@
+.zone-image {
+    padding: 20px 60px;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.zone-item {
+    margin: 20px;
+}
+
+mat-grid-tile {
+    justify-content: left !important;
+}
