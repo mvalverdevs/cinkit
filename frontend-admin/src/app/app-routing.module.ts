@@ -4,6 +4,7 @@ import { HomeComponent } from './main/home/home.component';
 import { UsersComponent } from './main/users/users.component';
 import { ZonesComponent } from './main/zones/zones.component';
 import { ProductsComponent } from './main/products/products.component';
+import { LoginComponent } from './main/login/login.component';
 
 const routes: Routes = [
   {
@@ -13,19 +14,28 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    data: { title: 'Inicio' }
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+    data: { title: 'Trabajadores' }
   },
   {
     path: 'zones',
-    component: ZonesComponent
+    component: ZonesComponent,
+    data: { title: 'Zonas' }
   },
   {
     path: 'products',
-    component: ProductsComponent
+    component: ProductsComponent,
+    data: { title: 'Productos' }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login' }
   },
 ];
 @NgModule({
