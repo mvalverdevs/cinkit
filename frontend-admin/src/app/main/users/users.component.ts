@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/api/models';
 import { UserService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
@@ -10,9 +11,10 @@ import { SHARED_IMPORTS } from 'src/app/shared/imports';
   standalone: true,
   imports: [...SHARED_IMPORTS],
 })
-export class UsersComponent  implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
 
-  users: User[] = []
+  dataSource = new MatTableDataSource<User>();
+  displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'actions'];
 
   constructor(
     private _userService: UserService
@@ -25,13 +27,10 @@ export class UsersComponent  implements OnInit {
   }
 
   getUsers() {
-    this._userService.userList().subscribe(
-      {
-        next: (users) => {
-          this.users = users.results;
-        }
+    this._userService.userList().subscribe({
+      next: (response) => {
+        this.dataSource.data = response.results;
       }
-    )
+    });
   }
-
 }

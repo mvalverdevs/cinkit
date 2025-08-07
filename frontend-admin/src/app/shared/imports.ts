@@ -9,10 +9,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { RouterModule } from '@angular/router';
 
 
 export const SHARED_IMPORTS = [
     CommonModule,
+    RouterModule,
     MatButtonModule,
     MatIconModule,
     MatListModule,
@@ -28,4 +31,5 @@ export const SHARED_IMPORTS = [
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
+    MatTableModule
 ];
