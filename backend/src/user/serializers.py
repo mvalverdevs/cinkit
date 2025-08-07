@@ -7,9 +7,11 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from user import models as user_models
 from utils.serializers import DynamicModelSerializer
-
+from django.utils import timezone
 from drf_spectacular.utils import extend_schema_field
 from rest_framework.authtoken.models import Token
+from datetime import timedelta
+from django.conf import settings
 
 
 class UserSerializer(DynamicModelSerializer):
@@ -63,10 +65,16 @@ class UserLoginSerializer(serializers.ModelSerializer):
             'token'
         )
 
-    @extend_schema_field(field=serializers.IntegerField)
+    @extend_schema_field(field=serializers.CharField)
     def get_token(self, user):
-        print(type(user))
-        token, created = Token.objects.get_or_create(user=user)
+        try:
+            token = Token.objects.get(user=user)
+            if token.created < timezone.now() - timedelta(days=settings.TOKEN_EXPIRATION_DAYS):
+                token.delete()
+                token = Token.objects.create(user=user)
+        except Token.DoesNotExist:
+            token = Token.objects.create(user=user)
+
         return token.key
 
 

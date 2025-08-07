@@ -5,6 +5,7 @@ from django.conf import settings
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
+from django.utils import timezone
 
 
 class ExpiringTokenAuthentication(TokenAuthentication):
@@ -18,10 +19,8 @@ class ExpiringTokenAuthentication(TokenAuthentication):
             raise AuthenticationFailed('User inactive or deleted')
 
         # This is required for the time comparison
-        utc_now = datetime.datetime.utcnow()
-        utc_now = utc_now.replace(tzinfo=pytz.utc)
-
-        if token.created < utc_now - datetime.timedelta(days=settings.TOKEN_EXPIRATION_DAYS):
+        if token.created < timezone.now() - datetime.timedelta(days=settings.TOKEN_EXPIRATION_DAYS):
+            token.delete()
             raise AuthenticationFailed('Token has expired')
 
         return token.user, token
