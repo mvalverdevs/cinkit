@@ -5,13 +5,13 @@ import { UserService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss'],
   standalone: true,
   imports: [...SHARED_IMPORTS],
 })
-export class UsersComponent implements OnInit, AfterViewInit {
+export class UserListComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'actions'];

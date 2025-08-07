@@ -5,13 +5,13 @@ import { Zone } from 'src/api/models/zone';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-zones',
-  templateUrl: './zones.component.html',
-  styleUrls: ['./zones.component.scss'],
+  selector: 'app-zone-list',
+  templateUrl: './zone-list.component.html',
+  styleUrls: ['./zone-list.component.scss'],
   standalone: true,
   imports: [...SHARED_IMPORTS],
 })
-export class ZonesComponent  implements OnInit {
+export class ZoneListComponent  implements OnInit {
 
   dataSource = new MatTableDataSource<Zone>();
   displayedColumns: string[] = ['image', 'name', 'actions'];

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './main/home/home.component';
-import { UsersComponent } from './main/users/users.component';
-import { ZonesComponent } from './main/zones/zones.component';
-import { ProductsComponent } from './main/products/products.component';
 import { LoginComponent } from './main/login/login.component';
 import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/lateral-menu-layout.component';
 
@@ -22,20 +19,17 @@ const routes: Routes = [
         component: HomeComponent,
         data: { title: 'Inicio' }
       },
-      { 
+      {
         path: 'users',
-        component: UsersComponent,
-        data: { title: 'Trabajadores' }
+        loadChildren: () => import('./main/user/user.module').then(m => m.UserModule)
       },
       {
         path: 'zones',
-        component: ZonesComponent,
-        data: { title: 'Zonas' }
+        loadChildren: () => import('./main/zone/zone.module').then(m => m.ZoneModule)
       },
       {
         path: 'products',
-        component: ProductsComponent,
-        data: { title: 'Productos' }
+        loadChildren: () => import('./main/product/product.module').then(m => m.ProductModule)
       },
     ]
   },
