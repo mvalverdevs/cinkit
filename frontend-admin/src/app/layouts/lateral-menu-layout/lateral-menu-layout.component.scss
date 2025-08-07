@@ -5,15 +5,15 @@
 
 .sidenav {
   width: 20%;
+  padding: 10px;
   background-color: var(--primary-color);
   border-radius: 0%;
 }
 
 .sidenav-title {
   background-color: var(--primary-color);
-    color: var(--text-light-color);
+  color: var(--text-light-color);
 }
-
 
 .material-symbols-outlined {
   font-size: 22px;
@@ -24,16 +24,56 @@
 }
 
 .nav-text {
-  padding-left: 3px;
+  padding-left: 10px;
   color: var(--text-light-color);
 }
 
 .nav-separator {
   margin: 20px;
-  background-color: var(--text-light-color);
+  //background-color: var(--text-light-color);
   padding: 0.5px 0;
 }
 
 .active-nav-item {
   background: rgba(0,0,0,0.08) !important;
+}
+
+.page-title {
+  padding: 10px;
+}
+
+.menu-item {
+  border-radius: 10px !important;
+}
+
+.user-menu-wrapper {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.account-button {
+  display: flex;
+  align-items: center;
+  max-width: 250px;
+  padding: 4px 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: transparent;
+  border: none;
+}
+
+.account-icon {
+  color: var(--primary-color);
+  font-size: 30px;
+  flex-shrink: 0;
+}
+
+.user-email {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }

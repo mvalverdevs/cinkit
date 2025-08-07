@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { UserService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 
 @Component({
@@ -19,7 +20,8 @@ export class LateralMenuLayoutComponent  implements OnInit {
 
   constructor(
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _userService: UserService
   ) {}
 
   ngOnInit(){
@@ -48,5 +50,16 @@ export class LateralMenuLayoutComponent  implements OnInit {
     if (this.isMobile) {
       drawer.close();
     }
+  }
+
+   logout() {
+    this._userService.userLogoutCreate$Json$Response().subscribe(
+      {
+        complete: () => {
+          localStorage.removeItem('accessToken')
+          this._router.navigate(['/login']);
+        }
+      }
+    )
   }
 }
