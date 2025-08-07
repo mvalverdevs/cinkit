@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     BrowserModule,
+    RouterModule,
     ReactiveFormsModule,
     AppRoutingModule,
     ApiModule.forRoot({ rootUrl: 'http://localhost:8000' }),

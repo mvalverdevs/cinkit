@@ -5,39 +5,48 @@ import { UsersComponent } from './main/users/users.component';
 import { ZonesComponent } from './main/zones/zones.component';
 import { ProductsComponent } from './main/products/products.component';
 import { LoginComponent } from './main/login/login.component';
+import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/lateral-menu-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    component: HomeComponent,
-    data: { title: 'Inicio' }
-  },
-  {
-    path: 'users',
-    component: UsersComponent,
-    data: { title: 'Trabajadores' }
-  },
-  {
-    path: 'zones',
-    component: ZonesComponent,
-    data: { title: 'Zonas' }
-  },
-  {
-    path: 'products',
-    component: ProductsComponent,
-    data: { title: 'Productos' }
+    component: LateralMenuLayoutComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      { 
+        path: 'home',
+        component: HomeComponent,
+        data: { title: 'Inicio' }
+      },
+      { 
+        path: 'users',
+        component: UsersComponent,
+        data: { title: 'Trabajadores' }
+      },
+      {
+        path: 'zones',
+        component: ZonesComponent,
+        data: { title: 'Zonas' }
+      },
+      {
+        path: 'products',
+        component: ProductsComponent,
+        data: { title: 'Productos' }
+      },
+    ]
   },
   {
     path: 'login',
     component: LoginComponent,
     data: { title: 'Login' }
   },
-];
+]
+
+
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
