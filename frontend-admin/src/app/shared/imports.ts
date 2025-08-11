@@ -10,12 +10,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 export const SHARED_IMPORTS = [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
     MatListModule,
@@ -31,5 +35,7 @@ export const SHARED_IMPORTS = [
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatSelectModule
 ];

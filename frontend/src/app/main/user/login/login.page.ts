@@ -25,9 +25,8 @@ export class LoginPage implements OnInit {
     private _router: Router
   ) {
     this.loginForm = this._formBuilder.group({
-      email: new FormControl('', [
+      dni: new FormControl('', [
         Validators.required,
-        Validators.email
       ]),
       password: new FormControl('', Validators.required)
     });

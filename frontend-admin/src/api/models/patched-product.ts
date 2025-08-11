@@ -2,9 +2,9 @@
 /* eslint-disable */
 import { Image } from '../models/image';
 export interface PatchedProduct {
-  category?: null | number;
+  category?: number | null;
   id?: number;
-  image?: null | number;
+  image?: number | null;
   image_data?: Image;
   name?: string;
   price?: string;

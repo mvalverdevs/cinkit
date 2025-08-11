@@ -9,7 +9,7 @@ import { RequestBuilder } from '../../request-builder';
 import { PaginatedProductList } from '../../models/paginated-product-list';
 
 export interface ProductList$Params {
-  category_id?: number;
+  category_id?: number | null;
 
 /**
  * Number of results to return per page.

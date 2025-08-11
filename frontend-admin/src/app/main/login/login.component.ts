@@ -10,7 +10,7 @@ import { SHARED_IMPORTS } from 'src/app/shared/imports';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, ...SHARED_IMPORTS],
+  imports: [...SHARED_IMPORTS],
 })
 export class LoginComponent  implements OnInit {
 
@@ -22,9 +22,8 @@ export class LoginComponent  implements OnInit {
     private _router: Router
   ) {
     this.loginForm = this._formBuilder.group({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email
+      dni: new FormControl('', [
+        Validators.required
       ]),
       password: new FormControl('', Validators.required)
     });

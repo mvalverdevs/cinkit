@@ -9,17 +9,18 @@ import { RoleEnum } from '../models/role-enum';
  * complex, nested serializations.
  */
 export interface User {
-  deactivation_datetime: null | string;
+  deactivation_datetime: string | null;
   email: string;
-  first_name?: null | string;
+  first_name?: string | null;
   has_login_blocked: string;
   id: number;
-  is_active?: null | boolean;
-  last_bad_login_attempt_datetime: null | string;
-  last_name?: null | string;
+  is_active?: boolean | null;
+  last_bad_login_attempt_datetime: string | null;
+  last_name?: string | null;
   login_attempts?: number;
   password: string;
-  phone?: null | string;
+  phone?: string | null;
   role?: RoleEnum;
   username: string;
+  dni: string;
 }

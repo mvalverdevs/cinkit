@@ -1166,60 +1166,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/user/check_email/:
-    post:
-      operationId: user_check_email_create
-      tags:
-      - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckEmail'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CheckEmail'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CheckEmail'
-        required: true
-      security:
-      - tokenAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CheckUserResponse'
-          description: ''
-  /api/user/check_username/:
-    post:
-      operationId: user_check_username_create
-      tags:
-      - user
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckUsername'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CheckUsername'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CheckUsername'
-        required: true
-      security:
-      - tokenAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CheckUserResponse'
-          description: ''
   /api/user/current/:
     get:
       operationId: user_current_retrieve
@@ -1542,28 +1488,6 @@ components:
       - id
       - last_3_products
       - orders_number
-    CheckEmail:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-      required:
-      - email
-    CheckUserResponse:
-      type: object
-      properties:
-        exists:
-          type: boolean
-      required:
-      - exists
-    CheckUsername:
-      type: object
-      properties:
-        username:
-          type: string
-      required:
-      - username
     Email:
       type: object
       description: Validate the contact email
@@ -1957,15 +1881,9 @@ components:
         password:
           type: string
           maxLength: 128
-        username:
+        dni:
           type: string
-          pattern: ^[\w.@+-]+$
           maxLength: 150
-        email:
-          type: string
-          format: email
-          title: User email
-          maxLength: 254
         first_name:
           type: string
           nullable: true
@@ -2115,15 +2033,9 @@ components:
         password:
           type: string
           maxLength: 128
-        username:
+        dni:
           type: string
-          pattern: ^[\w.@+-]+$
           maxLength: 150
-        email:
-          type: string
-          format: email
-          title: User email
-          maxLength: 254
         first_name:
           type: string
           nullable: true
@@ -2168,28 +2080,25 @@ components:
           readOnly: true
       required:
       - deactivation_datetime
-      - email
+      - dni
       - has_login_blocked
       - id
       - last_bad_login_attempt_datetime
       - password
-      - username
     UserLogin:
       type: object
       properties:
-        email:
+        dni:
           type: string
-          format: email
-          title: User email
-          maxLength: 254
+          maxLength: 150
         password:
           type: string
           maxLength: 128
         token:
-          type: integer
+          type: string
           readOnly: true
       required:
-      - email
+      - dni
       - password
       - token
     Zone:

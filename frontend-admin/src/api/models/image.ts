@@ -9,5 +9,5 @@
  */
 export interface Image {
   id: number;
-  image?: null | string;
+  image?: string | null;
 }

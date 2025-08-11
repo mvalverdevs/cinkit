@@ -14,7 +14,7 @@ import { SHARED_IMPORTS } from 'src/app/shared/imports';
 export class UserListComponent implements OnInit, AfterViewInit {
 
   dataSource = new MatTableDataSource<User>();
-  displayedColumns: string[] = ['first_name', 'last_name', 'phone', 'actions'];
+  displayedColumns: string[] = ['first_name', 'last_name', 'dni', 'phone', 'actions'];
 
   constructor(
     private _userService: UserService

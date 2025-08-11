@@ -1,0 +1,44 @@
+.product-image {
+    padding: 0px 60px;
+    margin: 5px 0px;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px !important;
+}
+
+
+table {
+  width: 100%;
+  background-color: white;
+  margin-top: 30px;
+  border-radius: 20% !important;
+}
+
+.is-active {
+    width: 5px;
+    height: 100%;
+    background-color: green;
+}
+
+.actions-cell, .actions-header {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  padding-right: 16px; // opcional, ajusta el espacio con el borde
+}
+
+// Opcional: espacio entre botones
+.actions-cell button {
+  margin-left: 4px;
+}
+
+.custom-table {
+  // Elimina las líneas entre filas
+  .mat-mdc-cell {
+    border-bottom: none !important;
+    border-bottom-style: none;
+  }
+}

@@ -7,7 +7,7 @@
       <a mat-list-item routerLink="/home" class="menu-item"
         routerLinkActive="active-nav-item"
         (click)="closeIfMobile(drawer)">
-        <mat-icon matListIcon class="material-symbols-outlined">home</mat-icon>
+        <mat-icon matListIcon class="material-symbols-outlined">finance</mat-icon>
         <span class="nav-text">Inicio</span>
       </a>
 
@@ -34,12 +34,19 @@
         <span class="nav-text">Productos</span>
       </a>
 
+      <a mat-list-item routerLink="/products" class="menu-item"
+        routerLinkActive="active-nav-item" 
+        (click)="closeIfMobile(drawer)">
+        <mat-icon class="material-symbols-outlined" fontIcon="inventory"></mat-icon>
+        <span class="nav-text">Inventario</span>
+      </a>
+
       <div class="nav-separator"></div>
 
       <a mat-list-item routerLink="/images" class="menu-item"
         routerLinkActive="active-nav-item" 
         (click)="closeIfMobile(drawer)">
-        <mat-icon class="material-symbols-outlined" fontIcon="image"></mat-icon>
+        <mat-icon class="material-symbols-outlined" fontIcon="filter"></mat-icon>
         <span class="nav-text">Imágenes</span>
       </a>
       <a mat-list-item routerLink="/settings" class="menu-item"

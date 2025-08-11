@@ -3,7 +3,7 @@
 import { Bill } from '../models/bill';
 export interface PaginatedBillList {
   count: number;
-  next?: null | string;
-  previous?: null | string;
+  next?: string | null;
+  previous?: string | null;
   results: Array<Bill>;
 }

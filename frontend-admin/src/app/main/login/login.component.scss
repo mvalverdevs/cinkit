@@ -3,13 +3,13 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #122f3d;
+    background: #0c6693;
 }
 
 mat-card {
   width: 350px;
   padding: 20px;
-  background: var(--primary-color);
+  background: var(--text-light-color);
 }
 
 .full-width {
@@ -19,4 +19,5 @@ mat-card {
 
 .login-title {
     padding: 20px 0;
+    color: var(--primary-color);
 }

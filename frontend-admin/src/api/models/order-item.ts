@@ -3,7 +3,7 @@
 import { Product } from '../models/product';
 export interface OrderItem {
   id: number;
-  note?: null | string;
+  note?: string | null;
   order: number;
   product: number;
   product_data: Product;

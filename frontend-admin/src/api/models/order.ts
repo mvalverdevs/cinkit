@@ -10,6 +10,6 @@ export interface Order {
   delivered_at: string;
   id: number;
   items: Array<OrderItem>;
-  user?: null | number;
+  user?: number | null;
   user_data: User;
 }

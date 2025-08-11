@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface UserLogin {
-  email: string;
+  dni: string;
   password: string;
-  token: number;
+  token: string;
 }

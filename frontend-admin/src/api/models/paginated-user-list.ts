@@ -3,7 +3,7 @@
 import { User } from '../models/user';
 export interface PaginatedUserList {
   count: number;
-  next?: null | string;
-  previous?: null | string;
+  next?: string | null;
+  previous?: string | null;
   results: Array<User>;
 }

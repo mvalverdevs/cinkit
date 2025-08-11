@@ -9,5 +9,5 @@
  */
 export interface PatchedImage {
   id?: number;
-  image?: null | string;
+  image?: string | null;
 }

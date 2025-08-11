@@ -11,7 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiModule } from 'src/api/api.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { ProfilePage } from './main/user/profile/profile.page';
 
 
 
@@ -19,7 +18,6 @@ import { ProfilePage } from './main/user/profile/profile.page';
     declarations: [
         AppComponent,
         LoginPage,
-        ProfilePage,
     ],
     bootstrap: [
         AppComponent

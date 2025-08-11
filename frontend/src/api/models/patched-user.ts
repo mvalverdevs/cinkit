@@ -10,7 +10,7 @@ import { RoleEnum } from '../models/role-enum';
  */
 export interface PatchedUser {
   deactivation_datetime?: null | string;
-  email?: string;
+  dni?: string;
   first_name?: null | string;
   has_login_blocked?: string;
   id?: number;
@@ -21,5 +21,4 @@ export interface PatchedUser {
   password?: string;
   phone?: null | string;
   role?: RoleEnum;
-  username?: string;
 }

@@ -3,7 +3,7 @@
 import { ProductCategory } from '../models/product-category';
 export interface PaginatedProductCategoryList {
   count: number;
-  next?: null | string;
-  previous?: null | string;
+  next?: string | null;
+  previous?: string | null;
   results: Array<ProductCategory>;
 }

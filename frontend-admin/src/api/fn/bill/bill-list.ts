@@ -30,7 +30,7 @@ export interface BillList$Params {
  * A search term.
  */
   search?: string;
-  zone_id?: number;
+  zone_id?: number | null;
 }
 
 export function billList(http: HttpClient, rootUrl: string, params?: BillList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedBillList>> {

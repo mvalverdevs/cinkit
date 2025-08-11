@@ -1,0 +1,51 @@
+
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+    <div class="botonera">
+        <button mat-stroked-button color="primary" routerLink="/users">
+            <mat-icon>arrow_back</mat-icon> Volver
+        </button>
+
+        <button mat-raised-button matButton="outlined" class="full-width" type="submit" [disabled]="!userForm.valid">
+            <mat-icon>save</mat-icon> Guardar
+        </button>
+    </div>
+
+    <div class="form-stack">
+        <mat-checkbox formControlName="is_active" class="example-margin">Trabajador activo</mat-checkbox>
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="first_name" type="text" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Apellidos</mat-label>
+                <input matInput formControlName="last_name" type="text" />
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput formControlName="phone" type="text" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>NIF</mat-label>
+                <input matInput formControlName="dni" type="text" />
+            </mat-form-field>
+            
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Rol</mat-label>
+                <mat-select formControlName="role">
+                    @for (role of roleSelector; track role) {
+                    <mat-option [value]="role.value">{{role.text}}</mat-option>
+                    }
+                </mat-select>
+                </mat-form-field>
+        </div>
+    </div>
+
+</form>

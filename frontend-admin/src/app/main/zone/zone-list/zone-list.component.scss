@@ -6,6 +6,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 10px !important;
 }
 
 table {
@@ -35,17 +36,8 @@ table {
 
 .custom-table {
   // Elimina las líneas entre filas
-  .mat-row, .mat-cell {
+  .mat-mdc-cell {
     border-bottom: none !important;
-  }
-
-  // Opcional: elimina líneas de cabecera (si quieres dejar solo la línea inferior)
-  .mat-header-row {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-
-  .mat-header-cell {
-    border-bottom: none;
-    font-weight: bold;
+    border-bottom-style: none;
   }
 }

@@ -3,7 +3,7 @@
 import { Order } from '../models/order';
 export interface PaginatedOrderList {
   count: number;
-  next?: null | string;
-  previous?: null | string;
+  next?: string | null;
+  previous?: string | null;
   results: Array<Order>;
 }

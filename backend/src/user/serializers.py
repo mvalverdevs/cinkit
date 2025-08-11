@@ -21,8 +21,7 @@ class UserSerializer(DynamicModelSerializer):
         fields = (
             'id',
             'password',
-            'username',
-            'email',
+            'dni',
             'first_name',
             'last_name',
             'role',
@@ -42,25 +41,13 @@ class UserSerializer(DynamicModelSerializer):
         )
 
 
-class CheckUsernameSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True)
-
-
-class CheckEmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(required=True)
-
-
-class CheckUserResponse(serializers.Serializer):
-    exists = serializers.BooleanField()
-
-
 class UserLoginSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = user_models.User
         fields = (
-            'email',
+            'dni',
             'password',
             'token'
         )

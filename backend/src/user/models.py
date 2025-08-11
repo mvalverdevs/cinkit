@@ -21,16 +21,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         service = UserService(self)
         super().__init__(*args, **kwargs)
 
-    username = models.CharField(
-        verbose_name=u'Username',
+    dni = models.CharField(
+        verbose_name=u'dni',
         unique=True,
         max_length=150,
-        validators=[UnicodeUsernameValidator()],
-    )
-
-    email = models.EmailField(
-        verbose_name=u'User email',
-        unique=True
     )
 
     first_name = models.CharField(
@@ -45,16 +39,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True
     )
 
-    role = models.CharField(
-        verbose_name=u'User role',
-        choices=USER_ROLES,
-        default=ROLE_USER_KEY
-    )
-
     phone = models.CharField(
         verbose_name=u'User phone number',
         max_length=16,
         null=True
+    )
+
+    role = models.CharField(
+        verbose_name=u'User role',
+        choices=USER_ROLES,
+        default=ROLE_USER_KEY
     )
 
     is_active = models.BooleanField(
@@ -84,8 +78,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     objects = UserManager()
-    USERNAME_FIELD = 'email'
-    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'dni'
+    EMAIL_FIELD = 'dni'
 
     @property
     def has_login_blocked(self):

@@ -4,6 +4,8 @@ from rest_framework import mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import DjangoModelPermissions
 from utils.authentication import ExpiringTokenAuthentication
+from rest_framework.permissions import AllowAny
+
 
 
 class GeneralViewSet(
@@ -16,6 +18,7 @@ class GeneralViewSet(
 ):
     authentication_classes = (ExpiringTokenAuthentication, )
     # permission_classes = (DjangoModelPermissions, )
+    permission_classes = [AllowAny]
     filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter)
     # ordering = ('-field',)
     # filterset_class = FilterClass
