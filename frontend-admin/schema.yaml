@@ -416,6 +416,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/ImageCategory'
           description: ''
+    delete:
+      operationId: image_category_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image category.
+        required: true
+      tags:
+      - image_category
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/image_library/:
     get:
       operationId: image_library_list
@@ -554,6 +571,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/Image'
           description: ''
+    delete:
+      operationId: image_library_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image.
+        required: true
+      tags:
+      - image_library
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/order/:
     get:
       operationId: order_list

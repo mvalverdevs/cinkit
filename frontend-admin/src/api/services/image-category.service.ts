@@ -16,6 +16,8 @@ import { imageCategoryCreate$Json } from '../fn/image-category/image-category-cr
 import { ImageCategoryCreate$Json$Params } from '../fn/image-category/image-category-create-json';
 import { imageCategoryCreate$XWwwFormUrlencoded } from '../fn/image-category/image-category-create-x-www-form-urlencoded';
 import { ImageCategoryCreate$XWwwFormUrlencoded$Params } from '../fn/image-category/image-category-create-x-www-form-urlencoded';
+import { imageCategoryDestroy } from '../fn/image-category/image-category-destroy';
+import { ImageCategoryDestroy$Params } from '../fn/image-category/image-category-destroy';
 import { imageCategoryList } from '../fn/image-category/image-category-list';
 import { ImageCategoryList$Params } from '../fn/image-category/image-category-list';
 import { imageCategoryPartialUpdate$FormData } from '../fn/image-category/image-category-partial-update-form-data';
@@ -225,6 +227,31 @@ export class ImageCategoryService extends BaseService {
   imageCategoryUpdate$FormData(params: ImageCategoryUpdate$FormData$Params, context?: HttpContext): Observable<ImageCategory> {
     return this.imageCategoryUpdate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<ImageCategory>): ImageCategory => r.body)
+    );
+  }
+
+  /** Path part for operation `imageCategoryDestroy()` */
+  static readonly ImageCategoryDestroyPath = '/api/image_category/{id}/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `imageCategoryDestroy()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  imageCategoryDestroy$Response(params: ImageCategoryDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return imageCategoryDestroy(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `imageCategoryDestroy$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  imageCategoryDestroy(params: ImageCategoryDestroy$Params, context?: HttpContext): Observable<void> {
+    return this.imageCategoryDestroy$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

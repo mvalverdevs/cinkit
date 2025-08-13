@@ -6,16 +6,81 @@
   </div>
 </div>
 
-<mat-tab-group #categoryTabs (selectedTabChange)="selectCategoryTab($event)">
-  <mat-tab label="Todas" id="all-categories-tab"></mat-tab>
-  <mat-tab 
-    *ngFor="let category of categories"
-    [label]="category.name"
-    [id]="category.id.toString()"
+<div class="tabs" aria-label="Categorías">
+  <!-- Todas -->
+  <button
+    type="button"
+    class="tab"
+    [class.active]="selectedIndex === 0"
+    [attr.aria-selected]="selectedIndex === 0"
+    id="tab-all"
+    aria-controls="panel-all"
+    (click)="selectIndex(0)"
   >
-  </mat-tab>
-  <mat-tab label="+ Añadir" id="new-category-tab"></mat-tab>
-</mat-tab-group>
+    Todas
+  </button>
+
+  <!-- Categorías -->
+  @for (category of categories; track category.id; let i = $index) {
+    <input
+        type="text"
+        class="tab"
+        [value]="category.name"
+        [class.active]="selectedIndex === i + 1"
+        [attr.aria-selected]="selectedIndex === i + 1"
+        [attr.id]="'tab-cat-' + category.id"
+        [attr.aria-controls]="'panel-cat-' + category.id"
+        [readonly]="!editCategories"
+        (click)="selectCategoryId(category.id)"
+      >
+      @if (editCategories) {
+        <button matIconButton class="delete-category-button"
+        (click)="deleteCategory(category)">
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+        <button
+          matIconButton 
+          (click)="updateCategory(category)"
+        >
+          <mat-icon class="material-symbols-outlined" fontIcon="save"></mat-icon>
+        </button>
+      }
+  }
+
+
+  <!-- + Añadir -->
+  <button
+    type="button"
+    class="tab"
+    role="tab"
+    [class.active]="selectedIndex === (categories?.length || 0) + 1"
+    [attr.aria-selected]="selectedIndex === (categories?.length || 0) + 1"
+    id="tab-new"
+    aria-controls="panel-new"
+    (click)="openNewCategoryDialog()"
+  >
+    <mat-icon class="material-symbols-outlined" fontIcon="add"></mat-icon>
+  </button>
+
+  @if ((categories?.length || 0) >= 1){
+    @if (!editCategories) {
+        <button
+          type="button"
+          class="tab"
+          role="tab"
+          [class.active]="selectedIndex === (categories?.length || 0) + 1"
+          [attr.aria-selected]="selectedIndex === (categories?.length || 0) + 1"
+          id="tab-new"
+          aria-controls="panel-new"
+          (click)="editCategories = !editCategories"
+        >
+          <mat-icon class="material-symbols-outlined" fontIcon="edit"></mat-icon>
+        </button>
+      }
+  }
+  
+</div>
+
 
 <div class="image-container">
   <div

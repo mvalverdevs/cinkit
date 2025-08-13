@@ -22,6 +22,10 @@ export class GalleryComponent  implements OnInit {
   images?: Image[];
   categories?: ImageCategory[];
   newCategoryName = '';
+  selectedIndex = 0;
+  trackByCatId = (_: number, c: ImageCategory) => c.id;
+  editCategories = false
+
 
   constructor(
     private _imageService: ImageLibraryService,
@@ -74,14 +78,15 @@ export class GalleryComponent  implements OnInit {
     )
   }
 
+  openNewCategoryDialog(){
+    const ref = this.dialog.open(this.dialogTpl);
+  }
 
   selectCategoryTab(event: MatTabChangeEvent) {
     if (event.tab.id == 'all-categories-tab') {
       this.getImages(undefined);
     } else if (event.tab.id == 'new-category-tab') {
-      const ref = this.dialog.open(this.dialogTpl, {
-        data: { name: 'Manu' } // datos opcionales para la plantilla
-      });
+      
     } else {
       console.log(event.tab.id!)
       let category = this.categories?.find(item => item.id === Number(event.tab.id!));
@@ -102,18 +107,68 @@ export class GalleryComponent  implements OnInit {
         next: (response) => {
           this.categories?.push(response.body);
           this.dialog.closeAll();
-          this.seleccionarPorIdCategoria(response.body.id);
+          this.selectCategoryId(response.body.id);
+          this.editCategories = false;
         }
       }
     )
   }
 
- seleccionarPorIdCategoria(id: number) {
-    const i = this.categories?.findIndex(c => c.id === id);
-    if (i !== -1) {
-      // +1 porque el índice 0 es "Todas"
-      this.categoryTabs.selectedIndex = i! + 1;
+  selectIndex(index: number) {
+    const max = (this.categories?.length ?? 0) + 1;
+    const bounded = Math.max(0, Math.min(index, max));
+    this.selectedIndex = bounded;
+
+    if (bounded === 0) {
+      // "Todas"
+      this.getImages(undefined);
+      return;
     }
+
+    // ¿+ Añadir?
+    if (this.categories && bounded === this.categories.length + 1) {
+      this.openNewCategoryDialog();
+      return;
+    }
+
+    // Categoría
+    const cat = this.categories?.[bounded - 1];
+    if (cat) this.getImages(cat);
+  }
+
+  selectCategoryId(id: number) {
+    const i = this.categories?.findIndex(c => c.id === id) ?? -1;
+    if (i !== -1) this.selectIndex(i + 1);
+  }
+
+  deleteCategory(category: ImageCategory) {
+    this._imageCategoryService.imageCategoryDestroy({
+      id: category.id
+    }).subscribe(
+      {
+        next: (response) => {
+          let position = this.categories?.indexOf(
+            this.categories?.find(item => item.id == category.id)!
+          )
+          this.categories?.splice(position!, 1)
+        }
+      }
+    )
+  }
+
+  updateCategory(category: ImageCategory) {
+    this._imageCategoryService.imageCategoryPartialUpdate$Json(
+      {
+        id: category.id,
+        body: category
+      }
+    ).subscribe(
+      {
+        next: (response) => {
+
+        }
+      }
+    )
   }
 
 

@@ -12,6 +12,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { Image } from '../models/image';
 import { imageLibraryCreate } from '../fn/image-library/image-library-create';
 import { ImageLibraryCreate$Params } from '../fn/image-library/image-library-create';
+import { imageLibraryDestroy } from '../fn/image-library/image-library-destroy';
+import { ImageLibraryDestroy$Params } from '../fn/image-library/image-library-destroy';
 import { imageLibraryList } from '../fn/image-library/image-library-list';
 import { ImageLibraryList$Params } from '../fn/image-library/image-library-list';
 import { imageLibraryPartialUpdate } from '../fn/image-library/image-library-partial-update';
@@ -125,6 +127,31 @@ export class ImageLibraryService extends BaseService {
   imageLibraryUpdate(params: ImageLibraryUpdate$Params, context?: HttpContext): Observable<Image> {
     return this.imageLibraryUpdate$Response(params, context).pipe(
       map((r: StrictHttpResponse<Image>): Image => r.body)
+    );
+  }
+
+  /** Path part for operation `imageLibraryDestroy()` */
+  static readonly ImageLibraryDestroyPath = '/api/image_library/{id}/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `imageLibraryDestroy()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  imageLibraryDestroy$Response(params: ImageLibraryDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return imageLibraryDestroy(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `imageLibraryDestroy$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  imageLibraryDestroy(params: ImageLibraryDestroy$Params, context?: HttpContext): Observable<void> {
+    return this.imageLibraryDestroy$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
