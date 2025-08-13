@@ -30,7 +30,6 @@ export class ProductListComponent  implements OnInit {
     this._productService.productList().subscribe({
       next: (response) => {
         this.dataSource.data = response.results;
-        console.log(response.results)
       }
     });
   }

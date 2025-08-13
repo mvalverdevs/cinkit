@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { BillService } from './services/bill.service';
+import { ImageCategoryService } from './services/image-category.service';
 import { ImageLibraryService } from './services/image-library.service';
 import { OrderService } from './services/order.service';
 import { ProductService } from './services/product.service';
@@ -22,6 +23,7 @@ import { ZoneService } from './services/zone.service';
   declarations: [],
   providers: [
     BillService,
+    ImageCategoryService,
     ImageLibraryService,
     OrderService,
     ProductService,

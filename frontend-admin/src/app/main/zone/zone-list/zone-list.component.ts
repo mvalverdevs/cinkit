@@ -15,6 +15,7 @@ export class ZoneListComponent  implements OnInit {
 
   dataSource = new MatTableDataSource<Zone>();
   displayedColumns: string[] = ['image', 'name', 'actions'];
+  editZone?: Zone;
 
   constructor(
     private _zoneService: ZoneService
@@ -32,6 +33,23 @@ export class ZoneListComponent  implements OnInit {
         next: (zones) => {
           console.log(zones.results)
           this.dataSource.data = zones.results;
+        }
+      }
+    )
+  }
+
+  onEditZone(zone: Zone) {
+    this.editZone = zone;
+  }
+
+  onSaveEditZone(zone: Zone) {
+    this._zoneService.zonePartialUpdate$Json$Response({
+      id: zone.id,
+      body: zone
+    }).subscribe(
+      {
+        next: (zone) => {
+          this.editZone = undefined;
         }
       }
     )

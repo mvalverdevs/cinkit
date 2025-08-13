@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/lateral-menu-layout.component';
+import { GalleryComponent } from './main/gallery/gallery.component';
 
 const routes: Routes = [
   {
@@ -14,10 +15,15 @@ const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full'
       },
-      { 
+      {
         path: 'home',
         component: HomeComponent,
         data: { title: 'Inicio' }
+      },
+      {
+        path: 'gallery',
+        component: GalleryComponent,
+        data: { title: 'Galería' }
       },
       {
         path: 'users',

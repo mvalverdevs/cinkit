@@ -10,7 +10,7 @@ import { RoleEnum } from '../models/role-enum';
  */
 export interface User {
   deactivation_datetime: string | null;
-  email: string;
+  dni: string;
   first_name?: string | null;
   has_login_blocked: string;
   id: number;
@@ -21,6 +21,4 @@ export interface User {
   password: string;
   phone?: string | null;
   role?: RoleEnum;
-  username: string;
-  dni: string;
 }

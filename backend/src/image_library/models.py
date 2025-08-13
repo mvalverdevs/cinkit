@@ -7,3 +7,13 @@ class Image(models.Model):
         upload_to='images/',
         null=True
     )
+
+    category = models.ForeignKey(
+        to="ImageCategory",
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+
+class ImageCategory(models.Model):
+    name = models.CharField()

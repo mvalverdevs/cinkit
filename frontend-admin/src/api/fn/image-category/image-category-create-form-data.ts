@@ -6,15 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CheckEmail } from '../../models/check-email';
-import { CheckUserResponse } from '../../models/check-user-response';
+import { ImageCategory } from '../../models/image-category';
 
-export interface UserCheckEmailCreate$FormData$Params {
-      body: CheckEmail
+export interface ImageCategoryCreate$FormData$Params {
+      body: ImageCategory
 }
 
-export function userCheckEmailCreate$FormData(http: HttpClient, rootUrl: string, params: UserCheckEmailCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<CheckUserResponse>> {
-  const rb = new RequestBuilder(rootUrl, userCheckEmailCreate$FormData.PATH, 'post');
+export function imageCategoryCreate$FormData(http: HttpClient, rootUrl: string, params: ImageCategoryCreate$FormData$Params, context?: HttpContext): Observable<StrictHttpResponse<ImageCategory>> {
+  const rb = new RequestBuilder(rootUrl, imageCategoryCreate$FormData.PATH, 'post');
   if (params) {
     rb.body(params.body, 'multipart/form-data');
   }
@@ -24,9 +23,9 @@ export function userCheckEmailCreate$FormData(http: HttpClient, rootUrl: string,
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<CheckUserResponse>;
+      return r as StrictHttpResponse<ImageCategory>;
     })
   );
 }
 
-userCheckEmailCreate$FormData.PATH = '/api/user/check_email/';
+imageCategoryCreate$FormData.PATH = '/api/image_category/';

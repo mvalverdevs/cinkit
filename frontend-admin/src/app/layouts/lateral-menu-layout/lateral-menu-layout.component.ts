@@ -37,7 +37,6 @@ export class LateralMenuLayoutComponent  implements OnInit {
     ).subscribe(data => {
       this.currentRoute = this._router.url;
       this.pageTitle = data['title'] || 'Mi App';
-      console.log(this.currentRoute)
     });
   }
 

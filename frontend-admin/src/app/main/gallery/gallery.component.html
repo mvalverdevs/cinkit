@@ -1,0 +1,44 @@
+<div class="drop-files">
+  <input type="file" (change)="uploadImage($event)" class="file-field" />
+  <div class="upload-text">
+    <mat-icon class="material-symbols-outlined upload-icon" fontIcon="upload"></mat-icon>
+    <span>Arrastra el archivo o haz click para seleccionar</span>
+  </div>
+</div>
+
+<mat-tab-group #categoryTabs (selectedTabChange)="selectCategoryTab($event)">
+  <mat-tab label="Todas" id="all-categories-tab"></mat-tab>
+  <mat-tab 
+    *ngFor="let category of categories"
+    [label]="category.name"
+    [id]="category.id.toString()"
+  >
+  </mat-tab>
+  <mat-tab label="+ Añadir" id="new-category-tab"></mat-tab>
+</mat-tab-group>
+
+<div class="image-container">
+  <div
+    *ngFor="let image of images"
+    class="image"
+    [ngStyle]="{
+      'background-image': 'url(' + image.image + ')'
+    }">
+  </div>
+</div>
+
+<ng-template #dialogTpl let-dialogRef="dialogRef" let-data>
+  <h1 mat-dialog-title>Nueva categoría</h1>
+
+  <mat-dialog-content>
+    <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="newCategoryName" />
+  </mat-form-field>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Cerrar</button>
+    <button mat-raised-button (click)="createCategory()">Aceptar</button>
+  </div>
+</ng-template>

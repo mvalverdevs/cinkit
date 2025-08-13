@@ -79,6 +79,12 @@ router.register(
     basename='image_library'
 )
 
+router.register(
+    r'image_category',
+    image_library_views.ImageCategoryView,
+    basename='image_category'
+)
+
 urlpatterns += [
     re_path(r"^api/", include((router.urls, "current"), namespace="current")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

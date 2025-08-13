@@ -1,4 +1,5 @@
 export { BillService } from './services/bill.service';
+export { ImageCategoryService } from './services/image-category.service';
 export { ImageLibraryService } from './services/image-library.service';
 export { OrderService } from './services/order.service';
 export { ProductService } from './services/product.service';

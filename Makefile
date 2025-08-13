@@ -166,7 +166,7 @@ front-admin-osshell: ## Run interactive bash shell in 'front-adminend' developer
 front-admin-swagger: ## Generate OpenAPI definition nfge-spa/swagger.json
 	$(DOCKER_DEV) run --rm frontend-admin wget -O ./schema.yaml http://$(LOCAL_IP):8000/api/schema/
 
-front-admin-apigen: front-swagger ## Run NPM APIGEN (ng-openapi-gen)
+front-admin-apigen: front-admin-swagger ## Run NPM APIGEN (ng-openapi-gen)
 	$(DOCKER_DEV) run --rm frontend-admin ng-openapi-gen
 	sudo chown -R $(runner):$(group) ./frontend-admin/src/api
 

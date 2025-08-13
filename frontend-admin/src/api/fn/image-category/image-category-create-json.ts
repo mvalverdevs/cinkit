@@ -6,15 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CheckUsername } from '../../models/check-username';
-import { CheckUserResponse } from '../../models/check-user-response';
+import { ImageCategory } from '../../models/image-category';
 
-export interface UserCheckUsernameCreate$Json$Params {
-      body: CheckUsername
+export interface ImageCategoryCreate$Json$Params {
+      body: ImageCategory
 }
 
-export function userCheckUsernameCreate$Json(http: HttpClient, rootUrl: string, params: UserCheckUsernameCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<CheckUserResponse>> {
-  const rb = new RequestBuilder(rootUrl, userCheckUsernameCreate$Json.PATH, 'post');
+export function imageCategoryCreate$Json(http: HttpClient, rootUrl: string, params: ImageCategoryCreate$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<ImageCategory>> {
+  const rb = new RequestBuilder(rootUrl, imageCategoryCreate$Json.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
   }
@@ -24,9 +23,9 @@ export function userCheckUsernameCreate$Json(http: HttpClient, rootUrl: string, 
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<CheckUserResponse>;
+      return r as StrictHttpResponse<ImageCategory>;
     })
   );
 }
 
-userCheckUsernameCreate$Json.PATH = '/api/user/check_username/';
+imageCategoryCreate$Json.PATH = '/api/image_category/';
