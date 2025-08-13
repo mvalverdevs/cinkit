@@ -16,16 +16,11 @@ import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 export class GalleryComponent  implements OnInit {
 
   @ViewChild('dialogTpl') dialogTpl!: TemplateRef<any>;
-  @ViewChild('categoryTabs') categoryTabs!: MatTabGroup;
   private dialog = inject(MatDialog);
 
   images?: Image[];
   categories?: ImageCategory[];
-  newCategoryName = '';
-  selectedIndex = 0;
-  trackByCatId = (_: number, c: ImageCategory) => c.id;
-  editCategories = false
-
+  selectedCategory?: ImageCategory;
 
   constructor(
     private _imageService: ImageLibraryService,
@@ -34,7 +29,7 @@ export class GalleryComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getImages(undefined);
+    this.getImages();
     this.getCategories();
   }
 
@@ -45,7 +40,8 @@ export class GalleryComponent  implements OnInit {
       {
         body: {
           id: 0,
-          image: newImage
+          image: newImage,
+          category: this.selectedCategory?.id
         }
       }
     ).subscribe(
@@ -57,9 +53,9 @@ export class GalleryComponent  implements OnInit {
     )
   }
 
-  getImages(category: ImageCategory | undefined) {
+  getImages() {
     this.images = [];
-    this._imageService.imageLibraryList({limit: 100, category_id: category?.id}).subscribe(
+    this._imageService.imageLibraryList({limit: 100, category_id: this.selectedCategory?.id}).subscribe(
           {
             next: (images) => {
               this.images = images.results;
@@ -78,67 +74,38 @@ export class GalleryComponent  implements OnInit {
     )
   }
 
-  openNewCategoryDialog(){
-    const ref = this.dialog.open(this.dialogTpl);
-  }
-
-  selectCategoryTab(event: MatTabChangeEvent) {
-    if (event.tab.id == 'all-categories-tab') {
-      this.getImages(undefined);
-    } else if (event.tab.id == 'new-category-tab') {
-      
+  openNewCategoryDialog(category: ImageCategory | undefined){
+    if (category == undefined) {
+        let newCategory = {
+        id: 0,
+        name: ''
+      }
+      this.selectedCategory = newCategory;
     } else {
-      console.log(event.tab.id!)
-      let category = this.categories?.find(item => item.id === Number(event.tab.id!));
-      console.log(category);
-      this.getImages(category);
+      this.selectedCategory = category;
     }
+    const ref = this.dialog.open(this.dialogTpl);
     
   }
 
   createCategory() {
     this._imageCategoryService.imageCategoryCreate$Json$Response({
-      body: {
-        id: 0,
-        name: this.newCategoryName
-      }
+      body: this.selectedCategory!
     }).subscribe(
       {
         next: (response) => {
           this.categories?.push(response.body);
           this.dialog.closeAll();
-          this.selectCategoryId(response.body.id);
-          this.editCategories = false;
+          this.selectedCategory = response.body;
+          this.selectCategory(response.body);
         }
       }
     )
   }
 
-  selectIndex(index: number) {
-    const max = (this.categories?.length ?? 0) + 1;
-    const bounded = Math.max(0, Math.min(index, max));
-    this.selectedIndex = bounded;
-
-    if (bounded === 0) {
-      // "Todas"
-      this.getImages(undefined);
-      return;
-    }
-
-    // ¿+ Añadir?
-    if (this.categories && bounded === this.categories.length + 1) {
-      this.openNewCategoryDialog();
-      return;
-    }
-
-    // Categoría
-    const cat = this.categories?.[bounded - 1];
-    if (cat) this.getImages(cat);
-  }
-
-  selectCategoryId(id: number) {
-    const i = this.categories?.findIndex(c => c.id === id) ?? -1;
-    if (i !== -1) this.selectIndex(i + 1);
+  selectCategory(category: ImageCategory | undefined) {
+    this.selectedCategory = category;
+    this.getImages();
   }
 
   deleteCategory(category: ImageCategory) {
@@ -150,7 +117,8 @@ export class GalleryComponent  implements OnInit {
           let position = this.categories?.indexOf(
             this.categories?.find(item => item.id == category.id)!
           )
-          this.categories?.splice(position!, 1)
+          this.categories?.splice(position!, 1);
+          this.selectCategory(undefined);
         }
       }
     )
@@ -160,16 +128,17 @@ export class GalleryComponent  implements OnInit {
     this._imageCategoryService.imageCategoryPartialUpdate$Json(
       {
         id: category.id,
-        body: category
+        body: {
+          name: category.name
+        }
       }
     ).subscribe(
       {
         next: (response) => {
-
+          this.dialog.closeAll();
         }
       }
     )
   }
-
 
 }

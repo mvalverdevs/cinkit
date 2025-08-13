@@ -1,109 +1,106 @@
-<div class="drop-files">
-  <input type="file" (change)="uploadImage($event)" class="file-field" />
-  <div class="upload-text">
-    <mat-icon class="material-symbols-outlined upload-icon" fontIcon="upload"></mat-icon>
-    <span>Arrastra el archivo o haz click para seleccionar</span>
-  </div>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav opened mode="side" class="categories-sidenav">
+    <div class="category-list">
 
-<div class="tabs" aria-label="Categorías">
-  <!-- Todas -->
-  <button
-    type="button"
-    class="tab"
-    [class.active]="selectedIndex === 0"
-    [attr.aria-selected]="selectedIndex === 0"
-    id="tab-all"
-    aria-controls="panel-all"
-    (click)="selectIndex(0)"
-  >
-    Todas
-  </button>
-
-  <!-- Categorías -->
-  @for (category of categories; track category.id; let i = $index) {
-    <input
-        type="text"
-        class="tab"
-        [value]="category.name"
-        [class.active]="selectedIndex === i + 1"
-        [attr.aria-selected]="selectedIndex === i + 1"
-        [attr.id]="'tab-cat-' + category.id"
-        [attr.aria-controls]="'panel-cat-' + category.id"
-        [readonly]="!editCategories"
-        (click)="selectCategoryId(category.id)"
+      <button  matButton="outlined" (click)="openNewCategoryDialog(undefined)" >
+        <mat-icon class="material-symbols-outlined" fontIcon="add"></mat-icon>
+      </button>
+      <hr>
+      <div
+        [ngClass]="{
+            'active-nav-item': selectedCategory == undefined
+          }"
       >
-      @if (editCategories) {
-        <button matIconButton class="delete-category-button"
-        (click)="deleteCategory(category)">
-          <mat-icon fontIcon="delete"></mat-icon>
-        </button>
-        <button
-          matIconButton 
-          (click)="updateCategory(category)"
+        <input
+            type="text"
+            class="category-text"
+            (click)="selectCategory(undefined)"
+            readonly
+            value="Todas"
         >
-          <mat-icon class="material-symbols-outlined" fontIcon="save"></mat-icon>
-        </button>
-      }
+      </div>
+      <!-- Categorías -->
+      @for (category of categories; track category.id; let i = $index) {
+        <div
+        [ngClass]="{
+            'active-nav-item': selectedCategory?.id == category.id
+          }"
+          class="category-item"
+        >
+          <input
+          type="text"
+          class="category-text"
+          (click)="selectCategory(category)"
+          readonly
+          [value]="category.name"
+        >
+          <button matIconButton [matMenuTriggerFor]="menu" class="category-more-options-button">
+            <mat-icon class="material-symbols-outlined" fontIcon="more_vert"></mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openNewCategoryDialog(category)">
+              <mat-icon class="material-symbols-outlined" fontIcon="edit"></mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="deleteCategory(category)">
+              <mat-icon class="material-symbols-outlined" fontIcon="delete"></mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </div>
   }
 
-
-  <!-- + Añadir -->
-  <button
-    type="button"
-    class="tab"
-    role="tab"
-    [class.active]="selectedIndex === (categories?.length || 0) + 1"
-    [attr.aria-selected]="selectedIndex === (categories?.length || 0) + 1"
-    id="tab-new"
-    aria-controls="panel-new"
-    (click)="openNewCategoryDialog()"
-  >
-    <mat-icon class="material-symbols-outlined" fontIcon="add"></mat-icon>
-  </button>
-
-  @if ((categories?.length || 0) >= 1){
-    @if (!editCategories) {
-        <button
-          type="button"
-          class="tab"
-          role="tab"
-          [class.active]="selectedIndex === (categories?.length || 0) + 1"
-          [attr.aria-selected]="selectedIndex === (categories?.length || 0) + 1"
-          id="tab-new"
-          aria-controls="panel-new"
-          (click)="editCategories = !editCategories"
-        >
-          <mat-icon class="material-symbols-outlined" fontIcon="edit"></mat-icon>
-        </button>
-      }
-  }
-  
 </div>
+  </mat-sidenav>
 
+  <mat-sidenav-content class="content">
+    <mat-toolbar color="primary">
+      <span class="page-title">{{ selectedCategory?.name || 'Todas'}}</span>
+    </mat-toolbar>
 
-<div class="image-container">
-  <div
-    *ngFor="let image of images"
-    class="image"
-    [ngStyle]="{
-      'background-image': 'url(' + image.image + ')'
-    }">
-  </div>
-</div>
+    <div class="drop-files">
+      <input type="file" (change)="uploadImage($event)" class="file-field" />
+      <div class="upload-text">
+        <mat-icon class="material-symbols-outlined upload-icon" fontIcon="upload"></mat-icon>
+        <span>Arrastra el archivo o haz click para seleccionar</span>
+      </div>
+    </div>
+    <div class="content">
+      <div class="image-container">
+        <div
+          *ngFor="let image of images"
+          class="image"
+          [ngStyle]="{
+            'background-image': 'url(' + image.image + ')'
+          }">
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <ng-template #dialogTpl let-dialogRef="dialogRef" let-data>
-  <h1 mat-dialog-title>Nueva categoría</h1>
+  @if (selectedCategory?.id == 0){
+    <h1 mat-dialog-title>Nueva categoría</h1>
+  } @else {
+    <h1 mat-dialog-title>Editar categoría</h1>
+  }
 
-  <mat-dialog-content>
-    <mat-form-field>
-    <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="newCategoryName" />
-  </mat-form-field>
-  </mat-dialog-content>
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="selectedCategory!.name" />
+        <input type="hidden" [(ngModel)]="selectedCategory!.id" />
+      </mat-form-field>
+    </mat-dialog-content>
 
   <div mat-dialog-actions align="end">
     <button mat-button (click)="dialogRef.close()">Cerrar</button>
-    <button mat-raised-button (click)="createCategory()">Aceptar</button>
+    @if (selectedCategory?.id == 0){
+      <button mat-raised-button (click)="createCategory()">Crear</button>
+    } @else {
+      <button mat-raised-button (click)="updateCategory(selectedCategory!)">Actualizar</button>
+    }
   </div>
 </ng-template>
