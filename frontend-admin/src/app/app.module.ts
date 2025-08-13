@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { GalleryComponent } from './main/gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +28,6 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     AppRoutingModule,
     ApiModule.forRoot({ rootUrl: 'http://localhost:8000' }),
-    // Angular Material
-    MatButtonModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatSidenavModule,
   ],
   providers: [
     Router,

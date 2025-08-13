@@ -1,0 +1,111 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav opened mode="side" class="categories-sidenav">
+    <div class="category-list">
+
+      <button  matButton="outlined" (click)="openNewCategoryDialog(undefined)" >
+        <mat-icon class="material-symbols-outlined" fontIcon="add"></mat-icon>
+      </button>
+      <div class="category-separator"></div>
+      <div class="category-separator"></div>
+      <div
+        [ngClass]="{
+            'active-nav-item': selectedCategory == undefined
+          }"
+      >
+        <input
+            type="text"
+            class="category-text"
+            (click)="selectCategory(undefined)"
+            readonly
+            value="Todas"
+        >
+      </div>
+      <div class="category-separator"></div>
+      <!-- Categorías -->
+      @for (category of categories; track category.id; let i = $index) {
+        <div
+        [ngClass]="{
+            'active-nav-item': selectedCategory?.id == category.id
+          }"
+          class="category-item"
+        >
+          <input
+          type="text"
+          class="category-text"
+          (click)="selectCategory(category)"
+          readonly
+          [value]="category.name"
+        >
+          <button matIconButton [matMenuTriggerFor]="menu" class="category-more-options-button">
+            <mat-icon class="material-symbols-outlined" fontIcon="more_vert"></mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openNewCategoryDialog(category)">
+              <mat-icon class="material-symbols-outlined" fontIcon="edit"></mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="deleteCategory(category)">
+              <mat-icon class="material-symbols-outlined" fontIcon="delete"></mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </div>
+  }
+
+</div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <mat-toolbar color="primary">
+      <span class="page-title">{{ selectedCategory?.name || 'Todas'}}</span>
+    </mat-toolbar>
+
+    <div class="drop-files">
+      <input type="file" (change)="uploadImage($event)" class="file-field" />
+      <div class="upload-text">
+        <mat-icon class="material-symbols-outlined upload-icon" fontIcon="upload"></mat-icon>
+        <span>Arrastra el archivo o haz click para seleccionar</span>
+      </div>
+    </div>
+    <div class="content">
+      <div class="image-container">
+        <div (click)="selectImage(image)"
+          *ngFor="let image of images"
+          class="image"
+          [ngStyle]="{
+            'background-image': 'url(' + image.image + ')',
+          }"
+          [ngClass]="{
+            'selected-image': image.id == selectedImage?.id
+          }">
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #dialogTpl let-dialogRef="dialogRef" let-data>
+  @if (selectedCategory?.id == 0){
+    <h1 mat-dialog-title>Nueva categoría</h1>
+  } @else {
+    <h1 mat-dialog-title>Editar categoría</h1>
+  }
+
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="selectedCategory!.name" />
+        <input type="hidden" [(ngModel)]="selectedCategory!.id" />
+      </mat-form-field>
+    </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Cerrar</button>
+    @if (selectedCategory?.id == 0){
+      <button mat-raised-button (click)="createCategory()">Crear</button>
+    } @else {
+      <button mat-raised-button (click)="updateCategory(selectedCategory!)">Actualizar</button>
+    }
+  </div>
+</ng-template>

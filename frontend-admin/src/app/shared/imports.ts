@@ -42,5 +42,5 @@ export const SHARED_IMPORTS = [
     MatCheckboxModule,
     MatSelectModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
 ];

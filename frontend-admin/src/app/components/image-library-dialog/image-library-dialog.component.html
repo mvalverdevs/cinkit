@@ -1,0 +1,11 @@
+
+<ng-template #imageDialog let-dialogRef="dialogRef" let-data class="image-dialog">
+  <mat-dialog-content>
+    <app-image-library (selectedImageChange)="selectImage($event)"></app-image-library>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Cerrar</button>
+    <button mat-button (click)="dialogRef.close(selectedImage)">Guardar</button>
+  </div>
+</ng-template>

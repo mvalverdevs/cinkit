@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ZoneService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 import { Zone } from 'src/api/models/zone';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageLibraryDialogComponent } from 'src/app/components/image-library-dialog/image-library-dialog.component';
+import { Image } from 'src/api/models';
 
 @Component({
   selector: 'app-zone-list',
   templateUrl: './zone-list.component.html',
   styleUrls: ['./zone-list.component.scss'],
   standalone: true,
-  imports: [...SHARED_IMPORTS],
+  imports: [ImageLibraryDialogComponent, ...SHARED_IMPORTS],
 })
 export class ZoneListComponent  implements OnInit {
 
   dataSource = new MatTableDataSource<Zone>();
   displayedColumns: string[] = ['image', 'name', 'actions'];
   editZone?: Zone;
+  @ViewChild(ImageLibraryDialogComponent) imageDialogCmp!: ImageLibraryDialogComponent;
 
   constructor(
     private _zoneService: ZoneService
@@ -53,6 +57,13 @@ export class ZoneListComponent  implements OnInit {
         }
       }
     )
+  }
+
+  openImageLibrary() {
+    const ref = this.imageDialogCmp.open();
+    ref.afterClosed().subscribe((image: Image) => {
+      console.log(image)
+    });
   }
 
 }
