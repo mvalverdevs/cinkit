@@ -3,7 +3,7 @@ from order import serializers as order_serializers
 from order import models as order_models
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
-from order.services import OrderService, BillService
+from order.services import OrderService, BillService, ZoneService
 from rest_framework.response import Response
 from utils.serializers import EmptySerializer
 
@@ -77,4 +77,17 @@ class OrderView(GeneralViewSet):
 
 class ZoneView(GeneralViewSet):
     serializer_class = order_serializers.ZoneSerializer
-    queryset = order_models.Zone.objects.all().distinct()
+    queryset = order_models.Zone.objects.filter(is_deleted=False).distinct()
+
+    @extend_schema(
+        request=EmptySerializer,
+        responses={200: order_serializers.ZoneSerializer}
+    )
+    @action(detail=True, methods=['delete'])
+    def set_deleted(self, request, *args, **kwargs):
+        zone = self.get_object()
+        ZoneService.logic_delete_zone(zone=zone)
+
+        return Response(
+            order_serializers.ZoneSerializer(instance=zone).data
+        )

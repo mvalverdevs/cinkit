@@ -59,3 +59,11 @@ class OrderService:
         order.delivered_at = datetime.now()
         order.save()
         return order
+
+
+class ZoneService:
+
+    @staticmethod
+    def logic_delete_zone(zone):
+        zone.is_deleted = True
+        zone.save()

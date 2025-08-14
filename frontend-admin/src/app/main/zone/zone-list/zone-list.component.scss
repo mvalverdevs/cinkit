@@ -49,13 +49,27 @@ table {
 }
 
 .image-editable {
-  filter: brightness(70%);
+  display: flex;
+  justify-content: center; /* Centrar elementos horizontal */
+  align-items: center; /* Centrar elementos vertical */
+
+  position: relative; /* necesario para posicionar el overlay */
+  overflow: hidden;
   cursor: pointer;
-  text-align: center;
+}
+
+.image-editable::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); /* oscuridad al 50% */
+  border-radius: 10px;
 }
 
 .edit-image-button {
   color: white;
-  position: absolute;
-  top: 30%;
+  z-index: 1;
 }

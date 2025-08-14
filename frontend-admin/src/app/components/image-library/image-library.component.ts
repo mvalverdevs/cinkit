@@ -18,7 +18,7 @@ export class ImageLibraryComponent implements OnInit {
   @ViewChild('dialogTpl') dialogTpl!: TemplateRef<any>;
   private dialog = inject(MatDialog);
 
-  images?: Image[];
+  images: Image[] = [];
   selectedImage?: Image;
   @Output() selectedImageChange: EventEmitter<Image> = new EventEmitter<Image>();
   categories?: ImageCategory[];

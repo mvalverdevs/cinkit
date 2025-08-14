@@ -1684,6 +1684,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/Zone'
           description: ''
+  /api/zone/{id}/set_deleted/:
+    delete:
+      operationId: zone_set_deleted_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this zone.
+        required: true
+      tags:
+      - zone
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+          description: ''
 components:
   schemas:
     Bill:
@@ -2231,6 +2253,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/Image'
           readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
     Permission:
       type: object
       description: Serialize pydrfpermissions
@@ -2406,9 +2431,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/Image'
           readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
       required:
       - id
       - image_data
+      - is_deleted
       - name
   securitySchemes:
     tokenAuth:

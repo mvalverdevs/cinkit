@@ -77,7 +77,7 @@ export class UserFormComponent implements OnInit {
       this._userService.userPartialUpdate$Json$Response({id: this.userId!, body: user}).subscribe(
         {
           next: (response) => {
-            this._router.navigate(['/users'])
+            this._router.navigate(['/users']);
           }
         }
       )
@@ -87,7 +87,7 @@ export class UserFormComponent implements OnInit {
       this._userService.userCreate$Json$Response({body: user}).subscribe(
         {
           next: (response) => {
-            this._router.navigate(['/users'])
+            this._router.navigate(['/users']);
           }
         }
       )

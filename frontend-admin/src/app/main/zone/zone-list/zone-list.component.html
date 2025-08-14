@@ -44,12 +44,23 @@
     <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef class="actions-header"></th>
     <td mat-cell *matCellDef="let zone" class="actions-cell"> 
-        <button mat-icon-button (click)="onEditZone(zone)" *ngIf="!(zone == editZone)">
-          <mat-icon>edit</mat-icon>
-        </button>
         <button mat-icon-button (click)="onSaveEditZone(zone)" *ngIf="zone == editZone">
           <mat-icon>save</mat-icon>
         </button>
+        <button *ngIf="!(zone == editZone)" matIconButton [matMenuTriggerFor]="menu" class="category-more-options-button">
+            <mat-icon class="material-symbols-outlined" fontIcon="more_vert"></mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="onEditZone(zone)">
+              <mat-icon class="material-symbols-outlined" fontIcon="edit"></mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="deleteZone(zone)">
+              <mat-icon class="material-symbols-outlined" fontIcon="delete"></mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
     </td>
     </ng-container>
 

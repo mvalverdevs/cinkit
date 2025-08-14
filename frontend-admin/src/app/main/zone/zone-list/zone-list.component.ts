@@ -45,6 +45,20 @@ export class ZoneListComponent  implements OnInit {
     this.editZone = zone;
   }
 
+  deleteZone(zone: Zone) {
+    this._zoneService.zoneSetDeletedDestroy(
+      {
+        id: zone.id
+      }
+    ).subscribe(
+      {
+        next: (response) => {
+          this.getZones();
+        }
+      }
+    )
+  }
+
   onSaveEditZone(zone: Zone) {
     this._zoneService.zonePartialUpdate$Json$Response({
       id: zone.id,

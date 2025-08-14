@@ -1,28 +1,30 @@
 
 
-<form [formGroup]="zoneForm" (ngSubmit)="onSubmit(zoneForm.value)">
+<form>
     <div class="botonera">
         <button mat-stroked-button color="primary" routerLink="/zones">
             <mat-icon>arrow_back</mat-icon> Volver
         </button>
 
-        <button mat-raised-button matButton="outlined" class="full-width" type="submit" [disabled]="!zoneForm.valid">
+        <button mat-raised-button matButton="outlined" class="full-width" (click)="onSubmit()" [disabled]="zoneName.length <= 0 || image == undefined">
             <mat-icon>save</mat-icon> Guardar
         </button>
     </div>
 
     <div class="form-stack">
         <div
-        (click)="openImageLibrary()"
-        class="zone-image"
-          [ngStyle]="{
-            'background-image': 'url(' + imageUrl + ')'
-          }"
-          ></div>
+            (click)="openImageLibrary()"
+            class="zone-image"
+            [ngStyle]="{
+            'background-image': 'url(' + image?.image + ')'
+            }"
+        >
+            <mat-icon class="material-symbols-outlined image-icon" fontIcon="image"></mat-icon>
+        </div>
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Nombre</mat-label>
-                <input matInput formControlName="name" type="text" />
+                <input matInput [(ngModel)]="zoneName" type="text" [ngModelOptions]="{standalone: true}"/>
             </mat-form-field>
         </div>
     </div>

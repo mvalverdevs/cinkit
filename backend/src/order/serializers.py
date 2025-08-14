@@ -88,9 +88,11 @@ class ZoneSerializer(ModelSerializer):
             'id',
             'name',
             'image',
-            'image_data'
+            'image_data',
+            'is_deleted'
         )
         read_only_fields = (
             'id',
             'image_data',
+            'is_deleted'
         )

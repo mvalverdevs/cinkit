@@ -101,3 +101,7 @@ class Zone(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    is_deleted = models.BooleanField(
+        default=False
+    )
