@@ -13,6 +13,7 @@
 
     <div class="form-stack">
         <div
+        (click)="openImageLibrary()"
         class="zone-image"
           [ngStyle]="{
             'background-image': 'url(' + imageUrl + ')'
@@ -27,3 +28,5 @@
     </div>
 
 </form>
+
+<app-image-library-dialog></app-image-library-dialog>

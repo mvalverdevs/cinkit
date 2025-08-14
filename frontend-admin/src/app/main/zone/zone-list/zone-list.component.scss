@@ -47,3 +47,15 @@ table {
 .image-dialog {
   width: 70%;
 }
+
+.image-editable {
+  filter: brightness(70%);
+  cursor: pointer;
+  text-align: center;
+}
+
+.edit-image-button {
+  color: white;
+  position: absolute;
+  top: 30%;
+}

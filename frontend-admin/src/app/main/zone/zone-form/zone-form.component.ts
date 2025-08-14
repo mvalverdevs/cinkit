@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ZoneService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 import { Zone } from 'src/api/models/zone';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ImageLibraryDialogComponent } from 'src/app/components/image-library-dialog/image-library-dialog.component';
+import { Image } from 'src/api/models';
 
 @Component({
   selector: 'app-zone-form',
   templateUrl: './zone-form.component.html',
   styleUrls: ['./zone-form.component.scss'],
   standalone: true,
-  imports: [...SHARED_IMPORTS],
+  imports: [ImageLibraryDialogComponent, ...SHARED_IMPORTS],
 })
 export class ZoneFormComponent  implements OnInit {
 
   zoneForm: FormGroup
   zoneId?: number
   imageUrl?: string
+
+  @ViewChild(ImageLibraryDialogComponent) imageDialogCmp!: ImageLibraryDialogComponent;
 
   constructor(
     private _zoneService: ZoneService,
@@ -63,5 +67,12 @@ export class ZoneFormComponent  implements OnInit {
 
     }
   }
+
+  openImageLibrary() {
+      const ref = this.imageDialogCmp.open();
+      ref.afterClosed().subscribe((image: Image) => {
+        
+      });
+    }
 
 }

@@ -36,9 +36,10 @@ export class ImageLibraryDialogComponent implements OnInit {
       panelClass: 'image-dialog', // -> en lugar de poner class en <ng-template>
       width: '80%',
       maxWidth: '95vw',
-      height: '90%',
       autoFocus: false,
       restoreFocus: false,
+      minHeight: '40vw',
+      
       // disableClose: true,
     });
   }

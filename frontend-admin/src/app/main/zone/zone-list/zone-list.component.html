@@ -9,13 +9,24 @@
   <ng-container matColumnDef="image">
     <th mat-header-cell *matHeaderCellDef> Imagen </th>
     <td mat-cell *matCellDef="let zone">
-        <div
-          (click)="openImageLibrary()"
-          class="zone-image"
-          [ngStyle]="{
-            'background-image': 'url(' + zone.image_data.image + ')'
-          }">
-        </div>
+       @if (zone == editZone) {
+          <div
+            (click)="openImageLibrary()"
+            class="zone-image image-editable"
+            [ngStyle]="{
+              'background-image': 'url(' + zone.image_data.image + ')'
+            }">
+              <mat-icon class="material-symbols-outlined edit-image-button" fontIcon="edit"></mat-icon>
+          </div>
+       } @else {
+          <div
+            class="zone-image"
+            [ngStyle]="{
+              'background-image': 'url(' + zone.image_data.image + ')'
+            }">
+          </div>
+       }
+        
     </td>
   </ng-container>
 

@@ -35,7 +35,6 @@ export class ZoneListComponent  implements OnInit {
     this._zoneService.zoneList().subscribe(
       {
         next: (zones) => {
-          console.log(zones.results)
           this.dataSource.data = zones.results;
         }
       }
@@ -62,7 +61,20 @@ export class ZoneListComponent  implements OnInit {
   openImageLibrary() {
     const ref = this.imageDialogCmp.open();
     ref.afterClosed().subscribe((image: Image) => {
-      console.log(image)
+      this.editZone!.image = image.id;
+      this._zoneService.zoneUpdate$Json$Response(
+        {
+          id: this.editZone!.id,
+          body: this.editZone!
+        }
+      ).subscribe(
+        {
+          next: (response) => {
+            this.editZone!.image_data = image;
+            this.editZone = undefined;
+          }
+        }
+      )
     });
   }
 
