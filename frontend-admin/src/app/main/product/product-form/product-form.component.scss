@@ -1,0 +1,62 @@
+.botonera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; // o el ancho que necesites
+  position: relative;
+  top: -4px;
+}
+
+.form-stack {
+    background-color: white;
+    margin: 20px 0;
+    padding-top: 30px;
+    display: grid;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+mat-form-field {
+    width: 45%;
+    margin: 10px;
+}
+
+.product-image {
+  margin: 5px 0px;
+  width: 500px;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 10px !important;
+  background-color: black;
+
+
+  display: flex; /* Activar flexbox */
+  justify-content: center; /* Centrar horizontal */
+  align-items: center; /* Centrar vertical */
+  cursor: pointer;
+  position: relative; /* necesario para posicionar el overlay */
+  overflow: hidden
+}
+
+.product-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); /* oscuridad al 50% */
+  border-radius: 10px;
+}
+
+.image-icon {
+  color: white;
+  font-size: 50px;
+  width: fit-content;
+  height: fit-content;
+  z-index: 1;
+
+}
