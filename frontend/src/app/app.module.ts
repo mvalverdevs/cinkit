@@ -27,7 +27,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        ApiModule.forRoot({ rootUrl: 'http://localhost:8000' })], providers: [
+        ApiModule.forRoot({ rootUrl: 'http://192.168.0.33:8000' })], providers: [
         Router,
         {
             provide: RouteReuseStrategy,

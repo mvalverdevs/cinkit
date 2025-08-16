@@ -1,18 +1,13 @@
-.login-button{
-  margin: 20px 22px;
+.form-container {
   width: 90%;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+  gap: 10px;
 }
 
-ion-input {
-  margin: 5px;
-  border-radius: 10px;
-}
-
-ion-list {
-  background-color: transparent!important;
-}
-
-ion-item {
-  --ion-item-background: transparent!important;
+.center-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center; /* horizontal */
 }

@@ -6,20 +6,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="createOrder()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
-  <ion-list lines="none">
-    <ion-item
-      *ngFor="let order of orders"
-    >
-      <ion-card class="order-card">
-        {{ order.id }}
+<ion-content>
+  <ion-list *ngIf="orders.length > 0" lines="none">
+    <ion-item *ngFor="let order of orders">
+      <ion-card class="order-card-item">
+        <ion-card-content>
+          <ion-button fill="clear" class="floating-button" [ngClass]="{
+            'delivered-icon': order.delivered,
+            'undelivered-icon': !order.delivered,
+          }"
+          (click)="deliverOrder(order)"
+          [disabled]="order.delivered">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-list>
+            <ion-item *ngFor="let item of order.items">
+              {{ item.product_data.name }} x {{ item.quantity }}
+            </ion-item>
+          </ion-list>
+          {{order.user_data.first_name}} {{order.user_data.last_name}} | {{ order.amount }} €
+        </ion-card-content>
       </ion-card>
     </ion-item>
   </ion-list>
+  <div *ngIf="orders.length == 0" class="empty-list-text">
+    Aún no hay comandas.
+  </div>
 </ion-content>

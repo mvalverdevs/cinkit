@@ -1,10 +1,19 @@
 .bill-card {
     padding: 10px 0;
-    width: 90%;
+    width: 100%;
 }
 
 .fill-button {
     margin: 10px;
+    max-width: 500px;
+    min-width: 100px;
+}
+
+.fill-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
 
 .bill-total-text {

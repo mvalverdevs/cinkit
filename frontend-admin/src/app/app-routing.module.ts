@@ -4,6 +4,7 @@ import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './main/login/login.component';
 import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/lateral-menu-layout.component';
 import { GalleryComponent } from './main/gallery/gallery.component';
+import { SettingsComponent } from './main/settings/settings.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
         path: 'gallery',
         component: GalleryComponent,
         data: { title: 'Galería' }
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        data: { title: 'Ajustes' }
       },
       {
         path: 'users',

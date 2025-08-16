@@ -22,8 +22,12 @@ export class OrderListComponent implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.getOrders();
+  }
+
   getOrders(){
-    this._orderService.orderList().subscribe(
+    this._orderService.orderList({delivered: false}).subscribe(
       {
         next: (orders) => {
           this.orders = orders.results;
@@ -33,6 +37,19 @@ export class OrderListComponent implements OnInit {
   }
 
   createOrder(){
+  }
+
+  deliverOrder(order: Order){
+    this._orderService.orderSetDeliveredCreate$Json({
+      id: order.id
+    }).subscribe({
+      next: (_order) => {
+        order.delivered = true;
+        this.orders.splice(this.orders.indexOf(order), 1);
+      }
+    }
+      
+    )
   }
 
 }

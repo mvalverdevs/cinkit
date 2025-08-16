@@ -54,7 +54,9 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button class="fill-button" expand="block" (click)="fillLastOrder($event, bill)" *ngIf="bill.orders_number != '0'">Llenar</ion-button>
+              <div class="fill-button-wrapper">
+                <ion-button class="fill-button" expand="block" (click)="fillLastOrder($event, bill)" *ngIf="bill.orders_number != '0'">Llenar</ion-button>
+              </div>
             </ion-col>
           </ion-row>
         </ion-grid>

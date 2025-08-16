@@ -7,32 +7,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form
+  <div class="center-wrapper">
+    <form
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit(loginForm.value)"
-  >
-    <ion-list lines="none">
-      <ion-item>
-        <ion-input
-          formControlName="dni"
-          label="NIF"
-          labelPlacement="floating"
-          fill="solid">
-        </ion-input>
-      </ion-item>
+      class="form-container"
+    >
+      <ion-input
+        formControlName="dni"
+        label="NIF"
+        labelPlacement="floating"
+        fill="solid">
+      </ion-input>
 
-      <ion-item>
-        <ion-input
-          formControlName="password"
-          label="Password"
-          labelPlacement="floating"
-          fill="solid"
-          type="password"
-          >
-        </ion-input>
-      </ion-item>
-    </ion-list>
+      <ion-input
+        formControlName="password"
+        label="Password"
+        labelPlacement="floating"
+        fill="solid"
+        type="password"
+        >
+      </ion-input>
 
-    <ion-button [disabled]="!loginForm.valid" class="login-button" type="submit">Iniciar Sesión</ion-button>
-  </form>
+      <ion-button expand="block" [disabled]="!loginForm.valid" class="login-button" type="submit">Iniciar Sesión</ion-button>
+
+    </form>
+  </div>
 </ion-content>

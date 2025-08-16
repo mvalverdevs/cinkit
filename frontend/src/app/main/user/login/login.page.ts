@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem('accessToken') != null){
-      this._router.navigate(['/products']);
+      this._router.navigate(['/bills']);
     }
   }
 
@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
       },
       error: (e) => {
         this._toastController.create({
-          message: e.error,
+          message: 'ERROR BRO',
           duration: 1500,
           position: 'bottom',
         }).then(
@@ -63,7 +63,7 @@ export class LoginPage implements OnInit {
       complete: () => {
         loading.dismiss()
         // NAVIGATE TO THE APP
-        this._router.navigate(['/profile']);
+        this._router.navigate(['/bills']);
       }
     });
   }
