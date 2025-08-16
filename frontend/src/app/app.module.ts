@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiModule } from 'src/api/api.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/lateral-menu-layout.component';
 
 
 
@@ -22,7 +23,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     bootstrap: [
         AppComponent
     ],
-    imports: [
+    imports: [LateralMenuLayoutComponent,
         ReactiveFormsModule,
         BrowserModule,
         IonicModule.forRoot(),
@@ -40,5 +41,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
             deps: [Router],
         } as any,
         provideHttpClient(withInterceptorsFromDi()),
-    ] })
+    ] 
+})
 export class AppModule {}

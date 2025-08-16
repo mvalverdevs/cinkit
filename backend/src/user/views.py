@@ -18,7 +18,18 @@ from utils.serializers import EmptySerializer
 class UserView(GeneralViewSet):
     queryset = user_models.User.objects.all()
     serializer_class = user_serializers.UserSerializer
-    
+
+    def get_permissions(self):
+        no_permission_views = (
+            'login',
+            'logout',
+            'reset_password',
+            'reset_confirm_password',
+        )
+        if self.action in no_permission_views:
+            return (AllowAny(), )
+        else:
+            return (DjangoModelPermissions(), )
 
     @extend_schema(
         request=EmptySerializer,

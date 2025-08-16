@@ -9,14 +9,17 @@ const routes: Routes = [
   {
     path: '',
     component: BillListComponent,
+    data: { title: 'Cuentas' }
   },
   {
     path: ':id',
     component: BillRetrieveComponent,
+    data: { title: 'Cuenta' }
   },
   {
     path: ':id/order',
     component: ProductListComponent,
+    data: { title: 'Añadir productos' }
   }
 ];
 

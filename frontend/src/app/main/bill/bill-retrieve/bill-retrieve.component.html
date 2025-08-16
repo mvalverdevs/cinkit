@@ -1,26 +1,12 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Cuenta
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/bills" ></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-text class="bill-total-text">
-      Total: {{ bill?.amount }} €
-    </ion-text>
-  </ion-toolbar>
   <div class="is-active-line"
     [ngClass]="{
       'is-active-line': bill?.is_open,
       'is-closed-line': !bill?.is_open,
     }"
   ></div>
-</ion-header>
-
-<ion-content>
+  <ion-text class="bill-total-text">
+    Total: {{ bill?.amount }} €
+  </ion-text>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="createOrder()" *ngIf="bill?.is_open">
       <ion-icon name="add"></ion-icon>
@@ -58,5 +44,3 @@
   <div *ngIf="orders.length == 0" class="empty-list-text">
     Aún no hay comandas.
   </div>
-
-</ion-content>

@@ -1,0 +1,67 @@
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+import { filter, map } from 'rxjs';
+import { UserService } from 'src/api/services';
+import { SHARED_IMPORTS } from 'src/app/shared/shared-imports';
+
+@Component({
+  selector: 'app-lateral-menu-layout',
+  templateUrl: './lateral-menu-layout.component.html',
+  styleUrls: ['./lateral-menu-layout.component.scss'],
+  standalone: true,
+  imports: [RouterModule, ...SHARED_IMPORTS],
+})
+export class LateralMenuLayoutComponent  implements OnInit {
+
+  isMobile: boolean = window.innerWidth < 768;
+  currentRoute = '';
+  pageTitle = '';
+
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _userService: UserService,
+    private menu: MenuController
+  ) {}
+
+  setPageTitle(componentRef: any) {
+    if (componentRef.pageTitle) {
+      this.pageTitle = componentRef.pageTitle;
+    }
+  }
+
+  ngOnInit(){
+    this._router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+        let child = this._route.firstChild;
+        while (child?.firstChild) {
+          child = child.firstChild;
+        }
+        return child?.snapshot.data || {};
+      })
+    ).subscribe(data => {
+      this.currentRoute = this._router.url;
+      console.log(this.currentRoute)
+      this.pageTitle = data['title'] || 'Mi App';
+    });
+  }
+
+  closeMenu() {
+    this.menu.close();
+  }
+
+  logout() {
+    this._userService.userLogoutCreate$Json$Response().subscribe(
+      {
+        complete: () => {
+          localStorage.removeItem('accessToken');
+          this.menu.close();
+          this._router.navigate(['/login']);
+
+        }
+      }
+    )
+  }
+}

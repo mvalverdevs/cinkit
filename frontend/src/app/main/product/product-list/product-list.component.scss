@@ -5,6 +5,21 @@
     background-repeat: no-repeat;
 }
 
+.product-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    grid-auto-rows: 200px;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.product {
+    width: 150px;
+}
+
 .product-name {
     font-size: 18px;
     position: relative;
@@ -104,6 +119,10 @@ ion-card {
     align-items: center;
     justify-content: center;
     color: var(--ion-color-primary-contrast)
+}
+
+ion-grid {
+    margin: 0px;
 }
 
 .product-quantity {

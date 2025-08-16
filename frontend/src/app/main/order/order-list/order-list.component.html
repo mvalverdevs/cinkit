@@ -1,13 +1,3 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Comandas
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
-<ion-content>
   <ion-list *ngIf="orders.length > 0" lines="none">
     <ion-item *ngFor="let order of orders">
       <ion-card class="order-card-item">
@@ -33,4 +23,3 @@
   <div *ngIf="orders.length == 0" class="empty-list-text">
     Aún no hay comandas.
   </div>
-</ion-content>

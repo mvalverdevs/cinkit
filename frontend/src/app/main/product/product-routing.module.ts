@@ -8,10 +8,12 @@ const routes: Routes = [
   {
     path: '',
     component: ProductListComponent,
+    data: { title: 'Productos' }
   },
   {
     path: 'list',
     component: ProductListComponent,
+    data: { title: 'Productos' }
   },
   {
     path: ':id/edit',

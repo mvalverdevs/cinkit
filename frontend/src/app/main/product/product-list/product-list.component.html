@@ -1,117 +1,106 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Nueva Comanda
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/bills" ></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar>
-    <app-horizontal-image-list 
-      [items]="categories"
-      (selectedItemChange)="selectCategory($event)"
-    ></app-horizontal-image-list>
-  </ion-toolbar>
-</ion-header>
+<app-horizontal-image-list 
+  [items]="categories"
+  (selectedItemChange)="selectCategory($event)"
+></app-horizontal-image-list>
 
-<ion-content>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="orderItems.length > 0">
+  <ion-fab-button (click)="createOrder()">
+    <ion-icon name="send"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="orderItems.length > 0">
-    <ion-fab-button (click)="createOrder()">
-      <ion-icon name="send"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-fab slot="fixed" vertical="bottom" horizontal="start" *ngIf="orderItems.length > 0">
-    <ion-fab-button size="small" color="light" (click)="setOpen(true)">
-      <ion-icon name="information-circle-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<ion-fab slot="fixed" vertical="bottom" horizontal="start" *ngIf="orderItems.length > 0">
+  <ion-fab-button size="small" color="light" (click)="setOpen(true)">
+    <ion-icon name="information-circle-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
 
-  <ion-grid *ngIf="products.length > 0">
-    <ion-row *ngFor="let row of itemRows">
-      <ion-col class="sin-padding" [size]="COL_SIZE" *ngFor="let product of row">
-        <ion-card (click)="selectProduct(product)" [ngClass]="{
-          'product-card-selected': isSelected(product)}">
-          <div>
-            <div class="product-quantity product-batch" *ngIf="isSelected(product)">
-              {{ getQuantity(product) }}
-            </div>
-            <div class="product-less product-batch" *ngIf="isSelected(product)" (click)="decreaseProduct($event, product)">
+<div 
+  *ngIf="products.length > 0"
+  class="product-wrap"
+>
+  <ion-card 
+    (click)="selectProduct(product)" 
+    [ngClass]="{
+      'product-card-selected': isSelected(product)
+    }"
+    class="product"
+    *ngFor="let product of products"
+  >
+    <div>
+      <div class="product-quantity product-batch" *ngIf="isSelected(product)">
+        {{ getQuantity(product) }}
+      </div>
+      <div class="product-less product-batch" *ngIf="isSelected(product)" (click)="decreaseProduct($event, product)">
+        -
+      </div>
+      <div
+        [ngStyle]="{
+            'background-image': 'url(' + product.image_data?.image + ')',
+          }"
+        class="product-image">
+      </div>
+        <ion-text class="product-name">
+            {{ product.name }}
+        </ion-text>
+    </div>
+  </ion-card>
+</div>
+
+<div *ngIf="products.length == 0" class="empty-list-text">
+  No hay nada aún.
+</div>
+
+<ion-modal [isOpen]="isModalOpen" [presentingElement]="presentingElement">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Artículos</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpen(false)">Hecho</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item *ngFor="let item of orderItems" lines="none">
+          <ion-label class="ion-text-wrap product-text-modal-item" slot="start">
+            {{ getProductById(item.product)?.name }}
+          </ion-label>
+
+          <ion-buttons slot="end" class="quantity-buttons">
+            <ion-button
+              size="small"
+              color="primary"
+              (click)="decreaseProduct($event, getProductById(item.product)!)"
+            >
+            <ion-text *ngIf="item.quantity! > 1">
               -
-            </div>
-            <div
-              [ngStyle]="{
-                  'background-image': 'url(' + product.image_data?.image + ')',
-                }"
-              class="product-image">
-            </div>
-              <ion-text class="product-name">
-                  {{ product.name }}
-              </ion-text>
-          </div>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            </ion-text>
+            <ion-text *ngIf="item.quantity! == 1">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-text>
+            </ion-button>
 
-  <div *ngIf="products.length == 0" class="empty-list-text">
-    No hay nada aún.
-  </div>
+            <ion-input
+              class="quantity-input"
+              type="number"
+              [(ngModel)]="item.quantity"
+              readonly
+            ></ion-input>
 
-  <ion-modal [isOpen]="isModalOpen" [presentingElement]="presentingElement">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Artículos</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false)">Hecho</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-list>
-          <ion-item *ngFor="let item of orderItems" lines="none">
-            <ion-label class="ion-text-wrap product-text-modal-item" slot="start">
-              {{ getProductById(item.product)?.name }}
-            </ion-label>
-
-            <ion-buttons slot="end" class="quantity-buttons">
               <ion-button
-                size="small"
-                color="primary"
-                (click)="decreaseProduct($event, getProductById(item.product)!)"
-              >
-              <ion-text *ngIf="item.quantity! > 1">
-                -
-              </ion-text>
-              <ion-text *ngIf="item.quantity! == 1">
-                <ion-icon name="trash-outline"></ion-icon>
-              </ion-text>
-              </ion-button>
+              size="small"
+              color="primary"
+              (click)="selectProduct(getProductById(item.product)!)"
+            >
+              +
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
 
-              <ion-input
-                class="quantity-input"
-                type="number"
-                [(ngModel)]="item.quantity"
-                readonly
-              ></ion-input>
-
-               <ion-button
-                size="small"
-                color="primary"
-                (click)="selectProduct(getProductById(item.product)!)"
-              >
-                +
-              </ion-button>
-            </ion-buttons>
-          </ion-item>
-        </ion-list>
-
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
-</ion-content>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
       },
       error: (e) => {
         this._toastController.create({
-          message: 'ERROR BRO',
+          message: e,
           duration: 1500,
           position: 'bottom',
         }).then(

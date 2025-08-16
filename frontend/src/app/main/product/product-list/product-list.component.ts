@@ -18,7 +18,7 @@ export class ProductListComponent  implements OnInit {
   selectedCategoryId?: number;
   orderItems: OrderItem[] = [];
   itemRows: any[][] = [];
-  PRODUCT_LIST_ROWS = 2;
+  PRODUCT_LIST_ROWS = 6;
   COL_SIZE = 6;
   billId?: number;
   presentingElement!: HTMLElement | null;
@@ -72,7 +72,7 @@ export class ProductListComponent  implements OnInit {
 
   getProducts(){
     this.products = [];
-    this._productService.productList({category_id: this.selectedCategoryId}).subscribe(
+    this._productService.productList({category_id: this.selectedCategoryId, limit: 100}).subscribe(
         {
         next: (products) => {
           this.products = products.results ?? [];

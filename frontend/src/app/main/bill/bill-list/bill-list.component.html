@@ -1,69 +1,53 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Cuentas
-    </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <app-horizontal-image-list 
-      [items]="zones"
-      (selectedItemChange)="selectZone($event)"
-    ></app-horizontal-image-list>
-  </ion-toolbar>
-</ion-header>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="createBill()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-<ion-content>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="createBill()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-list lines="none" *ngIf="bills.length > 0">
-    <ion-item
-      *ngFor="let bill of bills"
-    >
-      <ion-card class="bill-card" (click)="goToBill(bill)">
-        <ion-button fill="clear" class="floating-button" (click)="onInfoClick($event, bill)">
-          <ion-icon name="information-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-text class="bill-total-text">
-                Total: {{ bill.amount }} €
-              </ion-text>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-icon name="time-outline"></ion-icon>
-              Abierta a las {{ bill.created_at | date:'HH:mm' }}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-icon name="pricetags-outline"></ion-icon>
-              {{ bill.orders_number }} Comandas
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-icon name="albums-outline"></ion-icon> Ultimos pedidos: {{ bill.last_3_products }}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <div class="fill-button-wrapper">
-                <ion-button class="fill-button" expand="block" (click)="fillLastOrder($event, bill)" *ngIf="bill.orders_number != '0'">Llenar</ion-button>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card>
-    </ion-item>
-  </ion-list>
-  <div *ngIf="bills.length == 0" class="empty-list-text">
-    No hay cuentas abiertas aún.
-  </div>
-</ion-content>
+<ion-list lines="none" *ngIf="bills.length > 0">
+  <ion-item
+    *ngFor="let bill of bills"
+  >
+    <ion-card class="bill-card" (click)="goToBill(bill)">
+      <ion-button fill="clear" class="floating-button" (click)="onInfoClick($event, bill)">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text class="bill-total-text">
+              Total: {{ bill.amount }} €
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="time-outline"></ion-icon>
+            Abierta a las {{ bill.created_at | date:'HH:mm' }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="pricetags-outline"></ion-icon>
+            {{ bill.orders_number }} Comandas
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-icon name="albums-outline"></ion-icon> Ultimos pedidos: {{ bill.last_3_products }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="fill-button-wrapper">
+              <ion-button class="fill-button" expand="block" (click)="fillLastOrder($event, bill)" *ngIf="bill.orders_number != '0'">Llenar</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-item>
+</ion-list>
+<div *ngIf="bills.length == 0" class="empty-list-text">
+  No hay cuentas abiertas aún.
+</div>
