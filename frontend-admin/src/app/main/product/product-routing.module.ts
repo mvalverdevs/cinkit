@@ -17,7 +17,11 @@ const routes: Routes = [
   {
     path: 'new',
     component: ProductFormComponent,
-  }
+  },
+  {
+    path: 'categories',
+    loadChildren: () => import('./product-category/product-category.module').then(m => m.ProductCategoryModule)
+  },
 ];
 
 @NgModule({

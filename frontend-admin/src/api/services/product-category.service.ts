@@ -17,6 +17,8 @@ import { productCategoryCreate$Json } from '../fn/product-category/product-categ
 import { ProductCategoryCreate$Json$Params } from '../fn/product-category/product-category-create-json';
 import { productCategoryCreate$XWwwFormUrlencoded } from '../fn/product-category/product-category-create-x-www-form-urlencoded';
 import { ProductCategoryCreate$XWwwFormUrlencoded$Params } from '../fn/product-category/product-category-create-x-www-form-urlencoded';
+import { productCategoryDestroy } from '../fn/product-category/product-category-destroy';
+import { ProductCategoryDestroy$Params } from '../fn/product-category/product-category-destroy';
 import { productCategoryList } from '../fn/product-category/product-category-list';
 import { ProductCategoryList$Params } from '../fn/product-category/product-category-list';
 import { productCategoryPartialUpdate$FormData } from '../fn/product-category/product-category-partial-update-form-data';
@@ -225,6 +227,31 @@ export class ProductCategoryService extends BaseService {
   productCategoryUpdate$FormData(params: ProductCategoryUpdate$FormData$Params, context?: HttpContext): Observable<ProductCategory> {
     return this.productCategoryUpdate$FormData$Response(params, context).pipe(
       map((r: StrictHttpResponse<ProductCategory>): ProductCategory => r.body)
+    );
+  }
+
+  /** Path part for operation `productCategoryDestroy()` */
+  static readonly ProductCategoryDestroyPath = '/api/product_category/{id}/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `productCategoryDestroy()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  productCategoryDestroy$Response(params: ProductCategoryDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return productCategoryDestroy(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `productCategoryDestroy$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  productCategoryDestroy(params: ProductCategoryDestroy$Params, context?: HttpContext): Observable<void> {
+    return this.productCategoryDestroy$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

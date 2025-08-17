@@ -1,10 +1,15 @@
+<app-horizontal-image-list 
+  [items]="zones"
+  (selectedItemChange)="selectZone($event)"
+></app-horizontal-image-list>
+
 <ion-fab slot="fixed" vertical="bottom" horizontal="end">
   <ion-fab-button (click)="createBill()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 
-<ion-list lines="none" *ngIf="bills.length > 0">
+<ion-list class="bills-list" lines="none" *ngIf="bills.length > 0">
   <ion-item
     *ngFor="let bill of bills"
   >

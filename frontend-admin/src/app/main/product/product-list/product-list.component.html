@@ -1,7 +1,25 @@
-<button matButton="outlined" routerLink="/products/new">
-    <mat-icon>add</mat-icon>
-    Añadir
-</button>
+ <div class="botonera">
+  <button matButton="outlined" routerLink="/products/new">
+      <mat-icon>add</mat-icon>
+      Añadir
+  </button>
+
+  <button matButton="outlined" routerLink="/products/categories">
+      <mat-icon>label</mat-icon>
+      Gestionar categorias
+  </button>
+</div>
+
+<div class="filters-wrap">
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrar categoría</mat-label>
+    <mat-select (selectionChange)="onCategoryChange($event)">
+      @for (category of categories; track category) {
+        <mat-option [value]="category.id">{{category.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
 

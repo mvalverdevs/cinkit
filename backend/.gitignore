@@ -313,7 +313,7 @@ Session.vim
 
 ### Project template
 
-media/
+media/images/
 
 .pytest_cache/
 .env

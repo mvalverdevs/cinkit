@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Image, Product, User } from 'src/api/models';
-import { ProductService, UserService } from 'src/api/services';
+import { Image, Product, ProductCategory, User } from 'src/api/models';
+import { ProductCategoryService, ProductService, UserService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 import { RoleEnum } from 'src/api/models';
 import { ImageLibraryDialogComponent } from 'src/app/components/image-library-dialog/image-library-dialog.component';
@@ -19,6 +19,7 @@ export class ProductFormComponent implements OnInit {
   productForm: FormGroup
   productId?: number
   productImage?: Image;
+  categories: ProductCategory[] = [];
 
   @ViewChild(ImageLibraryDialogComponent) imageDialogCmp!: ImageLibraryDialogComponent;
 
@@ -27,6 +28,7 @@ export class ProductFormComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _router: Router,
     private _route: ActivatedRoute,
+    private _productCategoryService: ProductCategoryService
   ) {
     this.productForm = this._formBuilder.group({
       image: new FormControl('', Validators.required),
@@ -37,6 +39,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
     this._route.params.subscribe(params => {
       // 🚩 Edit Mode and take the recipe from api
       if (params['id'] != undefined){
@@ -90,7 +93,24 @@ export class ProductFormComponent implements OnInit {
           this.productImage = image;
           this.productForm.patchValue({
             image: image.id
-          })
+          });
       });
   }
+
+  getCategories(){
+    this._productCategoryService.productCategoryList$Response().subscribe(
+      {
+        next: (response) => {
+          this.categories = response.body.results;
+        }
+      }
+    )
+  }
+
+  onCategoryChange(event: any) {
+    this.productForm.patchValue({
+      category: event.value
+    });
+  }
+
 }

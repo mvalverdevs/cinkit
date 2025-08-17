@@ -1,6 +1,7 @@
 from utils.views import GeneralViewSet
 from product import serializers as product_serializers
 from product import models as product_models
+from rest_framework import mixins
 
 
 class ProductView(GeneralViewSet):
@@ -9,6 +10,6 @@ class ProductView(GeneralViewSet):
     filterset_fields = ('category_id',)
 
 
-class ProductCategoryView(GeneralViewSet):
+class ProductCategoryView(GeneralViewSet, mixins.DestroyModelMixin):
     serializer_class = product_serializers.ProductCategorySerializer
     queryset = product_models.ProductCategory.objects.all().distinct()

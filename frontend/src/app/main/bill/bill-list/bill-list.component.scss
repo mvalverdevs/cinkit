@@ -39,3 +39,9 @@
     margin-top: 1rem;
     color: var(--ion-color-medium);
 }
+
+.bills-list {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

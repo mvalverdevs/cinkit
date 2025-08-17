@@ -96,8 +96,8 @@ api-coverage: ## Run pytest with coverage report in the api container.
 api-test: ## Run pytest in the api container.
 	$(DOCKER_DEV) run --rm api pytest
 
-api-populate: ## Run pytest with coverage report in the api container.
-	$(DOCKER_DEV) run --rm api python manage.py populate -m $(model)
+api-initial-data: ## Run pytest with coverage report in the api container.
+	$(DOCKER_DEV) run --rm api python manage.py create_initial_data
 
 
 ### FRONTEND

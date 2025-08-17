@@ -20,7 +20,7 @@ DEBUG = config("DJANGO_DEBUG", cast=bool, default=True)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ROOT_DIR = Path(__file__).parent 
+ROOT_DIR = Path(__file__).parent
 APPS_DIR = ROOT_DIR.parent.parent
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key

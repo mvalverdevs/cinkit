@@ -52,10 +52,10 @@ export class ZoneFormComponent  implements OnInit {
   }
 
   openImageLibrary() {
-      const ref = this.imageDialogCmp.open();
-      ref.afterClosed().subscribe((image: Image) => {
-          this.image = image;
-      });
-    }
+    const ref = this.imageDialogCmp.open();
+    ref.afterClosed().subscribe((image: Image) => {
+        this.image = image;
+    });
+  }
 
 }

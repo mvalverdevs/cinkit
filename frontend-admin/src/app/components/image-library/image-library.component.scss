@@ -16,7 +16,7 @@
 
 .image-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, 200px);
     gap: 0.5rem; /* espacio entre celdas */
     padding: 1rem;
 }
