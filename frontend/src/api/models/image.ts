@@ -8,6 +8,7 @@
  * complex, nested serializations.
  */
 export interface Image {
+  category?: null | number;
   id: number;
   image?: null | string;
 }

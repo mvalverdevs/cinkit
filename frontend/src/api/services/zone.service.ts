@@ -27,6 +27,8 @@ import { zonePartialUpdate$XWwwFormUrlencoded } from '../fn/zone/zone-partial-up
 import { ZonePartialUpdate$XWwwFormUrlencoded$Params } from '../fn/zone/zone-partial-update-x-www-form-urlencoded';
 import { zoneRetrieve } from '../fn/zone/zone-retrieve';
 import { ZoneRetrieve$Params } from '../fn/zone/zone-retrieve';
+import { zoneSetDeletedDestroy } from '../fn/zone/zone-set-deleted-destroy';
+import { ZoneSetDeletedDestroy$Params } from '../fn/zone/zone-set-deleted-destroy';
 import { zoneUpdate$FormData } from '../fn/zone/zone-update-form-data';
 import { ZoneUpdate$FormData$Params } from '../fn/zone/zone-update-form-data';
 import { zoneUpdate$Json } from '../fn/zone/zone-update-json';
@@ -293,6 +295,31 @@ export class ZoneService extends BaseService {
    */
   zonePartialUpdate$FormData(params: ZonePartialUpdate$FormData$Params, context?: HttpContext): Observable<Zone> {
     return this.zonePartialUpdate$FormData$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Zone>): Zone => r.body)
+    );
+  }
+
+  /** Path part for operation `zoneSetDeletedDestroy()` */
+  static readonly ZoneSetDeletedDestroyPath = '/api/zone/{id}/set_deleted/';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `zoneSetDeletedDestroy()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  zoneSetDeletedDestroy$Response(params: ZoneSetDeletedDestroy$Params, context?: HttpContext): Observable<StrictHttpResponse<Zone>> {
+    return zoneSetDeletedDestroy(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `zoneSetDeletedDestroy$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  zoneSetDeletedDestroy(params: ZoneSetDeletedDestroy$Params, context?: HttpContext): Observable<Zone> {
+    return this.zoneSetDeletedDestroy$Response(params, context).pipe(
       map((r: StrictHttpResponse<Zone>): Zone => r.body)
     );
   }

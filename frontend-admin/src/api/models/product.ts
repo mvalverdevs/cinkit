@@ -3,6 +3,8 @@
 import { Image } from '../models/image';
 export interface Product {
   category?: number | null;
+  complements?: Array<number>;
+  complements_data: string;
   id: number;
   image?: number | null;
   image_data: Image;

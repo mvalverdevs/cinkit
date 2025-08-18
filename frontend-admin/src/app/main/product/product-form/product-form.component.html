@@ -12,6 +12,7 @@
     </div>
 
     <div class="form-stack">
+        wdwadwa
         <div
             (click)="openImageLibrary()"
             class="product-image form-row"
@@ -40,6 +41,16 @@
                     }
                 </mat-select>
             </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Complementos</mat-label>
+                <mat-select formControlName="complements" multiple>
+                    @for (complement of products; track complement) {
+                    <mat-option [value]="complement.id">{{complement.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
         </div>
     </div>
 

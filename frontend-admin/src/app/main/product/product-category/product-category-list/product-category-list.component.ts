@@ -14,7 +14,7 @@ import { SHARED_IMPORTS } from 'src/app/shared/imports';
 })
 export class ProductCategoryListComponent  implements OnInit {
 
-  dataSource = new MatTableDataSource<Product>();
+  dataSource = new MatTableDataSource<ProductCategory>();
   displayedColumns: string[] = ['image', 'name', 'actions'];
 
   constructor(
@@ -25,7 +25,6 @@ export class ProductCategoryListComponent  implements OnInit {
 
   ngAfterViewInit() {
     this.getCategories();
-    console.log('ENTRA')
   }
 
   getCategories() {

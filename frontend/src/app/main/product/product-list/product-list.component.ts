@@ -13,16 +13,16 @@ import { SHARED_IMPORTS } from 'src/app/shared/shared-imports';
 })
 export class ProductListComponent  implements OnInit {
 
-  products: Product[] = [];
+  billId?: number;
   categories: ProductCategory[] = [];
+  products: Product[] = [];
   selectedCategoryId?: number;
   orderItems: OrderItem[] = [];
-  itemRows: any[][] = [];
-  PRODUCT_LIST_ROWS = 6;
-  COL_SIZE = 6;
-  billId?: number;
-  presentingElement!: HTMLElement | null;
-  isModalOpen = false;
+  complements: any = [];
+  productToAddComplement?: Product;
+
+  isArticlesModalOpen = false;
+  isComplementsModalOpen = false;
 
   constructor(
     private _productService: ProductService,
@@ -33,7 +33,6 @@ export class ProductListComponent  implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.presentingElement = document.querySelector('.ion-page');
     this._route.params.subscribe(params => {
       // 🚩 Edit Mode and take the recipe from api
       if (params['id'] != undefined){
@@ -76,7 +75,6 @@ export class ProductListComponent  implements OnInit {
         {
         next: (products) => {
           this.products = products.results ?? [];
-          this.itemRows = this.agruparEnFilas(this.products, this.PRODUCT_LIST_ROWS);
         },
         error: (e) => console.error(e),
         complete: () => {
@@ -112,6 +110,11 @@ export class ProductListComponent  implements OnInit {
         product_data: {} as Product
       };
       this.orderItems.push(newItem);
+    }
+
+    if (product.complements?.length || 0 > 0) {
+      this.setComplementsModalOpen(true);
+      this.complements = product.complements_data;
     }
   }
 
@@ -165,7 +168,15 @@ export class ProductListComponent  implements OnInit {
     
   }
 
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
+  setArticleModalOpen(isOpen: boolean) {
+    this.isArticlesModalOpen = isOpen;
+  }
+
+  setComplementsModalOpen(isOpen: boolean) {
+    this.isComplementsModalOpen = isOpen;
+  }
+
+  addComplement(complement: Product){
+    this.setComplementsModalOpen(false);
   }
 }

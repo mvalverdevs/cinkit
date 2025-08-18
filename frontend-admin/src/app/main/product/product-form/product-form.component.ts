@@ -20,6 +20,7 @@ export class ProductFormComponent implements OnInit {
   productId?: number
   productImage?: Image;
   categories: ProductCategory[] = [];
+  products: Product[] = [];
 
   @ViewChild(ImageLibraryDialogComponent) imageDialogCmp!: ImageLibraryDialogComponent;
 
@@ -35,11 +36,13 @@ export class ProductFormComponent implements OnInit {
       name: new FormControl('', Validators.required),
       price: new FormControl('', Validators.required),
       category: new FormControl(''),
+      complements: new FormControl(''),
     });
   }
 
   ngOnInit() {
     this.getCategories();
+    this.getProducts();
     this._route.params.subscribe(params => {
       // 🚩 Edit Mode and take the recipe from api
       if (params['id'] != undefined){
@@ -57,13 +60,22 @@ export class ProductFormComponent implements OnInit {
             image: response.body.image,
             name: response.body.name,
             price: response.body.price,
-            category: response.body.category
+            category: response.body.category,
+            complements: response.body.complements
           }
           );
           this.productImage = response.body.image_data;
         }
       }
     )
+  }
+
+  getProducts() {
+    this._productService.productList().subscribe({
+      next: (response) => {
+        this.products = response.results;
+      }
+    });
   }
 
   onSubmit(product: Product){

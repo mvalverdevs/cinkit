@@ -49,7 +49,6 @@ paths:
       - bill
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -74,7 +73,6 @@ paths:
               $ref: '#/components/schemas/Bill'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -96,7 +94,6 @@ paths:
       - bill
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -128,7 +125,6 @@ paths:
               $ref: '#/components/schemas/Bill'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -160,7 +156,6 @@ paths:
               $ref: '#/components/schemas/PatchedBill'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -193,7 +188,6 @@ paths:
               $ref: '#/components/schemas/Empty'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -215,7 +209,6 @@ paths:
       - bill
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -255,7 +248,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -295,7 +287,6 @@ paths:
       - image_category
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -321,7 +312,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -343,7 +333,6 @@ paths:
       - image_category
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -376,7 +365,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -408,7 +396,6 @@ paths:
               $ref: '#/components/schemas/PatchedImageCategory'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -416,10 +403,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/ImageCategory'
           description: ''
+    delete:
+      operationId: image_category_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image category.
+        required: true
+      tags:
+      - image_category
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/image_library/:
     get:
       operationId: image_library_list
       parameters:
+      - in: query
+        name: category_id
+        schema:
+          type: integer
+          nullable: true
       - name: limit
         required: false
         in: query
@@ -448,7 +456,6 @@ paths:
       - image_library
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -467,7 +474,6 @@ paths:
               $ref: '#/components/schemas/Image'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -489,7 +495,6 @@ paths:
       - image_library
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -515,7 +520,6 @@ paths:
               $ref: '#/components/schemas/Image'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -541,7 +545,6 @@ paths:
               $ref: '#/components/schemas/PatchedImage'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -549,6 +552,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/Image'
           description: ''
+    delete:
+      operationId: image_library_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this image.
+        required: true
+      tags:
+      - image_library
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/order/:
     get:
       operationId: order_list
@@ -589,7 +608,6 @@ paths:
       - order
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -615,7 +633,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -637,7 +654,6 @@ paths:
       - order
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -670,7 +686,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -702,7 +717,6 @@ paths:
               $ref: '#/components/schemas/PatchedOrder'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -735,7 +749,6 @@ paths:
               $ref: '#/components/schemas/Empty'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -780,7 +793,6 @@ paths:
       - product
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -806,7 +818,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -828,7 +839,6 @@ paths:
       - product
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -861,7 +871,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -893,7 +902,6 @@ paths:
               $ref: '#/components/schemas/PatchedProduct'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -933,7 +941,6 @@ paths:
       - product_category
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -959,7 +966,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -981,7 +987,6 @@ paths:
       - product_category
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1014,7 +1019,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1046,7 +1050,6 @@ paths:
               $ref: '#/components/schemas/PatchedProductCategory'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1054,6 +1057,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductCategory'
           description: ''
+    delete:
+      operationId: product_category_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product category.
+        required: true
+      tags:
+      - product_category
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -1231,7 +1250,6 @@ paths:
       - user
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1257,7 +1275,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1279,7 +1296,6 @@ paths:
       - user
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1312,7 +1328,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1344,7 +1359,6 @@ paths:
               $ref: '#/components/schemas/PatchedUser'
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1359,7 +1373,6 @@ paths:
       - user
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1428,7 +1441,6 @@ paths:
       - user
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1524,7 +1536,6 @@ paths:
       - zone
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1550,7 +1561,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -1572,7 +1582,6 @@ paths:
       - zone
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1605,7 +1614,6 @@ paths:
         required: true
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -1637,7 +1645,27 @@ paths:
               $ref: '#/components/schemas/PatchedZone'
       security:
       - tokenAuth: []
-      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zone'
+          description: ''
+  /api/zone/{id}/set_deleted/:
+    delete:
+      operationId: zone_set_deleted_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this zone.
+        required: true
+      tags:
+      - zone
+      security:
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2103,6 +2131,13 @@ components:
         category:
           type: integer
           nullable: true
+        complements:
+          type: array
+          items:
+            type: integer
+        complements_data:
+          type: string
+          readOnly: true
     PatchedProductCategory:
       type: object
       properties:
@@ -2192,6 +2227,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/Image'
           readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
     Permission:
       type: object
       description: Serialize pydrfpermissions
@@ -2225,7 +2263,15 @@ components:
         category:
           type: integer
           nullable: true
+        complements:
+          type: array
+          items:
+            type: integer
+        complements_data:
+          type: string
+          readOnly: true
       required:
+      - complements_data
       - id
       - image_data
       - name
@@ -2367,9 +2413,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/Image'
           readOnly: true
+        is_deleted:
+          type: boolean
+          readOnly: true
       required:
       - id
       - image_data
+      - is_deleted
       - name
   securitySchemes:
     tokenAuth:

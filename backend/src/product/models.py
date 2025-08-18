@@ -22,6 +22,13 @@ class Product(models.Model):
         null=True
     )
 
+    complements = models.ManyToManyField(
+        to='self',
+        blank=True,
+        symmetrical=False,
+        related_name='is_complement_of'
+    )
+
 
 class ProductCategory(models.Model):
     name = models.CharField()

@@ -14,7 +14,7 @@
             (click)="openImageLibrary()"
             class="zone-image image-editable"
             [ngStyle]="{
-              'background-image': 'url(' + zone.image_data.image + ')'
+              'background-image': 'url(' + zone.image_data?.image + ')'
             }">
               <mat-icon class="material-symbols-outlined edit-image-button" fontIcon="edit"></mat-icon>
           </div>

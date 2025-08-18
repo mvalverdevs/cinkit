@@ -6,10 +6,9 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { PaginatedImageList } from '../../models/paginated-image-list';
+import { PaginatedImageCategoryList } from '../../models/paginated-image-category-list';
 
-export interface ImageLibraryList$Params {
-  category_id?: number;
+export interface ImageCategoryList$Params {
 
 /**
  * Number of results to return per page.
@@ -32,10 +31,9 @@ export interface ImageLibraryList$Params {
   search?: string;
 }
 
-export function imageLibraryList(http: HttpClient, rootUrl: string, params?: ImageLibraryList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedImageList>> {
-  const rb = new RequestBuilder(rootUrl, imageLibraryList.PATH, 'get');
+export function imageCategoryList(http: HttpClient, rootUrl: string, params?: ImageCategoryList$Params, context?: HttpContext): Observable<StrictHttpResponse<PaginatedImageCategoryList>> {
+  const rb = new RequestBuilder(rootUrl, imageCategoryList.PATH, 'get');
   if (params) {
-    rb.query('category_id', params.category_id, {});
     rb.query('limit', params.limit, {});
     rb.query('offset', params.offset, {});
     rb.query('ordering', params.ordering, {});
@@ -47,9 +45,9 @@ export function imageLibraryList(http: HttpClient, rootUrl: string, params?: Ima
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<PaginatedImageList>;
+      return r as StrictHttpResponse<PaginatedImageCategoryList>;
     })
   );
 }
 
-imageLibraryList.PATH = '/api/image_library/';
+imageCategoryList.PATH = '/api/image_category/';

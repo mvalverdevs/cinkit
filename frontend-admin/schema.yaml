@@ -2131,6 +2131,13 @@ components:
         category:
           type: integer
           nullable: true
+        complements:
+          type: array
+          items:
+            type: integer
+        complements_data:
+          type: string
+          readOnly: true
     PatchedProductCategory:
       type: object
       properties:
@@ -2256,7 +2263,15 @@ components:
         category:
           type: integer
           nullable: true
+        complements:
+          type: array
+          items:
+            type: integer
+        complements_data:
+          type: string
+          readOnly: true
       required:
+      - complements_data
       - id
       - image_data
       - name
