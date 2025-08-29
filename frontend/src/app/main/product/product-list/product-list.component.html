@@ -1,7 +1,9 @@
-<app-horizontal-image-list 
-  [items]="categories"
-  (selectedItemChange)="selectCategory($event)"
-></app-horizontal-image-list>
+<ion-header>
+  <ion-toolbar>
+    <app-horizontal-image-list [items]="categories"
+      (selectedItemChange)="selectCategory($event)"></app-horizontal-image-list>
+  </ion-toolbar>
+</ion-header>
 
 <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="orderItems.length > 0">
   <ion-fab-button (click)="createOrder()">

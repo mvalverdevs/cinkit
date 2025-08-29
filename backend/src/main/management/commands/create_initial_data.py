@@ -3,6 +3,7 @@ from image_library.models import Image, ImageCategory
 from product.models import Product, ProductCategory
 from django.core.files import File
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 class Command(BaseCommand):
@@ -13,6 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         InitialData.clean_db()
+        InitialData.create_superuser()
         InitialData.initial_data_image_category()
         InitialData.initial_data_product_categories()
         InitialData.initial_data_product()
@@ -21,6 +23,8 @@ class Command(BaseCommand):
 class InitialData:
     @staticmethod
     def clean_db():
+        User = get_user_model()
+        User.objects.all().delete()
         Image.objects.all().delete()
         ImageCategory.objects.all().delete()
         ProductCategory.objects.all().delete()
@@ -62,3 +66,12 @@ class InitialData:
 
         create_products(combinados, 'Combinados')
         create_products(refrescos, 'Refrescos')
+
+    @staticmethod
+    def create_superuser():
+        User = get_user_model()
+
+        User.objects.create_superuser(
+            dni="master",
+            password="contraseña"
+        )
