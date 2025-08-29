@@ -1,18 +1,22 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+<div class="botonera">
+    <button mat-stroked-button color="primary" routerLink="/products">
+        <mat-icon>arrow_back</mat-icon> Volver
+    </button>
 
+    <button mat-raised-button matButton="outlined" class="full-width" type="submit" [disabled]="!productForm.valid">
+        <mat-icon>save</mat-icon> Guardar
+    </button>
+</div>
 
-<form [formGroup]="productForm" (ngSubmit)="onSubmit(productForm.value)">
-    <div class="botonera">
-        <button mat-stroked-button color="primary" routerLink="/products">
-            <mat-icon>arrow_back</mat-icon> Volver
-        </button>
+<br>
 
-        <button mat-raised-button matButton="outlined" class="full-width" type="submit" [disabled]="!productForm.valid">
-            <mat-icon>save</mat-icon> Guardar
-        </button>
-    </div>
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel expanded="true" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+        <mat-panel-title> Datos del producto </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    <div class="form-stack">
-        wdwadwa
         <div
             (click)="openImageLibrary()"
             class="product-image form-row"
@@ -22,38 +26,89 @@
         >
             <mat-icon class="material-symbols-outlined image-icon" fontIcon="image"></mat-icon>
         </div>
-        <div class="form-row">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nombre</mat-label>
-                <input matInput formControlName="name" type="text" />
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Precio (€)</mat-label>
-                <input matInput formControlName="price" type="number" />
-            </mat-form-field>
-        </div>
-        <div class="form-row">
-            <mat-form-field appearance="outline">
-                <mat-label>Filtrar categoría</mat-label>
-                <mat-select formControlName="category" (selectionChange)="onCategoryChange($event)">
-                    @for (category of categories; track category) {
-                        <mat-option [value]="category.id">{{category.name}}</mat-option>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Precio (€)</mat-label>
+            <input matInput formControlName="price" type="number" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="category" (selectionChange)="onCategoryChange($event)">
+                @for (category of categories; track category) {
+                    <mat-option [value]="category.id">{{category.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="type">
+                @for (type of types; track type) {
+                <mat-option [value]="type.value">{{type.display}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<br>
+@if (productForm.value.type == 'bundle') {
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel expanded="true" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel-header>
+            <mat-panel-title> Categorías de opciones </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-stroked-button color="primary" (click)="addOptionGroup()" type="button">
+                <mat-icon>add</mat-icon> Añadir grupo
+            </button>
+
+            <br>
+
+            <div formArrayName="option_groups">
+                <mat-accordion class="example-headers-align">
+                    @for (group of optionGroups.controls; track group; let gi = $index) {
+                        <mat-expansion-panel expanded="true" (opened)="setStep(0)" hideToggle [formGroupName]="gi">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Categoría de opciones {{gi}}</mat-panel-title>
+                            </mat-expansion-panel-header>
+
+                            <mat-form-field appearance="outline" style="width:100px">
+                                <mat-label>Orden</mat-label>
+                                <input matInput formControlName="sort_order" type="number" />
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width:400px">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput formControlName="name" type="text" />
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width:100px">
+                                <mat-label>Mínimo</mat-label>
+                                <input matInput formControlName="min_choices" type="number" />
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width:100px">
+                                <mat-label>Máximo</mat-label>
+                                <input matInput formControlName="max_choices" type="number" />
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width:200px">
+                                <mat-label>Categoría</mat-label>
+                                <mat-select formControlName="source_category" (selectionChange)="onCategoryChange($event)">
+                                    @for (category of categories; track category) {
+                                        <mat-option [value]="category.id">{{category.name}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-expansion-panel>
                     }
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Complementos</mat-label>
-                <mat-select formControlName="complements" multiple>
-                    @for (complement of products; track complement) {
-                    <mat-option [value]="complement.id">{{complement.name}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-
-        </div>
-    </div>
-
+                </mat-accordion>
+            </div>
+            <mat-action-row>
+                <button matButton (click)="nextStep()">Guardar</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+}
 </form>
-
 <app-image-library-dialog></app-image-library-dialog>

@@ -13,3 +13,13 @@ class ProductView(GeneralViewSet):
 class ProductCategoryView(GeneralViewSet, mixins.DestroyModelMixin):
     serializer_class = product_serializers.ProductCategorySerializer
     queryset = product_models.ProductCategory.objects.all().distinct()
+
+
+class ProductOptionGroupView(GeneralViewSet):
+    serializer_class = product_serializers.ProductOptionGroupSerializer
+    queryset = product_models.ProductOptionGroup
+
+
+class ProductOptionItemView(GeneralViewSet):
+    serializer_class = product_serializers.ProductOptionItemSerializer
+    queryset = product_models.ProductOptionItem

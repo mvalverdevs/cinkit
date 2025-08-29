@@ -27,7 +27,7 @@ import { GalleryComponent } from './main/gallery/gallery.component';
     RouterModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ApiModule.forRoot({ rootUrl: 'http://localhost:8000' }),
+    ApiModule.forRoot({ rootUrl: 'http://172.20.10.2:8000' }),
   ],
   providers: [
     Router,

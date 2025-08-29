@@ -10,6 +10,8 @@ import { ImageLibraryService } from './services/image-library.service';
 import { OrderService } from './services/order.service';
 import { ProductService } from './services/product.service';
 import { ProductCategoryService } from './services/product-category.service';
+import { ProductOptionGroupService } from './services/product-option-group.service';
+import { ProductOptionItemService } from './services/product-option-item.service';
 import { SchemaService } from './services/schema.service';
 import { UserService } from './services/user.service';
 import { ZoneService } from './services/zone.service';
@@ -28,6 +30,8 @@ import { ZoneService } from './services/zone.service';
     OrderService,
     ProductService,
     ProductCategoryService,
+    ProductOptionGroupService,
+    ProductOptionItemService,
     SchemaService,
     UserService,
     ZoneService,

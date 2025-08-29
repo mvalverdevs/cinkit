@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import Sum
 
 
 class Bill(models.Model):
@@ -83,7 +82,14 @@ class OrderItem(models.Model):
 
     product = models.ForeignKey(
         to='product.Product',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='order_items'
+    )
+
+    complements = models.ManyToManyField(
+        to='product.Product',
+        related_name='order_items_as_complements',
+        blank=True
     )
 
     quantity = models.PositiveIntegerField(

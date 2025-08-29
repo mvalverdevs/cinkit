@@ -10,7 +10,7 @@
 </ion-fab>
 
 <ion-fab slot="fixed" vertical="bottom" horizontal="start" *ngIf="orderItems.length > 0">
-  <ion-fab-button size="small" color="light" (click)="setArticleModalOpen(true)">
+  <ion-fab-button size="small" color="light" (click)="setArticlesModalOpen($event, true)">
     <ion-icon name="information-circle-outline"></ion-icon>
   </ion-fab-button>
 </ion-fab>
@@ -31,9 +31,16 @@
       <div class="product-quantity product-batch" *ngIf="isSelected(product)">
         {{ getQuantity(product) }}
       </div>
-      <div class="product-less product-batch" *ngIf="isSelected(product)" (click)="decreaseProduct($event, product)">
-        -
-      </div>
+      @if (product.complements?.length || 0 > 0){
+        <div class="product-less product-batch" *ngIf="isSelected(product)" (click)="setArticlesModalOpen($event, true)">
+          <ion-icon name="information-outline"></ion-icon>
+        </div>
+      } @else {
+        <div class="product-less product-batch" *ngIf="isSelected(product)" (click)="deselectProduct($event, product)">
+          -
+        </div>
+      }
+      
       <div
         [ngStyle]="{
             'background-image': 'url(' + product.image_data?.image + ')',
@@ -51,7 +58,7 @@
   No hay nada aún.
 </div>
 
-<ion-modal [isOpen]="isComplementsModalOpen">
+<ion-modal (didDismiss)="setComplementsModalOpen(false)" [isOpen]="isComplementsModalOpen">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -87,62 +94,72 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal [isOpen]="isArticlesModalOpen">
+<ion-modal (didDismiss)="setArticlesModalOpen($event, false)" [isOpen]="isArticlesModalOpen">
   <ng-template>
     <ion-header>
       <ion-toolbar>
         <ion-title>Artículos</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="setArticleModalOpen(false)">Hecho</ion-button>
+          <ion-button (click)="setArticlesModalOpen($event, false)">Hecho</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-item *ngFor="let item of orderItems" lines="none">
-          <ion-label class="ion-text-wrap product-text-modal-item" slot="start">
-            {{ getProductById(item.product)?.name }}
-          </ion-label>
+        <ion-item *ngFor="let item of groupedItems" lines="none">
+          <div class="item-wrap">
+            <ion-label class="ion-text-wrap " slot="start">
+              {{ item.product_data?.name }} x{{ getQuantity(item.product_data) }}
+            </ion-label>
+            <div class="complement-wrapper">
+              @for (complement of item.complements_data; track complement) {
+                <label class="complement-item">
+                  {{ complement.name }}
+                </label>
+              }
+              <ion-buttons slot="end" class="quantity-buttons">
+              <ion-button
+                size="small"
+                color="primary"
+                (click)="decreaseProduct(item)"
+              >
+              <ion-text *ngIf="item.quantity! > 1">
+                <ion-icon name="remove-outline"></ion-icon>
+              </ion-text>
+              <ion-text *ngIf="item.quantity! == 1">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-text>
+              </ion-button>
 
-          <ion-buttons slot="end" class="quantity-buttons">
-            <ion-button
-              size="small"
-              color="primary"
-              (click)="decreaseProduct($event, getProductById(item.product)!)"
-            >
-            <ion-text *ngIf="item.quantity! > 1">
-              <ion-icon name="remove-outline"></ion-icon>
-            </ion-text>
-            <ion-text *ngIf="item.quantity! == 1">
-              <ion-icon name="trash-outline"></ion-icon>
-            </ion-text>
-            </ion-button>
+              <ion-input
+                class="quantity-input"
+                type="number"
+                [(ngModel)]="item.quantity"
+                readonly
+              ></ion-input>
 
-            <ion-input
-              class="quantity-input"
-              type="number"
-              [(ngModel)]="item.quantity"
-              readonly
-            ></ion-input>
-
-            <ion-button
-              size= "small"
-              color="primary"
-              (click)="selectProduct(getProductById(item.product)!)"
-            >
-              <ion-icon name="add-outline"></ion-icon>
-            </ion-button>
-            <ion-button
-              size= "small"
-              color="primary"
-              (click)="selectProduct(getProductById(item.product)!)"
-            >
-              <ion-icon name="document-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+              <ion-button
+                size= "small"
+                color="primary"
+                (click)="increaseProduct(item)"
+              >
+                <ion-icon name="add-outline"></ion-icon>
+              </ion-button>
+              <ion-button
+                size= "small"
+                color="primary"
+                (click)="presentAlert(item)"
+              >
+                <ion-icon name="document-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            </div>
+          </div>
+          
         </ion-item>
       </ion-list>
 
     </ion-content>
   </ng-template>
 </ion-modal>
+

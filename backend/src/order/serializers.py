@@ -34,6 +34,12 @@ class OrderItemSerializer(ModelSerializer):
         read_only=True
     )
 
+    complements_data = ProductSerializer(
+        source='complements',
+        read_only=True,
+        many=True
+    )
+
     class Meta:
         model = order_models.OrderItem
         fields = (
@@ -42,11 +48,14 @@ class OrderItemSerializer(ModelSerializer):
             'product',
             'quantity',
             'note',
-            'product_data'
+            'product_data',
+            'complements',
+            'complements_data',
         )
         read_only_fields = (
             'id',
-            'product_data'
+            'product_data',
+            'complements_data',
         )
 
 

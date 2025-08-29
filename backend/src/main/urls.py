@@ -49,6 +49,18 @@ router.register(
 )
 
 router.register(
+    r'product_option_group',
+    product_views.ProductOptionGroupView,
+    basename='product_option_group'
+)
+
+router.register(
+    r'product_option_item',
+    product_views.ProductOptionItemView,
+    basename='product_option_item'
+)
+
+router.register(
     r'product_category',
     product_views.ProductCategoryView,
     basename='product_category'

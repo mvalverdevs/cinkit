@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderItem, Product, ProductCategory } from 'src/api/models';
+import { AlertController } from '@ionic/angular';
+import { Order, OrderItem, Product, ProductCategory } from 'src/api/models';
 import { BillService, ProductCategoryService, ProductService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/shared-imports';
 
@@ -16,10 +17,15 @@ export class ProductListComponent  implements OnInit {
   billId?: number;
   categories: ProductCategory[] = [];
   products: Product[] = [];
+
   selectedCategoryId?: number;
   orderItems: OrderItem[] = [];
+
+  // Complementos del item seleccionado si tiene
   complements: any = [];
+  lastOrderItemWithComplements?: OrderItem;
   productToAddComplement?: Product;
+  groupedOrderItems: any[] = [];
 
   isArticlesModalOpen = false;
   isComplementsModalOpen = false;
@@ -29,7 +35,8 @@ export class ProductListComponent  implements OnInit {
     private _productCategoryService: ProductCategoryService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _billService: BillService
+    private _billService: BillService,
+    private _alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -98,44 +105,49 @@ export class ProductListComponent  implements OnInit {
 
   selectProduct(product: Product) {
     let existingItem = this.orderItems.find(item => item.product === product.id);
+    let hasComplements =  product.complements?.length || 0 > 0
 
     if (existingItem) {
-      existingItem.quantity! += 1;
+      if(!hasComplements){
+        existingItem!.quantity! += 1;
+      } else {
+        this.lastOrderItemWithComplements = existingItem;
+        this.complements = product.complements_data;
+        this.setComplementsModalOpen(true);
+      }
     } else {
-      const newItem: OrderItem = {
+      let newOrderItem = {
+        id: 0,
+        order: 0,
         product: product.id,
         quantity: 1,
-        order: 0,
-        id: 0,
-        product_data: {} as Product
-      };
-      this.orderItems.push(newItem);
+        product_data: product,
+        complements_data: [] as Product[],
+        complements: []
+      }
+      if(!hasComplements){
+        this.orderItems.push(newOrderItem);
+      } else {
+        this.lastOrderItemWithComplements = newOrderItem;
+        this.complements = product.complements_data;
+        this.setComplementsModalOpen(true);
+      }
+     
     }
-
-    if (product.complements?.length || 0 > 0) {
-      this.setComplementsModalOpen(true);
-      this.complements = product.complements_data;
-    }
+    console.log(this.orderItems);
   }
 
   getQuantity(product: Product): number {
-    const item = this.orderItems.find(i => i.product === product.id);
-    return item ? item.quantity! : 0;
+    return (this.orderItems ?? [])
+      .filter(i => i.product === product.id)           // coge todas las líneas del producto
+      .reduce((total, i) => total + (i.quantity ?? 0), 0); // suma cantidades (0 si falta)
   }
 
   isSelected(product: Product): boolean {
-    return this.getQuantity(product) > 0;
+    return !!this.orderItems.find(item => item.product_data! == product);
   }
 
-  private agruparEnFilas(lista: any[], tamañoFila: number): any[][] {
-    const filas = [];
-      for (let i = 0; i < lista.length; i += tamañoFila) {
-        filas.push(lista.slice(i, i + tamañoFila));
-      }
-      return filas;
-  }
-
-  decreaseProduct(event: Event, product: Product) {
+  deselectProduct(event: Event, product: Product) {
     // Como el botón está dentro del card y se selcciona al clickar de esta forma solo se llama a esta funcion.
     // Si no se llamaría a selectProduct() y esta a la vez y se anularían
     event.stopPropagation()
@@ -153,7 +165,25 @@ export class ProductListComponent  implements OnInit {
         this.orderItems.splice(index, 1);
       }
       this.orderItems = [...this.orderItems];
+
+      if (this.isArticlesModalOpen && this.orderItems.length == 0){
+        this.isArticlesModalOpen = false;
+      }
     }
+  }
+
+  decreaseProduct(orderItem: OrderItem) {
+    let index = this.orderItems.indexOf(orderItem);
+    if (orderItem.quantity! > 1) {
+        orderItem.quantity! -= 1;
+      } else {
+        this.orderItems.splice(index, 1);
+      }
+      this.orderItems = [...this.orderItems];
+  }
+
+  increaseProduct(orderItem: OrderItem) {
+    orderItem.quantity! += 1;
   }
 
   createOrder(){
@@ -168,7 +198,8 @@ export class ProductListComponent  implements OnInit {
     
   }
 
-  setArticleModalOpen(isOpen: boolean) {
+  setArticlesModalOpen(event: Event, isOpen: boolean) {
+    event.stopPropagation();
     this.isArticlesModalOpen = isOpen;
   }
 
@@ -177,6 +208,83 @@ export class ProductListComponent  implements OnInit {
   }
 
   addComplement(complement: Product){
+    if (this.lastOrderItemWithComplements?.complements?.find(
+      item => item === complement.id
+    )) {
+      this.lastOrderItemWithComplements!.quantity! += 1;
+    } else {
+      let newOrderItem = {
+        id: 0,
+        order: 0,
+        product: this.lastOrderItemWithComplements?.product,
+        quantity: 1,
+        product_data: this.lastOrderItemWithComplements?.product_data,
+        complements_data: [
+          complement
+        ],
+        complements: [
+          complement.id
+        ]
+      } as OrderItem
+      this.orderItems.push(newOrderItem);
+    }
+    this.lastOrderItemWithComplements = undefined;
     this.setComplementsModalOpen(false);
+    console.log(this.orderItems);
   }
+
+  setNoteToItem(event: any, item: OrderItem){
+    let noteText = event.detail.data.values[0];
+    item.note = noteText;
+  }
+
+  async presentAlert(item: OrderItem) {
+    const alert = await this._alertController.create({
+      header: 'Nota',
+      message: 'Añadir una nota al pedido.',
+      buttons: [
+        {
+        text: 'Guardar',
+        handler: (data) => {
+          // Aquí tienes lo que escribió el usuario
+          console.log(data);
+          item.note = data[0];
+          console.log('Nota guardada:', item.note);
+        }
+      }
+      ],
+      inputs: [
+        {
+          type: 'textarea',
+          placeholder: 'Nota',
+          value: item.note
+        },
+      ],
+      
+    });
+    await alert.present();
+  }
+
+  get groupedItems(): OrderItem[] {
+  const grouped: any = {};
+
+  for (let item of this.orderItems) {
+    const productId = item.product_data.id;
+
+    if (!grouped[productId]) {
+      grouped[productId] = {
+        ...item,
+        complements_data: [...item.complements_data],
+        quantity: item.quantity
+      };
+    } else {
+      // Sumamos la cantidad
+      grouped[productId].quantity += item.quantity;
+      // Metemos los complementos que no estén repetidos
+      grouped[productId].complements_data.push(...item.complements_data);
+    }
+  }
+
+  return Object.values(grouped);
+}
 }

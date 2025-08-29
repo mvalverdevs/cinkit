@@ -16,6 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 export const SHARED_IMPORTS = [
@@ -43,4 +45,6 @@ export const SHARED_IMPORTS = [
     MatSelectModule,
     MatTabsModule,
     MatDialogModule,
+    MatExpansionModule,
+    MatDatepickerModule
 ];
