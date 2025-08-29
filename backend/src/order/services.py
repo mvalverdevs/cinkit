@@ -20,7 +20,7 @@ class BillService:
         # Create order items
         order_amount = 0
         for item in order_items:
-            order_models.OrderItem.objects.create(
+            order_item = order_models.OrderItem.objects.create(
                 **{
                     'order': order,
                     'product_id': item.get('product'),
@@ -28,8 +28,15 @@ class BillService:
                     'note': item.get('note'),
                 }
             )
+            complements = product_models.Product.objects.filter(id__in=item.get('complements'))
+            order_item.complements.set(complements)
+
+            complements_price = 0
+            for complement in complements:
+                complements_price += complement.price
+
             product = product_models.Product.objects.get(id=item.get('product'))
-            order_amount += product.price * item.get('quantity')
+            order_amount += (complements_price + product.price) * item.get('quantity')
 
         # Set order amount
         order.amount = order_amount

@@ -137,12 +137,7 @@ ion-grid {
     right: 10px;
 }
 
-.quantity-buttons {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  ion-input.quantity-input {
+.quantity-input {
     width: 40px;
     text-align: center;
     font-weight: bold;
@@ -150,7 +145,6 @@ ion-grid {
     background-color: #f4f4f4;
     border-radius: 6px;
   }
-}
 
 .product-text-modal-item {
     overflow: hidden;
@@ -158,4 +152,20 @@ ion-grid {
     white-space: nowrap;
     max-width: 100%;
     min-height: 48px;
+}
+
+.item-wrap {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.complement-item {
+    padding: 0px 20px;
+}
+
+.complement-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }

@@ -4,6 +4,8 @@ export { ImageLibraryService } from './services/image-library.service';
 export { OrderService } from './services/order.service';
 export { ProductService } from './services/product.service';
 export { ProductCategoryService } from './services/product-category.service';
+export { ProductOptionGroupService } from './services/product-option-group.service';
+export { ProductOptionItemService } from './services/product-option-item.service';
 export { SchemaService } from './services/schema.service';
 export { UserService } from './services/user.service';
 export { ZoneService } from './services/zone.service';

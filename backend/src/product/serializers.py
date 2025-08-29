@@ -3,12 +3,60 @@ from rest_framework.serializers import ListSerializer, ModelSerializer, Serializ
 from product import models as product_models
 from image_library.serializers import ImageSerializer
 from drf_spectacular.utils import extend_schema_field
+from drf_writable_nested import WritableNestedModelSerializer
 
 
+class ProductOptionItemSerializer(WritableNestedModelSerializer):
+    class Meta:
+        model = product_models.ProductOptionItem
+        fields = (
+            'id',
+            'group',
+            'product',
+            'price_delta',
+            'is_default',
+            'sort_order'
+        )
+        read_only_fields = (
+            'id',
+        )
 
-class ProductSerializer(ModelSerializer):
-    image_data = ImageSerializer(read_only=True, source='image')
-    complements_data = SerializerMethodField()
+
+class ProductOptionGroupSerializer(WritableNestedModelSerializer):
+    items_data = ProductOptionItemSerializer(
+        source='items',
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = product_models.ProductOptionGroup
+        fields = (
+            'id',
+            'product',
+            'name',
+            'min_choices',
+            'max_choices',
+            'source_category',
+            'sort_order',
+            'items',
+            'items_data',
+        )
+        read_only_fields = (
+            'id',
+            'items_data',
+        )
+
+
+class ProductSerializer(WritableNestedModelSerializer):
+    image_data = ImageSerializer(
+        read_only=True,
+        source='image'
+    )
+
+    option_groups = ProductOptionGroupSerializer(
+        many=True,
+    )
 
     class Meta:
         model = product_models.Product
@@ -19,28 +67,20 @@ class ProductSerializer(ModelSerializer):
             'image_data',
             'price',
             'category',
-            'complements',
-            'complements_data',
+            'type',
+            'option_groups',
         )
         read_only_fields = (
             'id',
             'image_data',
-            'complements_data',
         )
-
-    def get_complements_data(self, obj):
-        depth = self.context.get("_depth", 0)
-        if depth >= 1:  # corta a 1 nivel
-            return [{"id": p.id, "name": p.name} for p in obj.complements.all()]
-        return ProductSerializer(
-            obj.complements.all(),
-            many=True,
-            context={**self.context, "_depth": depth + 1}
-        ).data
 
 
 class ProductCategorySerializer(ModelSerializer):
-    image_data = ImageSerializer(read_only=True, source='image')
+    image_data = ImageSerializer(
+        read_only=True,
+        source='image'
+    )
 
     class Meta:
         model = product_models.ProductCategory
