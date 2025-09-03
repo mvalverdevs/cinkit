@@ -6,8 +6,11 @@ from rest_framework import mixins
 
 class ProductView(GeneralViewSet):
     serializer_class = product_serializers.ProductSerializer
-    queryset = product_models.Product.objects.all().distinct()
+    queryset = product_models.Product.objects.all().distinct().order_by('-modified')
     filterset_fields = ('category_id',)
+    search_fields = (
+        'name',
+    )
 
 
 class ProductCategoryView(GeneralViewSet, mixins.DestroyModelMixin):

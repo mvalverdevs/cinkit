@@ -1,4 +1,5 @@
 from django.db import models
+from model_utils.models import TimeStampedModel
 
 
 SIMPLE = "simple"
@@ -9,7 +10,7 @@ PRODUCT_TYPES = (
 )
 
 
-class Product(models.Model):
+class Product(TimeStampedModel):
     name = models.CharField()
 
     image = models.ForeignKey(

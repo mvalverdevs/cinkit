@@ -28,7 +28,7 @@ import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/latera
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        ApiModule.forRoot({ rootUrl: 'http://192.168.0.33:8000' })], providers: [
+        ApiModule.forRoot({ rootUrl: 'http://192.168.1.52:8000' })], providers: [
         Router,
         {
             provide: RouteReuseStrategy,

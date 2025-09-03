@@ -69,10 +69,14 @@ class ProductSerializer(WritableNestedModelSerializer):
             'category',
             'type',
             'option_groups',
+            'created',
+            'modified'
         )
         read_only_fields = (
             'id',
             'image_data',
+            'created',
+            'modified',
         )
 
 
