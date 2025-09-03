@@ -1073,6 +1073,296 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/product_option_group/:
+    get:
+      operationId: product_option_group_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - product_option_group
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductOptionGroupList'
+          description: ''
+    post:
+      operationId: product_option_group_create
+      tags:
+      - product_option_group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionGroup'
+          description: ''
+  /api/product_option_group/{id}/:
+    get:
+      operationId: product_option_group_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_group
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionGroup'
+          description: ''
+    put:
+      operationId: product_option_group_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductOptionGroup'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionGroup'
+          description: ''
+    patch:
+      operationId: product_option_group_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionGroup'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionGroup'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionGroup'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionGroup'
+          description: ''
+  /api/product_option_item/:
+    get:
+      operationId: product_option_item_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - product_option_item
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductOptionItemList'
+          description: ''
+    post:
+      operationId: product_option_item_create
+      tags:
+      - product_option_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionItem'
+          description: ''
+  /api/product_option_item/{id}/:
+    get:
+      operationId: product_option_item_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_item
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionItem'
+          description: ''
+    put:
+      operationId: product_option_item_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductOptionItem'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionItem'
+          description: ''
+    patch:
+      operationId: product_option_item_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - product_option_item
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductOptionItem'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductOptionItem'
+          description: ''
   /api/schema/:
     get:
       operationId: schema_retrieve
@@ -1825,7 +2115,17 @@ components:
           allOf:
           - $ref: '#/components/schemas/Product'
           readOnly: true
+        complements:
+          type: array
+          items:
+            type: integer
+        complements_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+          readOnly: true
       required:
+      - complements_data
       - id
       - order
       - product
@@ -1968,6 +2268,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
+    PaginatedProductOptionGroupList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionGroup'
+    PaginatedProductOptionItemList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionItem'
     PaginatedUserList:
       type: object
       required:
@@ -2111,6 +2457,7 @@ components:
           readOnly: true
     PatchedProduct:
       type: object
+      description: Adds nested create feature
       properties:
         id:
           type: integer
@@ -2131,12 +2478,19 @@ components:
         category:
           type: integer
           nullable: true
-        complements:
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        option_groups:
           type: array
           items:
-            type: integer
-        complements_data:
+            $ref: '#/components/schemas/ProductOptionGroup'
+        created:
           type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
           readOnly: true
     PatchedProductCategory:
       type: object
@@ -2153,6 +2507,62 @@ components:
           allOf:
           - $ref: '#/components/schemas/Image'
           readOnly: true
+    PatchedProductOptionGroup:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        name:
+          type: string
+        min_choices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_choices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        source_category:
+          type: integer
+          nullable: true
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          items:
+            type: integer
+        items_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionItem'
+          readOnly: true
+    PatchedProductOptionItem:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        group:
+          type: integer
+        product:
+          type: integer
+        price_delta:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+        is_default:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
     PatchedUser:
       type: object
       description: |-
@@ -2243,6 +2653,7 @@ components:
       - url
     Product:
       type: object
+      description: Adds nested create feature
       properties:
         id:
           type: integer
@@ -2263,18 +2674,27 @@ components:
         category:
           type: integer
           nullable: true
-        complements:
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        option_groups:
           type: array
           items:
-            type: integer
-        complements_data:
+            $ref: '#/components/schemas/ProductOptionGroup'
+        created:
           type: string
+          format: date-time
+          readOnly: true
+        modified:
+          type: string
+          format: date-time
           readOnly: true
       required:
-      - complements_data
+      - created
       - id
       - image_data
+      - modified
       - name
+      - option_groups
     ProductCategory:
       type: object
       properties:
@@ -2294,6 +2714,72 @@ components:
       - id
       - image_data
       - name
+    ProductOptionGroup:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        name:
+          type: string
+        min_choices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_choices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        source_category:
+          type: integer
+          nullable: true
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        items:
+          type: array
+          items:
+            type: integer
+        items_data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductOptionItem'
+          readOnly: true
+      required:
+      - id
+      - items
+      - items_data
+      - name
+      - product
+    ProductOptionItem:
+      type: object
+      description: Adds nested create feature
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        group:
+          type: integer
+        product:
+          type: integer
+        price_delta:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+        is_default:
+          type: boolean
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+      required:
+      - group
+      - id
+      - product
     ResetPassword:
       type: object
       description: Validate the contact email
@@ -2316,6 +2802,14 @@ components:
       description: |-
         * `superadmin` - Superadministrador
         * `user` - User
+    TypeEnum:
+      enum:
+      - simple
+      - bundle
+      type: string
+      description: |-
+        * `simple` - Simple
+        * `bundle` - Bundle
     User:
       type: object
       description: |-

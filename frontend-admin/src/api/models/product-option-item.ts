@@ -1,5 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+
+/**
+ * Adds nested create feature
+ */
 export interface ProductOptionItem {
   group: number;
   id: number;

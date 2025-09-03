@@ -9,7 +9,7 @@ DBDUMP := postgres-data.tar.bz2
 DOCKER_DEV := docker compose -p newproj-dev -f docker-compose.yml
 DOCKER_PROD := docker compose -p newproj-prod -f docker-compose.production-test.yml
 
-LOCAL_IP := 172.20.10.2
+LOCAL_IP := 192.168.1.52
 
 
 

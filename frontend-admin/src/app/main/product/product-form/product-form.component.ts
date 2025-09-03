@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild, signal } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Image, Product, ProductCategory, ProductOptionGroup, User } from 'src/api/models';
+import { Image, Product, ProductCategory, ProductOptionGroup, ProductOptionItem, User } from 'src/api/models';
 import { ProductCategoryService, ProductOptionGroupService, ProductOptionItemService, ProductService, UserService } from 'src/api/services';
 import { SHARED_IMPORTS } from 'src/app/shared/imports';
 import { RoleEnum } from 'src/api/models';
 import { ImageLibraryDialogComponent } from 'src/app/components/image-library-dialog/image-library-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { firstValueFrom, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -16,6 +18,10 @@ import { MatTableDataSource } from '@angular/material/table';
   imports: [ImageLibraryDialogComponent, ...SHARED_IMPORTS],
 })
 export class ProductFormComponent implements OnInit {
+
+  @ViewChild('optionGroupItemDialog') optionGroupItemDialog!: TemplateRef<any>;
+  private dialog = inject(MatDialog);
+
   // Form attrs
   productForm: FormGroup;
 
@@ -62,7 +68,6 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
-    this.getProducts();
     this._route.params.subscribe(params => {
       // 🚩 Edit Mode and take the recipe from api
       if (params['id'] != undefined){
@@ -108,12 +113,9 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  getProducts() {
-    this._productService.productList().subscribe({
-      next: (response) => {
-        this.products = response.results;
-      }
-    });
+  getProducts(category_id?: number): Observable<Product[]> {
+    return this._productService.productList({ category_id })
+      .pipe(map(response => response.results));
   }
 
   onSubmit(){
@@ -123,7 +125,6 @@ export class ProductFormComponent implements OnInit {
       this._productService.productPartialUpdate$Json$Response({id: this.productId!, body: product}).subscribe(
         {
           next: (response) => {
-            this.saveOptionsGroup();
             this._router.navigate(['/products']);
           }
         }
@@ -132,31 +133,10 @@ export class ProductFormComponent implements OnInit {
       this._productService.productCreate$Json$Response({body: product}).subscribe(
         {
           next: (response) => {
-            this.saveOptionsGroup();
             this._router.navigate(['/products']);
           }
         }
       )
-    }
-  }
-
-  saveOptionsGroup(){
-    let product = this.productForm.value as Product;
-    if (this.productId) {
-      product.option_groups.forEach(option_group => {
-        this._productOptionGroupService.productOptionGroupCreate$Json$Response(
-          {
-            body: option_group
-          }
-        ).subscribe(
-          {
-            next: (option_group) => {
-
-            }
-          }
-        )
-      });
-      
     }
   }
 
@@ -198,10 +178,10 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  createOptionItem(): FormGroup {
+  createOptionItem(product: Product): FormGroup {
     return this._formBuilder.group({
       group: [''],
-      product: [''],
+      product: [product.id],
       price_delta: [0],
       is_default: [false],
       sort_order: [0]
@@ -216,7 +196,8 @@ export class ProductFormComponent implements OnInit {
     this.optionGroups.push(this.createOptionGroup());
   }
 
-    step = signal(0);
+
+  step = signal(0);
 
   setStep(index: number) {
     this.step.set(index);
@@ -228,6 +209,48 @@ export class ProductFormComponent implements OnInit {
 
   prevStep() {
     this.step.update(i => i - 1);
+  }
+
+  deleteOptionGroup(index: number) {
+    this.optionGroups.removeAt(index);
+  }
+
+  openItemDialog(optionGroup: ProductOptionGroup){
+    if (!this.optionGroupItemDialog) {
+      // Por si el padre intenta abrir antes de que el hijo renderice
+      throw new Error('imageDialog TemplateRef todavía no está disponible');
+    }
+  
+     this.dialog.open(this.optionGroupItemDialog, {
+      data: {image: undefined},
+      // si quieres aplicar estilos al contenedor del diálogo:
+      panelClass: 'image-dialog', // -> en lugar de poner class en <ng-template>
+      width: '80%',
+      maxWidth: '95vw',
+      autoFocus: false,
+      restoreFocus: false,
+      minHeight: '40vw',
+      
+      // disableClose: true,
+    });
+
+    
+    this.getProducts(optionGroup.source_category!).subscribe(products => {
+      products.forEach(product => {
+        this.createOptionItem(product);
+      });
+    });
+
+  }
+
+  getTableItems(optionGroup: ProductOptionGroup) {
+    let dataSource = new MatTableDataSource<ProductOptionItem>();
+    dataSource.data = optionGroup.items_data;
+    return dataSource;
+  }
+
+  getItemsColumns () {
+    return ['sort_order', 'product', 'price_delta'];
   }
 
 }

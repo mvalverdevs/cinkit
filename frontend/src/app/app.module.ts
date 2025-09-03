@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {LoginPage} from "./main/user/login/login.page";
+import { LoginPage } from "./main/user/login/login.page";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApiModule } from 'src/api/api.module';
@@ -29,18 +29,18 @@ import { LateralMenuLayoutComponent } from './layouts/lateral-menu-layout/latera
         IonicModule.forRoot(),
         AppRoutingModule,
         ApiModule.forRoot({ rootUrl: 'http://192.168.0.51:8000' })], providers: [
-        Router,
-        {
-            provide: RouteReuseStrategy,
-            useClass: IonicRouteStrategy,
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true,
-            deps: [Router],
-        } as any,
-        provideHttpClient(withInterceptorsFromDi()),
-    ] 
+            Router,
+            {
+                provide: RouteReuseStrategy,
+                useClass: IonicRouteStrategy,
+            },
+            {
+                provide: HTTP_INTERCEPTORS,
+                useClass: AuthInterceptor,
+                multi: true,
+                deps: [Router],
+            } as any,
+            provideHttpClient(withInterceptorsFromDi()),
+        ]
 })
-export class AppModule {}
+export class AppModule { }

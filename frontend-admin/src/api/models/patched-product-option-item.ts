@@ -1,5 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+
+/**
+ * Adds nested create feature
+ */
 export interface PatchedProductOptionItem {
   group?: number;
   id?: number;

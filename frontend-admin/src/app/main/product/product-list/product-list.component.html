@@ -11,6 +11,14 @@
 </div>
 
 <div class="filters-wrap">
+
+  <mat-form-field appearance="outline" style="width: 30%;">
+    <button matSuffix mat-icon-button aria-label="Search" (click)="getProducts()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <input matInput type="search" [(ngModel)]="searchText" (input)="getProducts()" placeholder="Búsqueda">
+  </mat-form-field>
+
   <mat-form-field appearance="outline">
     <mat-label>Filtrar categoría</mat-label>
     <mat-select (selectionChange)="onCategoryChange($event)">
@@ -19,6 +27,7 @@
       }
     </mat-select>
   </mat-form-field>
+
 </div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">

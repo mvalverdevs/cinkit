@@ -16,6 +16,7 @@ export class ProductListComponent  implements OnInit {
   dataSource = new MatTableDataSource<Product>();
   displayedColumns: string[] = ['image', 'name', 'price', 'actions'];
   categories: ProductCategory[] = [];
+  searchText?: string;
 
   constructor(
     private _productService: ProductService,
@@ -32,7 +33,8 @@ export class ProductListComponent  implements OnInit {
   getProducts(category?: number) {
     this.dataSource.data = [];
     this._productService.productList({
-      category_id: category
+      category_id: category,
+      search: this.searchText
     }).subscribe({
       next: (response) => {
         this.dataSource.data = response.results;
