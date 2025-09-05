@@ -215,26 +215,7 @@ export class ProductFormComponent implements OnInit {
     this.optionGroups.removeAt(index);
   }
 
-  openItemDialog(optionGroup: ProductOptionGroup){
-    if (!this.optionGroupItemDialog) {
-      // Por si el padre intenta abrir antes de que el hijo renderice
-      throw new Error('imageDialog TemplateRef todavía no está disponible');
-    }
-  
-     this.dialog.open(this.optionGroupItemDialog, {
-      data: {image: undefined},
-      // si quieres aplicar estilos al contenedor del diálogo:
-      panelClass: 'image-dialog', // -> en lugar de poner class en <ng-template>
-      width: '80%',
-      maxWidth: '95vw',
-      autoFocus: false,
-      restoreFocus: false,
-      minHeight: '40vw',
-      
-      // disableClose: true,
-    });
-
-    
+  openItemDialog(optionGroup: ProductOptionGroup) {
     this.getProducts(optionGroup.source_category!).subscribe(products => {
       products.forEach(product => {
         this.createOptionItem(product);
